@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.vehicleentry.VehicleEntryFragment">
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_ver_25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.1"/>
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_hor_25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.15"/>
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_hor_75"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.85"/>
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_ver_75"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.9"/>
+<androidx.cardview.widget.CardView
+        app:cardElevation="5dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintStart_toStartOf="@id/guideline_ver_25"
+        app:layout_constraintTop_toBottomOf="@id/guideline_hor_25"
+        app:layout_constraintEnd_toStartOf="@id/guideline_ver_75"
+        app:layout_constraintBottom_toBottomOf="@id/guideline_hor_75"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        app:layout_constraintVertical_bias=".5"
+        >
+<LinearLayout
+        android:padding="20dp"
+        android:orientation="vertical"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <com.google.android.material.textfield.TextInputLayout
+
+            android:layout_weight="1"
+            android:id="@+id/textInputNumber"
+            android:hint="Vehicle Number"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+    <com.google.android.material.textfield.TextInputEditText
+            android:backgroundTint="@color/colorPrimaryDark"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editTextNumber"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_weight="1"
+            android:id="@+id/textInputModel"
+
+            android:hint="Vehicle Model"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+    <com.google.android.material.textfield.TextInputEditText
+            android:backgroundTint="@color/colorPrimaryDark"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editTextModel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_weight="1"
+
+            android:hint="Parking Slot"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+        <com.google.android.material.textfield.TextInputEditText
+                android:backgroundTint="@color/colorPrimaryDark"
+
+                android:enabled="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/editTextSlot"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_weight="1"
+
+            android:hint="Entry Time"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+        <com.google.android.material.textfield.TextInputEditText
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:enabled="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/editTextTime"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <Button
+            android:id="@+id/buttonSubmit"
+            android:layout_marginTop="20dp"
+            android:textColorHint="@color/white"
+            android:background="@color/colorAccent"
+            android:hint="Submit"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"/>
+
+</LinearLayout>
+</androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

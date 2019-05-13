@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.appbar.AppBarLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/appbar"
+        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        app:layout_constraintDimensionRatio="3:1.2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <Toolbar
+                android:titleTextColor="@color/white"
+                android:id="@+id/tool_bar"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_width="match_parent">
+        </Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+

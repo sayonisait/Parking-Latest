@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        android:gravity="center"
+        android:id="@+id/cell_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+   <ImageView
+           android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+   android:src="@drawable/ic_suv_car"
+   android:id="@+id/image_car"
+   app:layout_constraintTop_toTopOf="parent"
+   app:layout_constraintStart_toStartOf="parent"
+   app:layout_constraintEnd_toEndOf="parent"
+   />
+    <TextView
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="199"
+              app:layout_constraintTop_toBottomOf="@id/image_car"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintBottom_toBottomOf="parent"
+              android:id="@+id/slot_number"
+    />
+    <!--<View android:layout_width=".2dp"-->
+          <!--android:layout_margin="2dp"-->
+          <!--android:layout_height="match_parent"-->
+    <!--android:background="@color/colorPrimary"/>-->
+
+</LinearLayout>

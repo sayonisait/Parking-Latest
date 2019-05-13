@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".ui.vehicleentry.TicketPrintFragment"
+>
+
+
+    <androidx.cardview.widget.CardView
+            app:cardElevation="5dp"
+
+
+            android:layout_width="0dp"
+            app:layout_constraintHeight_percent=".7"
+            app:layout_constraintWidth_percent=".7"
+                                       android:layout_height="0dp"
+                                       app:layout_constraintStart_toStartOf="parent"
+                                       app:layout_constraintTop_toTopOf="parent"
+                                       app:layout_constraintEnd_toEndOf="parent"
+                                       app:layout_constraintBottom_toBottomOf="parent"
+    >
+        <androidx.constraintlayout.widget.ConstraintLayout
+                                                           android:layout_width="match_parent"
+                                                           android:layout_height="match_parent"
+        >
+
+            <!-- TODO: Update blank fragment layout -->
+            <ImageView
+                    android:layout_gravity="center"
+                    android:id="@+id/qr_code_image"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    app:layout_constraintTop_toTopOf="@id/textViewClientName"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintVertical_bias="0.2"/>
+            <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_ver_20"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent=".5"
+
+            />
+
+
+            <TextView
+                    android:textStyle="bold"
+                    android:text="Vehicle Number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewNumberTag"
+                    app:layout_constraintTop_toBottomOf="@+id/qr_code_image"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintVertical_bias=".1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_ver_20"
+                    app:layout_constraintHorizontal_bias="1"
+            />
+
+            <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewNumber"
+                    app:layout_constraintStart_toEndOf="@+id/textViewNumberTag"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/textViewNumberTag"
+                    app:layout_constraintVertical_bias=".0"
+                    app:layout_constraintHorizontal_bias=".1"
+                    app:layout_constraintEnd_toEndOf="parent"
+            />
+            <TextView
+                    android:textStyle="bold"
+
+                    android:text="Vehicle Model"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewModelTag"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewNumberTag"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintVertical_bias=".05"
+                    app:layout_constraintStart_toStartOf="@id/textViewNumberTag"/>
+            <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewModel"
+                    app:layout_constraintTop_toTopOf="@+id/textViewModelTag"
+                    app:layout_constraintStart_toStartOf="@+id/textViewNumber"
+            />
+            <TextView
+                    android:textStyle="bold"
+
+                    android:text="Entry Time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewTimeTag"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewModelTag"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintVertical_bias=".05"
+                    app:layout_constraintStart_toStartOf="@id/textViewNumberTag"/>
+            <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewTime"
+                    app:layout_constraintTop_toTopOf="@+id/textViewTimeTag"
+                    app:layout_constraintStart_toStartOf="@+id/textViewNumber"/>
+            <TextView
+                    android:textStyle="bold"
+
+                    android:text="Slot Number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewSlotNumberTag"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewTimeTag"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintVertical_bias=".05"
+                    app:layout_constraintStart_toStartOf="@id/textViewNumberTag"/>
+            <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewSlot"
+                    app:layout_constraintTop_toTopOf="@+id/textViewSlotNumberTag"
+                    app:layout_constraintStart_toStartOf="@+id/textViewNumber"/>
+            <TextView
+                    android:text="CLIENT NAME"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewClientName"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintVertical_bias="0.060000002"/>
+            <TextView
+                    android:text="Address1, Address 2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/textViewClientName"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintVertical_bias=".01"
+                    android:id="@+id/textView13"/>
+            <Button android:layout_width="0dp"
+                    app:layout_constraintWidth_percent=".8"
+                    android:layout_height="35dp"
+                    android:background="@color/colorAccent"
+                    android:textColor="@color/white"
+                    android:text="PRINT"
+                    app:layout_constraintTop_toBottomOf="@id/textViewSlot"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintVertical_bias=".5"
+            />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

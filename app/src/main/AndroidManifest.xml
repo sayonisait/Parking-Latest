@@ -3,6 +3,7 @@
           package="com.example.parking">
 
     <application
+            android:screenOrientation="portrait"
 
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
@@ -11,7 +12,12 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
 
-        <activity android:name=".VehicleEntryActivity"
+        <activity android:name=".ui.vehicleentry.VehicleEntryActivity"
+                  android:windowSoftInputMode="adjustPan"
+        >
+
+        </activity>
+        <activity android:name=".ui.monthly.MonthlyPlanActivity"
                   android:windowSoftInputMode="adjustPan"
         >
 

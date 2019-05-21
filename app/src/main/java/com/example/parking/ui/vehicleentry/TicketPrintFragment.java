@@ -30,6 +30,18 @@ public class TicketPrintFragment extends Fragment {
     TextView textViewSlot;
     @BindView(R.id.textViewTime)
     TextView textViewTime;
+    @BindView(R.id.textViewExitTime)
+    TextView textViewExit;
+    @BindView(R.id.textViewExitTimeTag)
+    TextView textViewExitTag;
+    @BindView(R.id.textViewHours)
+    TextView textViewHours;
+    @BindView(R.id.textViewHoursTag)
+    TextView textViewHoursTag;
+    @BindView(R.id.textViewAmount)
+    TextView textViewAmount;
+    @BindView(R.id.textViewAmountTag)
+    TextView textViewAmountTag;
 
     public static TicketPrintFragment newInstance() {
         return new TicketPrintFragment();
@@ -48,11 +60,26 @@ public class TicketPrintFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(VehicleEntryViewModel.class);
-        qrCodeImage.setImageBitmap(mViewModel.qrCode.getValue());
-        textViewNumber.setText(mViewModel.entry.vehicleNumber);
-        textViewModel.setText(mViewModel.entry.vehicleModel);
-       textViewTime.setText(mViewModel.entry.entryTime);
+        if(mViewModel.qrCode.getValue()!=null)
+            qrCodeImage.setImageBitmap(mViewModel.qrCode.getValue());
+        else
+            qrCodeImage.setVisibility(View.GONE);
+        textViewNumber.setText(mViewModel.entry.vehicle.vehicleNumber);
+        textViewModel.setText(mViewModel.entry.vehicle.vehicleModel);
+        textViewTime.setText(mViewModel.entry.entryTime);
         textViewSlot.setText(mViewModel.entry.parkingSlot);
+        if(mViewModel.isExit){
+            textViewExit.setText(mViewModel.entry.exitTime);
+            textViewHours.setText(mViewModel.entry.hours);
+            textViewAmount.setText(mViewModel.entry.charge);
+        }else{
+            textViewExitTag.setVisibility(View.GONE);
+            textViewHoursTag.setVisibility(View.GONE);
+            textViewAmountTag.setVisibility(View.GONE);
+            textViewExit.setVisibility(View.GONE);
+            textViewHours.setVisibility(View.GONE);
+            textViewAmount.setVisibility(View.GONE);
+        }
         ((FragmentActivity)  mContext). getActionBar().setTitle("Ticket Preview");
 
 

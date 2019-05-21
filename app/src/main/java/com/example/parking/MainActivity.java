@@ -2,40 +2,45 @@ package com.example.parking;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toolbar;
 
-
-import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.example.parking.ui.monthly.MonthlyPlanActivity;
+import com.example.parking.ui.vehicleentry.VehicleEntryActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import lecho.lib.hellocharts.model.PieChartData;
-import lecho.lib.hellocharts.model.SliceValue;
-import lecho.lib.hellocharts.view.PieChartView;
 
 public class MainActivity extends Activity  {
 
     int totalParkingCount=100, occupiedCount=60;
 
-    @BindView(R.id.chart)
-    PieChartView pieChartView;
-    @BindView(R.id.chart_vacant)
-    PieChartView pieChartViewVacant;
-    @OnClick(R.id.new_entry)
+    @BindView(R.id.textViewVacCount)
+    TextView textViewVacantCount;
+    @BindView(R.id.textViewOccupCount)
+    TextView textViewOccupCount;
+    @OnClick(R.id.box1)
      void startNewVehicleEntryActivity(){
         Intent intent= new Intent(this, VehicleEntryActivity.class);
         startActivity(intent);
     }
-
+    @OnClick(R.id.box3)
+    void startMonthlyActivity(){
+        Intent intent= new Intent(this, MonthlyPlanActivity.class);
+        startActivity(intent);
+    }
+    @OnClick(R.id.box2)
+    void startNewVehicleExitctivity(){
+        Intent intent= new Intent(this, VehicleEntryActivity.class);
+        intent.putExtra("exit",true);
+        startActivity(intent);
+    }
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -74,26 +79,9 @@ public class MainActivity extends Activity  {
        ButterKnife.bind(this);
 
 
-       List<SliceValue> pieData = new ArrayList<>();
-       pieData.add(new SliceValue(occupiedCount,getResources().getColor( android.R.color.holo_red_light) ));
-       pieData.add(new SliceValue(totalParkingCount-occupiedCount, getResources().getColor( android.R.color.holo_green_light)));
+       textViewOccupCount.setText(String.valueOf(occupiedCount));
 
-       List<SliceValue> pieData2 = new ArrayList<>();
-       pieData2.add(new SliceValue(totalParkingCount-occupiedCount,getResources().getColor( android.R.color.holo_green_light) ));
-       pieData2.add(new SliceValue(occupiedCount, getResources().getColor( android.R.color.holo_red_light) ));
-
-       PieChartData pieChartData = new PieChartData(pieData);
-       pieChartData.setHasCenterCircle(true).setCenterText1(String.valueOf(occupiedCount)).setCenterText1FontSize(20).setCenterCircleScale(.8f);
-
-
-
-     pieChartView.setPieChartData(pieChartData);
-
-
-       PieChartData pieChartDataVacant = new PieChartData(pieData2);
-       pieChartDataVacant.setHasCenterCircle(true).setCenterText1(String.valueOf(totalParkingCount-occupiedCount)).setCenterText1FontSize(20).setCenterCircleScale(.8f);
-       pieChartViewVacant.setPieChartData(pieChartDataVacant);
-
+       textViewVacantCount.setText(String.valueOf(totalParkingCount-occupiedCount));
 
        initToolBar();
         initListeners();

@@ -12,18 +12,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.1"/>
-    <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_hor_25"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.15"/>
-    <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_hor_75"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.85"/>
+
+
 
     <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_ver_75"
@@ -35,11 +25,11 @@
         app:cardElevation="5dp"
         app:cardUseCompatPadding="true"
         app:layout_constraintStart_toStartOf="@id/guideline_ver_25"
-        app:layout_constraintTop_toBottomOf="@id/guideline_hor_25"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toStartOf="@id/guideline_ver_75"
-        app:layout_constraintBottom_toBottomOf="@id/guideline_hor_75"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         app:layout_constraintVertical_bias=".5"
         >
@@ -52,11 +42,10 @@
 
     <com.google.android.material.textfield.TextInputLayout
 
-            android:layout_weight="1"
             android:id="@+id/textInputNumber"
             android:hint="Vehicle Number"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="wrap_content">
 
     <com.google.android.material.textfield.TextInputEditText
             android:backgroundTint="@color/colorPrimaryDark"
@@ -71,12 +60,10 @@
             app:layout_constraintEnd_toEndOf="parent"/>
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
-            android:layout_weight="1"
             android:id="@+id/textInputModel"
-
             android:hint="Vehicle Model"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="wrap_content">
     <com.google.android.material.textfield.TextInputEditText
             android:backgroundTint="@color/colorPrimaryDark"
 
@@ -90,15 +77,14 @@
             app:layout_constraintEnd_toEndOf="parent"/>
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
-            android:layout_weight="1"
 
             android:hint="Parking Slot"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="wrap_content">
         <com.google.android.material.textfield.TextInputEditText
                 android:backgroundTint="@color/colorPrimaryDark"
 
-                android:enabled="false"
+                android:focusable="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
@@ -109,14 +95,13 @@
                 app:layout_constraintEnd_toEndOf="parent"/>
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
-            android:layout_weight="1"
 
             android:hint="Entry Time"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="wrap_content">
         <com.google.android.material.textfield.TextInputEditText
                 android:backgroundTint="@color/colorPrimaryDark"
-                android:enabled="false"
+                android:focusable="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
@@ -126,6 +111,107 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
     </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputStartDate"
+            android:visibility="gone"
+            android:hint="Start Date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
+                android:backgroundTint="@color/colorPrimaryDark"
+
+                android:clickable="true"
+                android:focusable="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/editTextStartDate"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputEndDate"
+            android:visibility="gone"
+            android:hint="End Date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:focusable="false"
+                android:clickable="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/editEndDate"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputExitTime"
+            android:visibility="gone"
+            android:hint="Exit Time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:focusable="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/editExitTime"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputHours"
+            android:visibility="gone"
+            android:hint="Hours Parked"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:focusable="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/editHours"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputCharge"
+            android:visibility="gone"
+            android:hint="Amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <com.google.android.material.textfield.TextInputEditText
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:focusable="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/editCharge"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+            android:visibility="gone"
+            android:gravity="center_vertical"
+            android:layout_weight="1"
+            android:textColor="@android:color/holo_red_dark"
+            android:text="Your monthly plan has expired !! Please renew !!"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
     <Button
             android:id="@+id/buttonSubmit"
             android:layout_marginTop="20dp"

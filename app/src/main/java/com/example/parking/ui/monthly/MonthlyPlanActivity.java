@@ -1,4 +1,4 @@
-package com.example.parking;
+package com.example.parking.ui.monthly;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,11 +6,16 @@ import android.view.MenuItem;
 import android.widget.Toast;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
-import com.example.parking.ui.vehicleentry.*;
+import com.example.parking.R;
+import com.example.parking.ScanQRCodeActivity;
+import com.example.parking.ui.vehicleentry.ParkingSlotFragment;
+import com.example.parking.ui.vehicleentry.TicketPrintFragment;
+import com.example.parking.ui.vehicleentry.VehicleEntryFragment;
+import com.example.parking.ui.vehicleentry.VehicleEntryViewModel;
 
-public class VehicleEntryActivity extends FragmentActivity  {
+public class MonthlyPlanActivity extends FragmentActivity  {
 
-    private VehicleEntryViewModel mViewModel;
+    private MonthlyViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,21 +24,20 @@ public class VehicleEntryActivity extends FragmentActivity  {
         setActionBar(findViewById(R.id.tool_bar));
 
         if (savedInstanceState == null) {
-            getActionBar().setTitle("Select slot");
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, ParkingSlotFragment.newInstance()).addToBackStack("slot")
+                    .add(R.id.container, MonthlyPlanFragment.newInstance()).addToBackStack("slot")
                     .commit();
         }
-        mViewModel = ViewModelProviders.of(this).get(VehicleEntryViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(MonthlyViewModel.class);
         mViewModel.createEntry();
-        mViewModel.slotNumber.observe(this, s -> {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container,VehicleEntryFragment.newInstance() ).addToBackStack("entry")
-                    .commit();
-        });
+//        mViewModel.slotNumber.observe(this, s -> {
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.container,VehicleEntryFragment.newInstance() ).addToBackStack("monthlyPlan")
+//                    .commit();
+//        });
         mViewModel.qrCode.observe(this, s->{
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, TicketPrintFragment.newInstance() ).addToBackStack("preview")
+                    .replace(R.id.container, MonthlyPrintFragment.newInstance() ).addToBackStack("preview")
                     .commit();
 
         });
@@ -56,7 +60,7 @@ public class VehicleEntryActivity extends FragmentActivity  {
     public boolean onOptionsItemSelected(MenuItem item) {
         try {
 
-            Intent intent= new Intent(this,ScanQRCodeActivity.class);
+            Intent intent= new Intent(this, ScanQRCodeActivity.class);
             startActivityForResult(intent,1);
 
         } catch (Exception e) {

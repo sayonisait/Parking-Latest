@@ -2,9 +2,7 @@ package com.example.parking.ui.vehicleentry;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.Toolbar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -68,5 +66,17 @@ public class ParkingSlotFragment extends Fragment {
         mContext = null;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        MenuItem scan=menu.add("scan");
+        scan.setIcon(R.drawable.ic_qr_code);
+        scan.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+    }
 }

@@ -1,17 +1,13 @@
 package com.example.parking.ui.vehicleentry;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,11 +20,11 @@ import com.example.parking.entities.ParkingSlot;
 import java.util.ArrayList;
 
 public class ParkingSlotAdapter extends RecyclerView.Adapter<ParkingSlotAdapter.ViewHolder> {
-    ArrayList<ParkingSlot> slots;
-    Context context;
-    VehicleEntryViewModel viewModel;
+    private ArrayList<ParkingSlot> slots;
+    private Context context;
+    private VehicleEntryViewModel viewModel;
 
-    public ParkingSlotAdapter(ArrayList<ParkingSlot> slots, FragmentActivity context) {
+    ParkingSlotAdapter(ArrayList<ParkingSlot> slots, FragmentActivity context) {
         this.slots=slots;
         this.context=context;
         viewModel= ViewModelProviders.of(context).get(VehicleEntryViewModel.class);
@@ -65,11 +61,16 @@ public class ParkingSlotAdapter extends RecyclerView.Adapter<ParkingSlotAdapter.
         holder.itemView.setOnClickListener(view -> {
             if(slot.slotNumber==-1)//if a space that doesnt belong to parking slot, no action need to be perfomed
                 return;
-            if(slot.isOccupied){
+            if(slot.isOccupied && !viewModel.isExit){
                 Toast.makeText(context, "Selected slot is occupied. Please select a vaccant slot", Toast.LENGTH_SHORT).show();
                 return;
             }
-            viewModel.slotNumber.postValue(String.valueOf( slot.slotNumber));
+            if(!slot.isOccupied && viewModel.isExit){
+                Toast.makeText(context, "Please select an occupied slot to make an exit", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            viewModel.setParkingSlot(String.valueOf(  slot.slotNumber));
+
         });
 
     }
@@ -96,7 +97,7 @@ public class ParkingSlotAdapter extends RecyclerView.Adapter<ParkingSlotAdapter.
          @BindColor(android.R.color.holo_green_dark)
          public int greenColor;
 
-        public ViewHolder(@NonNull View itemView) {
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
 

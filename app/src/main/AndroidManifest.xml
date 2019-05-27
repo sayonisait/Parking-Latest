@@ -13,8 +13,10 @@
             android:theme="@style/AppTheme">
 
         <activity android:name=".ui.vehicleentry.VehicleEntryActivity"
-                  android:windowSoftInputMode="adjustPan"
-        >
+                  android:windowSoftInputMode="adjustPan">
+        <nav-graph android:value="@navigation/navigation_graph" />
+
+
 
         </activity>
         <activity android:name=".ui.monthly.MonthlyPlanActivity"

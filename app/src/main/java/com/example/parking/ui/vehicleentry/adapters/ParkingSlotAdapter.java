@@ -1,4 +1,4 @@
-package com.example.parking.ui.vehicleentry;
+package com.example.parking.ui.vehicleentry.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.example.parking.R;
 import com.example.parking.entities.ParkingSlot;
+import com.example.parking.ui.vehicleentry.viewmodels.VehicleEntryViewModel;
 
 import java.util.ArrayList;
 
@@ -24,7 +25,7 @@ public class ParkingSlotAdapter extends RecyclerView.Adapter<ParkingSlotAdapter.
     private Context context;
     private VehicleEntryViewModel viewModel;
 
-    ParkingSlotAdapter(ArrayList<ParkingSlot> slots, FragmentActivity context) {
+    public ParkingSlotAdapter(ArrayList<ParkingSlot> slots, FragmentActivity context) {
         this.slots=slots;
         this.context=context;
         viewModel= ViewModelProviders.of(context).get(VehicleEntryViewModel.class);

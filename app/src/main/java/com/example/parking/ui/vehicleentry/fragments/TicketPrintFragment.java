@@ -1,8 +1,7 @@
-package com.example.parking.ui.vehicleentry;
+package com.example.parking.ui.vehicleentry.fragments;
 
 import android.content.Context;
 import android.view.*;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.fragment.app.FragmentActivity;
@@ -14,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.example.parking.R;
+import com.example.parking.ui.vehicleentry.viewmodels.VehicleEntryViewModel;
 
 public class TicketPrintFragment extends Fragment {
 

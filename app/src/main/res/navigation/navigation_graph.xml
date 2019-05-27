@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation_grpah"
+            app:startDestination="@id/vehicleentry">
+    <fragment android:id="@+id/vehicleentry"
+              android:name="com.example.parking.ui.vehicleentry.fragments.VehicleEntryFragment"
+              android:label="vehicle_entry" tools:layout="@layout/vehicle_entry_fragment">
+        <action android:id="@+id/action_entry_print" app:destination="@id/ticketprint"/>
+        <action android:id="@+id/action_to_parkingSlot" app:destination="@id/parkingSlot"/>
+
+    </fragment>
+    <fragment android:id="@+id/parkingSlot"
+              android:name="com.example.parking.ui.vehicleentry.fragments.ParkingSlotFragment"
+              android:label="parking_slot_fragment" tools:layout="@layout/parking_slot_fragment"/>
+    <fragment android:id="@+id/ticketprint"
+              android:name="com.example.parking.ui.vehicleentry.fragments.TicketPrintFragment"
+              android:label="ticket_print_fragment" tools:layout="@layout/fragment_entry_print"/>
+</navigation>

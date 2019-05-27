@@ -1,20 +1,21 @@
-package com.example.parking.ui.vehicleentry;
+package com.example.parking.ui.vehicleentry.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.view.*;
-import android.widget.Toolbar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.example.parking.R;
+import com.example.parking.ui.vehicleentry.adapters.ParkingSlotAdapter;
+import com.example.parking.ui.vehicleentry.viewmodels.ParkingSlotViewModel;
 
 public class ParkingSlotFragment extends Fragment {
 

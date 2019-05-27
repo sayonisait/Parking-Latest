@@ -8,10 +8,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.parking.R;
 import com.example.parking.ScanQRCodeActivity;
-import com.example.parking.ui.vehicleentry.ParkingSlotFragment;
-import com.example.parking.ui.vehicleentry.TicketPrintFragment;
-import com.example.parking.ui.vehicleentry.VehicleEntryFragment;
-import com.example.parking.ui.vehicleentry.VehicleEntryViewModel;
 
 public class MonthlyPlanActivity extends FragmentActivity  {
 

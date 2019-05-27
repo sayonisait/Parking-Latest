@@ -1,4 +1,4 @@
-package com.example.parking.ui.vehicleentry;
+package com.example.parking.ui.vehicleentry.viewmodels;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -27,8 +27,8 @@ public class VehicleEntryViewModel extends ViewModel {
     public MutableLiveData<MonthlyPlan> monthlyPlanMutableLiveData= new MutableLiveData<>();
     public MutableLiveData<Entry> entryMutableLiveData= new MutableLiveData<>();
 
-    Entry entry;
-    boolean isExit;
+    public Entry entry;
+    public boolean isExit;
     public void createEntry(boolean isExit){
          entry= new Entry();
          if(!isExit)
@@ -36,6 +36,7 @@ public class VehicleEntryViewModel extends ViewModel {
          else
              entry.exitTime= getTime();
          this.isExit=isExit;
+         entry.vehicle= new Vehicle();
 
 
     }
@@ -82,10 +83,8 @@ public class VehicleEntryViewModel extends ViewModel {
         slotNumber.postValue( slot);
     }
 
-    public void createQRCode(String vehicleNumber , String modelName) {
+    public void createQRCode(String modelName) {
         QRCodeWriter writer = new QRCodeWriter();
-        entry.vehicle= new Vehicle();
-        entry.vehicle.vehicleNumber=vehicleNumber;
         entry.vehicle.vehicleModel=modelName;
         try {
             BitMatrix bitMatrix = writer.encode(new Gson().toJson(entry), BarcodeFormat.QR_CODE, 512, 512);

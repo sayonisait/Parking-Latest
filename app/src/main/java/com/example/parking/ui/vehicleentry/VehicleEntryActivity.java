@@ -3,15 +3,21 @@ package com.example.parking.ui.vehicleentry;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.viewpager.widget.ViewPager;
 import com.example.parking.AppConstants;
 import com.example.parking.R;
 import com.example.parking.ScanQRCodeActivity;
-import com.example.parking.entities.MonthlyPlan;
+import com.example.parking.ui.vehicleentry.adapters.ViewPagerAdapter;
+import com.example.parking.ui.vehicleentry.fragments.ParkingSlotFragment;
+import com.example.parking.ui.vehicleentry.fragments.TicketPrintFragment;
+import com.example.parking.ui.vehicleentry.fragments.VehicleEntryFragment;
+import com.example.parking.ui.vehicleentry.viewmodels.VehicleEntryViewModel;
 
 public class VehicleEntryActivity extends FragmentActivity  {
 
@@ -23,40 +29,35 @@ public class VehicleEntryActivity extends FragmentActivity  {
         setContentView(R.layout.vehicle_entry_activity);
         setActionBar(findViewById(R.id.tool_bar));
 
-        if (savedInstanceState == null) {
-            getActionBar().setTitle("Select slot");
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container,VehicleEntryFragment.newInstance() ).addToBackStack("entry")
-                    .commit();
-        }
+        NavController navController= Navigation.findNavController(this, R.id.nav_host_fragment);
+
+
 
         isExit=getIntent().getBooleanExtra("exit",false);
 
         mViewModel = ViewModelProviders.of(this).get(VehicleEntryViewModel.class);
         mViewModel.createEntry(isExit);
         mViewModel.slotNumber.observe(this, s -> {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container,VehicleEntryFragment.newInstance() ).addToBackStack("entry")
-                    .commit();
+             navController.popBackStack ();
         });
         mViewModel.qrCode.observe(this, s->{
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, TicketPrintFragment.newInstance() ).addToBackStack("preview")
-                    .commit();
+           navController.navigate(R.id.ticketprint);
 
         });
         mViewModel.monthlyPlanMutableLiveData.observe(this, s-> {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container,VehicleEntryFragment.newInstance() ).addToBackStack("entry")
-                    .commit();
+          //  viewPager.setCurrentItem(1);
+
 
         });
         mViewModel.entryMutableLiveData.observe(this, s-> {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container,VehicleEntryFragment.newInstance() ).addToBackStack("entry")
-                    .commit();
+           // viewPager.setCurrentItem(1);
+
 
         });
+
+
+        //navController.navigate(R.id.action_entry_print);
+
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.example.parking.ui.vehicleentry;
+package com.example.parking.ui.vehicleentry.viewmodels;
 
 import androidx.lifecycle.ViewModel;
 import com.example.parking.entities.ParkingSlot;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class ParkingSlotViewModel extends ViewModel {
 
-   ArrayList<ParkingSlot> getParkingSpaces(){
+   public ArrayList<ParkingSlot> getParkingSpaces(){
        //todo fetch parking spaces
        ArrayList<ParkingSlot> slots= new ArrayList<>();
        for(int i=0;i<99;i++){

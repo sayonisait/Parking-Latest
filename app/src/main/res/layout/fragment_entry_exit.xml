@@ -9,7 +9,7 @@
 >
     
     <androidx.cardview.widget.CardView android:layout_width="match_parent"
-                                       android:layout_height="wrap_content"
+                                       android:layout_height="match_parent"
                                        app:cardElevation="5dp"
     >
         <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
@@ -22,8 +22,8 @@
 
             <com.google.android.material.textfield.TextInputLayout
                     app:layout_constraintVertical_bias="0"
-                    app:layout_constraintStart_toStartOf="@id/textInputCustomerName"
-                    app:layout_constraintTop_toBottomOf="@id/textInputCustomerName"
+                    app:layout_constraintStart_toStartOf="@id/textInputSlot"
+                    app:layout_constraintTop_toBottomOf="@id/textInputSlot"
                     app:layout_constraintBottom_toBottomOf="parent"
 
                     android:id="@+id/textInputNumber"
@@ -31,7 +31,7 @@
                     app:layout_constraintWidth_percent=".45"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="@id/textInputCustomerName">
+                    app:layout_constraintEnd_toEndOf="@id/textInputSlot">
 
                 <com.google.android.material.textfield.TextInputEditText
                         android:backgroundTint="@color/colorPrimaryDark"
@@ -71,44 +71,15 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                    app:layout_constraintVertical_bias="0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:id="@+id/textInputCustomerName"
-                    android:hint="Name"
-                    app:layout_constraintWidth_percent=".45"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintEnd_toEndOf="parent">
-
-                <com.google.android.material.textfield.TextInputEditText
-                        android:backgroundTint="@color/colorPrimaryDark"
-
-                        android:layout_width="match_parent"
-
-                        android:layout_height="wrap_content"
-                        android:inputType="textPersonName"
-                        android:ems="10"
-                        android:id="@+id/editTextCusName"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                />
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                    app:layout_constraintVertical_bias="0"
-                    app:layout_constraintStart_toStartOf="@id/textInputCustomerName"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="@id/textInputSlot"
                     app:layout_constraintTop_toBottomOf="@id/textInputNumber"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:id="@+id/textInputStartDate"
                     android:hint="Start Date"
-                    app:layout_constraintWidth_percent=".45"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintEnd_toEndOf="@id/textInputCustomerName">
+                    app:layout_constraintEnd_toEndOf="@id/textInputSlot">
 
                 <com.google.android.material.textfield.TextInputEditText
                         android:backgroundTint="@color/colorPrimaryDark"
@@ -127,8 +98,8 @@
 
             <com.google.android.material.textfield.TextInputLayout
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/textInputCustomerName"
-                    app:layout_constraintBottom_toBottomOf="@id/textInputCustomerName"
+                    app:layout_constraintTop_toTopOf="@id/textInputSlot"
+                    app:layout_constraintBottom_toBottomOf="@id/textInputSlot"
                     android:id="@+id/textInputPhone"
                     android:hint="Phone Number"
                     app:layout_constraintWidth_percent=".45"
@@ -150,6 +121,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="@id/textInputPhone"
                     app:layout_constraintTop_toTopOf="@id/textInputStartDate"
                     app:layout_constraintBottom_toBottomOf="@id/textInputStartDate"
@@ -172,26 +144,23 @@
                         app:layout_constraintEnd_toEndOf="parent"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputLayout
                     app:layout_constraintVertical_bias="0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/textInputExitime"
-                    app:layout_constraintBottom_toBottomOf="@id/textInputEntryTime"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
 
-                    android:id="@+id/textInputSlot"
-                    android:hint="Slot "
-                    app:layout_constraintWidth_percent=".3"
+                    app:layout_constraintWidth_percent=".45"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:id="@+id/textInputSlot"
+                    android:hint="Slot "
 
-            app:layout_constraintHorizontal_bias="0">
+           >
 
                 <com.google.android.material.textfield.TextInputEditText
                         android:backgroundTint="@color/colorPrimaryDark"
@@ -208,17 +177,17 @@
                 />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
-                    app:layout_constraintStart_toEndOf="@id/textInputSlot"
-                    app:layout_constraintTop_toTopOf="@id/textInputSlot"
-                    app:layout_constraintBottom_toBottomOf="@id/textInputSlot"
-                    app:layout_constraintEnd_toStartOf="@id/textInputExitime"
+                    app:layout_constraintStart_toStartOf="@id/textInputSlot"
+            app:layout_constraintTop_toBottomOf="@id/textInputNumber"
+            app:layout_constraintEnd_toEndOf="@id/textInputSlot"
+
+            android:layout_width="0dp"
+
+            android:layout_height="wrap_content"
+
                     android:hint="Entry Time"
                     android:id="@+id/textInputEntryTime"
-                    app:layout_constraintWidth_percent=".3"
-                    android:layout_width="0dp"
-                    app:layout_constraintHorizontal_bias=".5"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_height="wrap_content">
+                    >
                 <com.google.android.material.textfield.TextInputEditText
                         android:focusable="false"
 
@@ -234,96 +203,96 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/textInputSlot"
-                    app:layout_constraintBottom_toBottomOf="@id/textInputSlot"
+                    app:layout_constraintStart_toStartOf="@id/textInputSlot"
+                    app:layout_constraintTop_toBottomOf="@id/textInputHours"
 
-                    android:id="@+id/textInputExitime"
-                    android:hint="Exit Time"
-                    app:layout_constraintWidth_percent=".3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1">
+                    app:layout_constraintEnd_toEndOf="@id/textInputSlot"
+
+                    android:hint="Charge/Hr"
+                    android:id="@+id/textInputCharge"
+
+
+
+                   >
 
                 <com.google.android.material.textfield.TextInputEditText
                         android:backgroundTint="@color/colorPrimaryDark"
-                        android:focusable="false"
+                        android:id="@+id/editTextCharge"
                         android:layout_width="match_parent"
-
                         android:layout_height="wrap_content"
                         android:inputType="textPersonName"
                         android:ems="10"
-                        android:id="@+id/editExitTime"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        android:focusable="false"
                 />
+
+
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
-                    app:layout_constraintVertical_bias="0"
-                    app:layout_constraintStart_toEndOf="@id/textInputHours"
-                    app:layout_constraintTop_toBottomOf="@id/textInputEntryTime"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/textInputPhone"
+                    app:layout_constraintTop_toBottomOf="@id/textInputSpecialCharge"
+                    android:id="@+id/textInputEstAmount"
+                    android:hint="Est Amount"
 
-                    android:id="@+id/textInputHours"
-                    android:hint="Hours "
-                    app:layout_constraintWidth_percent=".3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/textInputPhone"
 
-                    app:layout_constraintHorizontal_bias="0">
+                    >
+
+
 
                 <com.google.android.material.textfield.TextInputEditText
                         android:backgroundTint="@color/colorPrimaryDark"
                         android:layout_width="match_parent"
-                        android:focusable="false"
+
                         android:layout_height="wrap_content"
                         android:inputType="textPersonName"
                         android:ems="10"
-                        android:id="@+id/editTextHours"
+                        android:id="@+id/editTextEstAmount"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                 />
             </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
-                        app:layout_constraintStart_toEndOf="@id/textInputSlot"
-                        app:layout_constraintTop_toTopOf="@id/textInputHours"
-                        app:layout_constraintBottom_toBottomOf="@id/textInputHours"
-                        app:layout_constraintEnd_toStartOf="@id/textInputExitime"
-                        android:hint="Charge/Hr"
-                        android:id="@+id/textInputCharge"
-                        app:layout_constraintWidth_percent=".3"
-                        android:layout_width="0dp"
-                        app:layout_constraintHorizontal_bias=".5"
 
-                        android:layout_height="0dp">
+                        app:layout_constraintTop_toBottomOf="@id/textInputModel"
+                        app:layout_constraintStart_toStartOf="@id/textInputPhone"
+                        android:layout_width="0dp"
+                        app:layout_constraintEnd_toEndOf="@id/textInputPhone"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textInputExitime"
+                        android:hint="Exit Time"
+
+                        >
                     <com.google.android.material.textfield.TextInputEditText
                             android:backgroundTint="@color/colorPrimaryDark"
-                            android:id="@+id/editTextCharge"
+                            android:focusable="false"
                             android:layout_width="match_parent"
+
                             android:layout_height="wrap_content"
                             android:inputType="textPersonName"
                             android:ems="10"
-                            android:focusable="false"
-                           />
+                            android:id="@+id/editExitTime"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                    />
                 </com.google.android.material.textfield.TextInputLayout>
 
 
             <com.google.android.material.textfield.TextInputLayout
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/textInputHours"
-                    app:layout_constraintBottom_toBottomOf="@id/textInputHours"
+                    app:layout_constraintStart_toStartOf="@id/textInputSlot"
+                    app:layout_constraintTop_toBottomOf="@id/textInputCharge"
 
                     android:id="@+id/textInputAmountCalculated"
-                    android:hint="Amount Calculated"
-                    app:layout_constraintWidth_percent=".3"
+                    android:hint="Actual Amount"
                     android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1">
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@id/textInputSlot"
+                    >
 
                 <com.google.android.material.textfield.TextInputEditText
                         android:backgroundTint="@color/colorPrimaryDark"
@@ -343,93 +312,92 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-                    app:layout_constraintVertical_bias="0"
-                    app:layout_constraintStart_toStartOf="@id/textInputHours"
-                    app:layout_constraintTop_toBottomOf="@id/textInputHours"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/textInputSlot"
+                    app:layout_constraintTop_toBottomOf="@id/textInputExitime"
+                    app:layout_constraintEnd_toEndOf="@id/textInputSlot"
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+
+                    android:id="@+id/textInputHours"
+                    android:hint="Hours"
+
+                    >
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:backgroundTint="@color/colorPrimaryDark"
+                        android:layout_width="match_parent"
+                        android:focusable="false"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:id="@+id/editTextHours"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                    app:layout_constraintStart_toStartOf="@id/textInputPhone"
+                    app:layout_constraintTop_toBottomOf="@id/textInputEntryTime"
+                    app:layout_constraintEnd_toEndOf="@id/textInputPhone"
 
                     android:id="@+id/textInputEstHours"
                     android:hint="Est Hours "
-                    app:layout_constraintWidth_percent=".3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
 
-                    app:layout_constraintHorizontal_bias="0">
+
+                    android:layout_width="0dp"
+
+                    android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
                         android:backgroundTint="@color/colorPrimaryDark"
                         android:layout_width="match_parent"
 
                         android:layout_height="wrap_content"
-                        android:inputType="textPersonName"
+                        android:inputType="number"
                         android:ems="10"
                         android:id="@+id/editTextEstHours"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                 />
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                    app:layout_constraintStart_toEndOf="@id/textInputSlot"
-                    app:layout_constraintTop_toTopOf="@id/textInputEstHours"
-                    app:layout_constraintBottom_toBottomOf="@id/textInputEstHours"
-                    app:layout_constraintEnd_toStartOf="@id/textInputEstAmount"
-                    android:hint="Special Charge"
-                    android:id="@+id/textInputSpecialCharge"
-                    app:layout_constraintWidth_percent=".3"
-                    android:layout_width="0dp"
-                    app:layout_constraintHorizontal_bias=".5"
 
-                    android:layout_height="0dp">
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                    app:layout_constraintStart_toStartOf="@id/textInputPhone"
+                    app:layout_constraintTop_toBottomOf="@id/textInputHours"
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+
+                    android:id="@+id/textInputSpecialCharge"
+                    android:hint="Special Charge"
+                    >
+
+
+
                 <com.google.android.material.textfield.TextInputEditText
                         android:backgroundTint="@color/colorPrimaryDark"
                         android:id="@+id/editTextSpecialCharge"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textPersonName"
+                        android:inputType="number"
                         android:ems="10"
                 />
             </com.google.android.material.textfield.TextInputLayout>
-
-
             <com.google.android.material.textfield.TextInputLayout
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/textInputEstHours"
-                    app:layout_constraintBottom_toBottomOf="@id/textInputEstHours"
-
-                    android:id="@+id/textInputEstAmount"
-                    android:hint="Est Amount"
-                    app:layout_constraintWidth_percent=".3"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="1">
-
-                <com.google.android.material.textfield.TextInputEditText
-                        android:backgroundTint="@color/colorPrimaryDark"
-                        android:layout_width="match_parent"
-
-                        android:layout_height="wrap_content"
-                        android:inputType="textPersonName"
-                        android:ems="10"
-                        android:id="@+id/editTextEstAmount"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                />
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/textInputEstHours"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/textInputSlot"
+                    app:layout_constraintTop_toBottomOf="@id/textInputEstAmount"
                     android:hint="Amount to be paid"
                     android:id="@+id/textInputAmount"
                     android:layout_width="0dp"
 
-                    app:layout_constraintHorizontal_bias=".5"
 
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/textInputPhone"
                     android:layout_height="wrap_content">
                 <com.google.android.material.textfield.TextInputEditText
                         android:backgroundTint="@color/colorPrimaryDark"

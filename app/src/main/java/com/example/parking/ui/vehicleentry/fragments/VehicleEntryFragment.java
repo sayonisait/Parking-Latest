@@ -11,13 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.example.parking.R;
 import com.example.parking.entities.MonthlyPlan;
 import com.example.parking.ui.vehicleentry.viewmodels.VehicleEntryViewModel;
+import com.example.parking.utils.StringUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -54,6 +54,17 @@ public class VehicleEntryFragment extends Fragment {
     @BindView(R.id.buttonSubmit)
     Button buttonSubmit;
 
+    @BindView(R.id.editTextCharge)
+    EditText editTextCharge;
+    @BindView(R.id.editTextEstAmount)
+    EditText editTextEstAmount;
+    @BindView(R.id.editTextEstHours)
+    EditText editTextEstHours;
+    @BindView(R.id.editTextSpecialCharge)
+    EditText editTextSpecialCharge;
+    @BindView(R.id.textInputSpecialCharge)
+    TextInputLayout textInputSpecialCharge;
+
     public static VehicleEntryFragment newInstance() {
         return new VehicleEntryFragment();
     }
@@ -87,6 +98,7 @@ public class VehicleEntryFragment extends Fragment {
         else{
             textInputEndDate.setVisibility(View.GONE);
             textInputStartDate.setVisibility(View.GONE);
+            editTextCharge.setText(StringUtils.getAmountFormatted(mViewModel.entry.hourlyCharge));
 
             if(mViewModel.isExit){
 
@@ -94,7 +106,6 @@ public class VehicleEntryFragment extends Fragment {
 //                textInputCharge.setVisibility(View.VISIBLE);
 //                textInputHours.setVisibility(View.VISIBLE);
 //                editHours.setText(mViewModel.entry.hours);
-//                editCharge.setText(mViewModel.entry.charge);
 
 
                 editExitTime.setFocusable(true);
@@ -134,18 +145,30 @@ public class VehicleEntryFragment extends Fragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 String text=((TextInputEditText)v).getText().toString();
-                if(hasFocus && !text.equals(""))
+                if(hasFocus || text.equals(""))
                     return;
                 switch(v.getId()){
                     case R.id.editTextNumber:
                         mViewModel.entry.vehicle.vehicleNumber=text;
+                        textInputNumber.setError(null);
                         break;
                     case R.id.editTextModel:
                         mViewModel.entry.vehicle.vehicleModel=text;
+                        textInputModel.setError(null);
                         break;
                     case R.id.editTextSlot:
                         mViewModel.entry.parkingSlot=text;
                         break;
+                    case R.id.editTextSpecialCharge:
+                        mViewModel.setSpecialCharge(Double.parseDouble(text));
+                        textInputSpecialCharge.setError(null);
+                        break;
+                    case R.id.editTextEstHours:
+                        mViewModel.setEstHours(Integer.parseInt(text));
+                        textInputSpecialCharge.setError(null);
+
+                        break;
+
 
                 }
 
@@ -155,24 +178,58 @@ public class VehicleEntryFragment extends Fragment {
         editTextNumber.setOnFocusChangeListener(focusChangeListener);
         editTextSlot.setOnFocusChangeListener(focusChangeListener);
         editTextModel.setOnFocusChangeListener(focusChangeListener);
+        editTextSpecialCharge.setOnFocusChangeListener(focusChangeListener);
+        editTextEstHours.setOnFocusChangeListener(focusChangeListener);
 
         mViewModel.slotNumber.observe(this, s -> {
             editTextSlot.setText (mViewModel.slotNumber.getValue());
         });
+        mViewModel.estimatedAmountLiveData.observe(this, s->{
+            editTextEstAmount.setText(  mViewModel.estimatedAmountLiveData.getValue());
+        });
+        mViewModel.specialChargeLiveData.observe(this, s->{
+            editTextSpecialCharge.setText(  mViewModel.specialChargeLiveData.getValue());
+        });
+
+
+
+
 
         buttonSubmit.setOnClickListener(view -> {
             boolean isValidated=true;
-            ((FragmentActivity) mContext).getCurrentFocus().clearFocus();
+            if( ((FragmentActivity) mContext).getCurrentFocus()!=null)
+                ((FragmentActivity) mContext).getCurrentFocus() .clearFocus();
 
             if(editTextModel.getText().toString().trim().equals("")){
                 textInputModel.setError("Field can not be empty");
                 isValidated=false;
             }
+
             if(editTextNumber.getText().toString().trim().equals("")){
                 textInputNumber.setError("Field can not be empty");
                 isValidated=false;
             }
+
+            if(!editTextEstHours.getText().toString().trim().equals("") && editTextSpecialCharge.getText().toString().trim().equals("")){
+                textInputSpecialCharge.setError("Field can not be empty");
+                isValidated=false;
+            }
+
+            if(editTextEstHours.getText().toString().trim().equals("") && !editTextSpecialCharge.getText().toString().trim().equals("")){
+                textInputSpecialCharge.setError("Field can not be empty");
+                isValidated=false;
+            }
+
+            //validating special charge not greater than actual charge
+
+            if(mViewModel.entry.specialCharge>mViewModel.entry.hourlyCharge){
+                editTextSpecialCharge.setError("Special Charge cant be greater than actual charge");
+                isValidated=false;
+            }
+
             if(isValidated) {
+
+                // once all validations are done , go to print screen to print all details
                 if (monthlyPlan == null )
                     mViewModel.createQRCode(editTextModel.getText().toString());
                 else

@@ -8,6 +8,7 @@ import com.example.parking.AppConstants;
 import com.example.parking.entities.Entry;
 import com.example.parking.entities.MonthlyPlan;
 import com.example.parking.entities.Vehicle;
+import com.example.parking.utils.StringUtils;
 import com.google.gson.Gson;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -26,9 +27,36 @@ public class VehicleEntryViewModel extends ViewModel {
    public MutableLiveData<Bitmap> qrCode= new MutableLiveData<>();
     public MutableLiveData<MonthlyPlan> monthlyPlanMutableLiveData= new MutableLiveData<>();
     public MutableLiveData<Entry> entryMutableLiveData= new MutableLiveData<>();
+    public MutableLiveData<String> estimatedAmountLiveData = new MutableLiveData<>();
+    public MutableLiveData<String> specialChargeLiveData = new MutableLiveData<>();
 
     public Entry entry;
     public boolean isExit;
+
+
+    public void setSpecialCharge(Double specialChargeLiveData){
+        entry.specialCharge= specialChargeLiveData;
+        setEstimatedAmount();
+        this.specialChargeLiveData.postValue(StringUtils.getAmountFormatted(entry.specialCharge));
+
+    }
+
+    public void setEstHours(int hours){
+        entry.estimatedHours=hours;
+        setEstimatedAmount();
+
+    }
+
+    private void setEstimatedAmount(){
+            entry.estimatedAmount = entry.specialCharge * entry.estimatedHours;
+            if(entry.estimatedAmount>0)
+                estimatedAmountLiveData.postValue(StringUtils.getAmountFormatted(entry.estimatedAmount));
+
+
+    }
+
+
+
     public void createEntry(boolean isExit){
          entry= new Entry();
          if(!isExit)
@@ -37,6 +65,7 @@ public class VehicleEntryViewModel extends ViewModel {
              entry.exitTime= getTime();
          this.isExit=isExit;
          entry.vehicle= new Vehicle();
+         entry.hourlyCharge=AppConstants.HOURLY_CHARGE;
 
 
     }
@@ -55,9 +84,9 @@ public class VehicleEntryViewModel extends ViewModel {
                     entry.hours= hours +" hrs "+ minutes +" min";
                 else
                     entry.hours= minutes +" min";
-                double charge=minutes>0 ?(hours+1)*AppConstants.HOURLY_CHARGE:hours*AppConstants.HOURLY_CHARGE;
+                double charge=minutes>0 ?(hours+1)*entry.hourlyCharge:hours*entry.hourlyCharge;
                 if(minutes>0)
-                    entry.charge=String.format(Locale.ENGLISH,"%.2f", charge)+" AED";
+                    entry.calculatedAmount =String.format(Locale.ENGLISH,"%.2f", charge)+" AED";
                 this.entry=entry;
             } catch (ParseException e) {
                 e.printStackTrace();

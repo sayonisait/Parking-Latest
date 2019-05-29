@@ -14,6 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.example.parking.R;
 import com.example.parking.ui.vehicleentry.viewmodels.VehicleEntryViewModel;
+import com.example.parking.utils.StringUtils;
 
 public class TicketPrintFragment extends Fragment {
 
@@ -42,7 +43,22 @@ public class TicketPrintFragment extends Fragment {
     TextView textViewAmount;
     @BindView(R.id.textViewAmountTag)
     TextView textViewAmountTag;
-
+    @BindView(R.id.textViewEstAmountTag)
+    TextView textViewEstAmountTag;
+    @BindView(R.id.textViewEstAmount)
+    TextView textViewEstAmount;
+    @BindView(R.id.textViewSpecialPriceTag)
+    TextView textViewSpecialPriceTag;
+    @BindView(R.id.textViewSpecialPrice)
+    TextView textViewSpecialPrice;
+    @BindView(R.id.textViewChargeTag)
+    TextView textViewChargeTag;
+    @BindView(R.id.textViewCharge)
+    TextView textViewCharge;
+    @BindView(R.id.textViewEstHoursTag)
+    TextView textViewEstHoursTag;
+    @BindView(R.id.textViewEstHours)
+    TextView textViewEstHours;
     public static TicketPrintFragment newInstance() {
         return new TicketPrintFragment();
     }
@@ -68,10 +84,15 @@ public class TicketPrintFragment extends Fragment {
         textViewModel.setText(mViewModel.entry.vehicle.vehicleModel);
         textViewTime.setText(mViewModel.entry.entryTime);
         textViewSlot.setText(mViewModel.entry.parkingSlot);
+        textViewEstHours.setText( String.valueOf( mViewModel.entry.estimatedHours));
+        textViewEstAmount.setText(mViewModel.estimatedAmountLiveData.getValue());
+        textViewCharge.setText(StringUtils.getAmountFormatted( mViewModel.entry.hourlyCharge));
+        textViewSpecialPrice.setText(mViewModel.specialChargeLiveData.getValue());
+
         if(mViewModel.isExit){
             textViewExit.setText(mViewModel.entry.exitTime);
             textViewHours.setText(mViewModel.entry.hours);
-            textViewAmount.setText(mViewModel.entry.charge);
+            textViewAmount.setText(mViewModel.entry.calculatedAmount);
         }else{
             textViewExitTag.setVisibility(View.GONE);
             textViewHoursTag.setVisibility(View.GONE);

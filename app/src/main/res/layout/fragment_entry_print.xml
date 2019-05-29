@@ -153,7 +153,7 @@
                     android:id="@+id/textViewHoursTag"
                     app:layout_constraintTop_toBottomOf="@+id/textViewExitTimeTag"
                     app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintBottom_toTopOf="@id/textViewAmountTag"
+                    app:layout_constraintBottom_toTopOf="@id/textViewEstHoursTag"
                     app:layout_constraintVertical_bias=".05"
                     app:layout_constraintStart_toStartOf="@id/textViewNumberTag"/>
             <TextView
@@ -163,16 +163,74 @@
                     android:id="@+id/textViewHours"
                     app:layout_constraintTop_toTopOf="@+id/textViewHoursTag"
                     app:layout_constraintStart_toStartOf="@+id/textViewNumber"/>
+
             <TextView
                     android:textStyle="bold"
 
-                    android:text="Amount"
+                    android:text="Estimated Hours"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewEstHoursTag"
+                    app:layout_constraintTop_toBottomOf="@id/textViewHoursTag"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintBottom_toTopOf="@id/textViewSpecialPriceTag"
+                    app:layout_constraintVertical_bias=".05"
+                    app:layout_constraintStart_toStartOf="@id/textViewNumberTag"/>
+            <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewEstHours"
+                    app:layout_constraintTop_toTopOf="@id/textViewEstHoursTag"
+                    app:layout_constraintStart_toStartOf="@+id/textViewNumber"/>
+            <TextView
+                    android:textStyle="bold"
+
+                    android:text="Special Price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewSpecialPriceTag"
+                    app:layout_constraintTop_toBottomOf="@id/textViewEstHoursTag"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintBottom_toTopOf="@id/textViewChargeTag"
+                    app:layout_constraintVertical_bias=".05"
+                    app:layout_constraintStart_toStartOf="@id/textViewNumberTag"/>
+            <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewSpecialPrice"
+                    app:layout_constraintTop_toTopOf="@id/textViewSpecialPriceTag"
+                    app:layout_constraintStart_toStartOf="@+id/textViewNumber"/>
+
+            <TextView
+                    android:textStyle="bold"
+
+                    android:text="Charge per hour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewChargeTag"
+                    app:layout_constraintTop_toBottomOf="@id/textViewSpecialPriceTag"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintBottom_toTopOf="@id/textViewAmountTag"
+                    app:layout_constraintVertical_bias=".05"
+                    app:layout_constraintStart_toStartOf="@id/textViewNumberTag"/>
+            <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewCharge"
+                    app:layout_constraintTop_toTopOf="@id/textViewChargeTag"
+                    app:layout_constraintStart_toStartOf="@+id/textViewNumber"/>
+            <TextView
+                    android:textStyle="bold"
+
+                    android:text="Actual Amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/textViewAmountTag"
                     app:layout_constraintTop_toBottomOf="@+id/textViewHoursTag"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/textViewEstAmountTag"
                     app:layout_constraintVertical_bias=".05"
                     app:layout_constraintStart_toStartOf="@id/textViewNumberTag"/>
             <TextView
@@ -182,6 +240,27 @@
                     android:id="@+id/textViewAmount"
                     app:layout_constraintTop_toTopOf="@+id/textViewAmountTag"
                     app:layout_constraintStart_toStartOf="@+id/textViewNumber"/>
+
+
+            <TextView
+                    android:textStyle="bold"
+
+                    android:text="Estimated Amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewEstAmountTag"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewAmountTag"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="@id/textViewNumberTag"/>
+            <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewEstAmount"
+                    app:layout_constraintTop_toTopOf="@+id/textViewEstAmountTag"
+                    app:layout_constraintStart_toStartOf="@+id/textViewNumber"/>
+
+
             <TextView
                     android:text="TextView"
                     android:layout_width="wrap_content"

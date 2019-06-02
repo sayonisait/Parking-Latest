@@ -1,7 +1,10 @@
 package com.example.parking.ui.vehicleentry.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.*;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import androidx.fragment.app.FragmentActivity;
@@ -20,6 +23,9 @@ import com.example.parking.ui.vehicleentry.viewmodels.VehicleEntryViewModel;
 import com.example.parking.utils.StringUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.Locale;
+import java.util.Objects;
 
 public class VehicleEntryFragment extends Fragment {
 
@@ -40,7 +46,7 @@ public class VehicleEntryFragment extends Fragment {
     @BindView(R.id.textInputNumber)
     TextInputLayout textInputNumber;
     @BindView(R.id.editTextModel)
-    EditText editTextModel;
+    AutoCompleteTextView editTextModel;
     @BindView(R.id.editTextNumber)
     EditText editTextNumber;
     @BindView(R.id.editTextEntryTime)
@@ -64,7 +70,8 @@ public class VehicleEntryFragment extends Fragment {
     EditText editTextSpecialCharge;
     @BindView(R.id.textInputSpecialCharge)
     TextInputLayout textInputSpecialCharge;
-
+    @BindView(R.id.textInputEstHours)
+    TextInputLayout textInputEstHours;
     public static VehicleEntryFragment newInstance() {
         return new VehicleEntryFragment();
     }
@@ -80,13 +87,16 @@ public class VehicleEntryFragment extends Fragment {
     }
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(VehicleEntryViewModel.class);
         editTextTime.setText(mViewModel.entry.entryTime);
         editTextSlot.setText(mViewModel.entry.parkingSlot);
+        editTextModel.setAdapter( new ArrayAdapter<String>(mContext,android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.models)));
         MonthlyPlan monthlyPlan=mViewModel.monthlyPlanMutableLiveData.getValue();
+
         if(monthlyPlan!=null) {
             editTextNumber.setText(monthlyPlan.vehicle.vehicleNumber);
             editTextModel.setText(monthlyPlan.vehicle.vehicleModel);
@@ -121,20 +131,16 @@ public class VehicleEntryFragment extends Fragment {
              editExitTime.setFocusable(false);
             }
         }
-        editTextSlot.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                System.out.println(String.format(" x is %f , full width is %d, image width is %d",event.getRawX(),editTextSlot.getRight(), 10));
-                if(event.getRawX() > (editTextSlot.getRight() - 10)) {
-                    NavController navController= NavHostFragment.findNavController(VehicleEntryFragment.this);
-                    if (navController.getCurrentDestination().getId()== R.id.vehicleentry) {
-                        navController.navigate(R.id.action_to_parkingSlot);
-                        return true;
+        editTextSlot.setOnTouchListener((v, event) -> {
+            if(event.getRawX() > (editTextSlot.getRight() - 10)) {
+                NavController navController= NavHostFragment.findNavController(VehicleEntryFragment.this);
+                if (navController.getCurrentDestination().getId()== R.id.vehicleentry) {
+                    navController.navigate(R.id.action_to_parkingSlot);
+                    return true;
 
-                    }
                 }
-                return false;
             }
+            return false;
         });
 
 
@@ -144,7 +150,7 @@ public class VehicleEntryFragment extends Fragment {
         View.OnFocusChangeListener focusChangeListener= new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                String text=((TextInputEditText)v).getText().toString();
+                String text= Objects.requireNonNull(((TextInputEditText) v).getText()).toString();
                 if(hasFocus || text.equals(""))
                     return;
                 switch(v.getId()){
@@ -177,7 +183,7 @@ public class VehicleEntryFragment extends Fragment {
 
         editTextNumber.setOnFocusChangeListener(focusChangeListener);
         editTextSlot.setOnFocusChangeListener(focusChangeListener);
-        editTextModel.setOnFocusChangeListener(focusChangeListener);
+      //  editTextModel.setOnFocusChangeListener(focusChangeListener);
         editTextSpecialCharge.setOnFocusChangeListener(focusChangeListener);
         editTextEstHours.setOnFocusChangeListener(focusChangeListener);
 
@@ -216,14 +222,14 @@ public class VehicleEntryFragment extends Fragment {
             }
 
             if(editTextEstHours.getText().toString().trim().equals("") && !editTextSpecialCharge.getText().toString().trim().equals("")){
-                textInputSpecialCharge.setError("Field can not be empty");
+                textInputEstHours.setError("Field can not be empty");
                 isValidated=false;
             }
 
             //validating special charge not greater than actual charge
 
             if(mViewModel.entry.specialCharge>mViewModel.entry.hourlyCharge){
-                editTextSpecialCharge.setError("Special Charge cant be greater than actual charge");
+                textInputSpecialCharge.setError("Special Charge cant be greater than actual charge");
                 isValidated=false;
             }
 

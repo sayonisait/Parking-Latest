@@ -57,7 +57,7 @@
                     app:layout_constraintHorizontal_bias="1"
                     app:layout_constraintEnd_toEndOf="@id/textInputPhone"
                     android:layout_height="wrap_content">
-                <com.google.android.material.textfield.TextInputEditText
+                <AutoCompleteTextView
                         android:backgroundTint="@color/colorPrimaryDark"
 
                         android:layout_width="match_parent"

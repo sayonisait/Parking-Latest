@@ -5,6 +5,6 @@ import java.util.Locale;
 public class StringUtils {
 
     public static String getAmountFormatted(double amount){
-        return String.format( Locale.ENGLISH, "AED %.2f", amount);
+        return String.format( Locale.ENGLISH, " %.2f", amount);
     }
 }

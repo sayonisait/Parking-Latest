@@ -14,6 +14,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import com.example.parking.AppConstants;
 import com.example.parking.R;
 import com.example.parking.entities.MonthlyPlan;
 import com.example.parking.ui.vehicleentry.viewmodels.VehicleEntryViewModel;
@@ -33,7 +34,8 @@ public class VehicleEntryFragment extends Fragment {
     EditText editTextStartDate;
     @BindView(R.id.editTextEndDate)
     EditText editEndDate;
-
+    @BindView(R.id.editTextAmountCalculated)
+    EditText editTextAmountCalculated;
 
     @BindView(R.id.textInputModel)
     TextInputLayout textInputModel;
@@ -60,11 +62,14 @@ public class VehicleEntryFragment extends Fragment {
     EditText editTextEstAmount;
     @BindView(R.id.editTextEstHours)
     EditText editTextEstHours;
+    @BindView(R.id.editTextHours)
+    EditText editTextHours;
     @BindView(R.id.editTextSpecialCharge)
     EditText editTextSpecialCharge;
     @BindView(R.id.textInputSpecialCharge)
     TextInputLayout textInputSpecialCharge;
-
+    @BindView(R.id.editTextPhone)
+    EditText editTextPhone;
     public static VehicleEntryFragment newInstance() {
         return new VehicleEntryFragment();
     }
@@ -83,9 +88,25 @@ public class VehicleEntryFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         mViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(VehicleEntryViewModel.class);
         editTextTime.setText(mViewModel.entry.entryTime);
         editTextSlot.setText(mViewModel.entry.parkingSlot);
+        editTextNumber.setText(mViewModel.entry.vehicle.vehicleNumber);
+        editTextModel.setText(mViewModel.entry.vehicle.vehicleModel);
+        editExitTime.setText(mViewModel.entry.exitTime);
+        editTextHours.setText(mViewModel.entry.hours);
+        //editTextPhone.setText(mViewModel.);
+        editTextAmountCalculated.setText( StringUtils.getAmountFormatted( mViewModel.entry.calculatedAmount));
+
+        if(mViewModel.entry.estimatedHours!=0)
+            editTextEstHours.setText(String.valueOf(mViewModel.entry.estimatedHours));
+        if(mViewModel.entry.specialCharge!=0)
+            editTextSpecialCharge.setText(String.valueOf(mViewModel.entry.specialCharge));
+        if(mViewModel.entry.estimatedAmount!=0)
+            editTextEstAmount.setText(String.valueOf(mViewModel.entry.estimatedAmount));
+
+
         MonthlyPlan monthlyPlan=mViewModel.monthlyPlanMutableLiveData.getValue();
         if(monthlyPlan!=null) {
             editTextNumber.setText(monthlyPlan.vehicle.vehicleNumber);
@@ -100,7 +121,7 @@ public class VehicleEntryFragment extends Fragment {
             textInputStartDate.setVisibility(View.GONE);
             editTextCharge.setText(StringUtils.getAmountFormatted(mViewModel.entry.hourlyCharge));
 
-            if(mViewModel.isExit){
+            if(mViewModel.isMonthlyPlan){
 
                 // commenting temporarily
 //                textInputCharge.setVisibility(View.VISIBLE);
@@ -233,7 +254,7 @@ public class VehicleEntryFragment extends Fragment {
                 if (monthlyPlan == null )
                     mViewModel.createQRCode(editTextModel.getText().toString());
                 else
-                    if(mViewModel.isExit){
+                    if(mViewModel.isMonthlyPlan){
 
                         NavHostFragment.findNavController(VehicleEntryFragment.this).navigate(R.id.action_entry_print);
                     }else

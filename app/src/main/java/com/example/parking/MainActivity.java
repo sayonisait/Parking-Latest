@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -36,11 +38,20 @@ public class MainActivity extends Activity  {
         startActivity(intent);
     }
     @OnClick(R.id.box2)
-    void startNewVehicleExitctivity(){
-        Intent intent= new Intent(this, VehicleEntryActivity.class);
-        intent.putExtra("exit",true);
-        startActivity(intent);
+     void scanQrCode(){
+        try {
+
+            Intent intent= new Intent(this, ScanQRCodeActivity.class);
+            startActivityForResult(intent,1);
+
+        } catch (Exception e) {
+
+            Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+
+        }
     }
+
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -63,28 +74,17 @@ public class MainActivity extends Activity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home);
-
         BottomNavigationView navigation = findViewById(R.id.navigation);
-
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
         initViews();
-
-
-
-
     }
 
    private void initViews(){
        ButterKnife.bind(this);
-
-
        textViewOccupCount.setText(String.valueOf(occupiedCount));
-
        textViewVacantCount.setText(String.valueOf(totalParkingCount-occupiedCount));
-
        initToolBar();
-        initListeners();
+       initListeners();
     }
 
     private void   initToolBar(){
@@ -97,6 +97,20 @@ public class MainActivity extends Activity  {
 
     private void initListeners(){
 
+    }
+
+    void startExitActivity(String contents){
+        Intent intent= new Intent(this, VehicleEntryActivity.class);
+        intent.putExtra("content",contents);
+        startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==1 && resultCode==RESULT_OK){
+            startExitActivity(data.getStringExtra(AppConstants.KEY_QR_CODE));
+        }
     }
 
 

@@ -22,7 +22,7 @@ import com.example.parking.ui.vehicleentry.viewmodels.VehicleEntryViewModel;
 public class VehicleEntryActivity extends FragmentActivity  {
 
     private VehicleEntryViewModel mViewModel;
-    boolean isExit;
+    String exitContents;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,12 +31,15 @@ public class VehicleEntryActivity extends FragmentActivity  {
 
         NavController navController= Navigation.findNavController(this, R.id.nav_host_fragment);
 
-
-
-        isExit=getIntent().getBooleanExtra("exit",false);
+        exitContents=getIntent().getStringExtra("content");
 
         mViewModel = ViewModelProviders.of(this).get(VehicleEntryViewModel.class);
-        mViewModel.createEntry(isExit);
+
+        if(exitContents!=null)
+            mViewModel.createExit(exitContents);
+        else
+            mViewModel.createEntry();
+
         mViewModel.slotNumber.observe(this, s -> {
              navController.popBackStack ();
         });
@@ -72,27 +75,7 @@ public class VehicleEntryActivity extends FragmentActivity  {
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        try {
 
-            Intent intent= new Intent(this, ScanQRCodeActivity.class);
-            startActivityForResult(intent,1);
 
-        } catch (Exception e) {
 
-            Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-
-        }
-        return true;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==1 && resultCode==RESULT_OK){
-            String contents = data.getStringExtra(AppConstants.KEY_QR_CODE);
-            mViewModel.updateEntry(contents);
-        }
-    }
 }

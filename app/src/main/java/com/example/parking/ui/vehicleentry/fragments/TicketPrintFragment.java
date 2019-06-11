@@ -89,7 +89,7 @@ public class TicketPrintFragment extends Fragment {
         textViewCharge.setText(StringUtils.getAmountFormatted( mViewModel.entry.hourlyCharge));
         textViewSpecialPrice.setText(mViewModel.specialChargeLiveData.getValue());
 
-        if(mViewModel.isExit){
+        if(mViewModel.isMonthlyPlan){
             textViewExit.setText(mViewModel.entry.exitTime);
             textViewHours.setText(mViewModel.entry.hours);
             textViewAmount.setText(mViewModel.entry.calculatedAmount);

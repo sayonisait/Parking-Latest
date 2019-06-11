@@ -62,11 +62,11 @@ public class ParkingSlotAdapter extends RecyclerView.Adapter<ParkingSlotAdapter.
         holder.itemView.setOnClickListener(view -> {
             if(slot.slotNumber==-1)//if a space that doesnt belong to parking slot, no action need to be perfomed
                 return;
-            if(slot.isOccupied && !viewModel.isExit){
+            if(slot.isOccupied && !viewModel.isMonthlyPlan){
                 Toast.makeText(context, "Selected slot is occupied. Please select a vaccant slot", Toast.LENGTH_SHORT).show();
                 return;
             }
-            if(!slot.isOccupied && viewModel.isExit){
+            if(!slot.isOccupied && viewModel.isMonthlyPlan){
                 Toast.makeText(context, "Please select an occupied slot to make an exit", Toast.LENGTH_SHORT).show();
                 return;
             }

@@ -1,9 +1,13 @@
 package com.example.parking.ui.vehicleentry.fragments;
 
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.view.*;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -13,8 +17,12 @@ import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.example.parking.R;
+import com.example.parking.print.BluetoothUtil;
 import com.example.parking.ui.vehicleentry.viewmodels.VehicleEntryViewModel;
 import com.example.parking.utils.StringUtils;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.io.IOException;
 
 public class TicketPrintFragment extends Fragment {
 
@@ -59,6 +67,8 @@ public class TicketPrintFragment extends Fragment {
     TextView textViewEstHoursTag;
     @BindView(R.id.textViewEstHours)
     TextView textViewEstHours;
+    @BindView(R.id.floatingActionButton)
+    FloatingActionButton printButton;
     public static TicketPrintFragment newInstance() {
         return new TicketPrintFragment();
     }
@@ -92,7 +102,7 @@ public class TicketPrintFragment extends Fragment {
         if(mViewModel.isMonthlyPlan){
             textViewExit.setText(mViewModel.entry.exitTime);
             textViewHours.setText(mViewModel.entry.hours);
-            textViewAmount.setText(mViewModel.entry.calculatedAmount);
+            textViewAmount.setText(StringUtils.getAmountFormatted( mViewModel.entry.calculatedAmount));
         }else{
             textViewExitTag.setVisibility(View.GONE);
             textViewHoursTag.setVisibility(View.GONE);
@@ -102,6 +112,10 @@ public class TicketPrintFragment extends Fragment {
             textViewAmount.setVisibility(View.GONE);
         }
         ((FragmentActivity)  mContext). getActionBar().setTitle("Ticket Preview");
+
+        printButton.setOnClickListener(view -> {
+            BluetoothUtil.printData(("\n\n\n\n-------------------\n\n\n\nTesting Print\n\n\n\n\n\n\n\n-------------------\n\n\n\n").getBytes(), mContext);
+        });
 
 
     }

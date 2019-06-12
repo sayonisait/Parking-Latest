@@ -56,66 +56,27 @@ public class VehicleEntryViewModel extends ViewModel {
     }
 
 
-
+    /* creates a new entry*/
     public void createEntry(){
          entry= new Entry();
-            entry.entryTime= getTime();
-
-         entry.vehicle= new Vehicle();
-         entry.hourlyCharge=AppConstants.HOURLY_CHARGE;
-
-
+         entry.startEntry();
     }
 
     public void createEntryForMonthlyVehicle(String json){
-
             // if entry scanned qr code is for a monthly plan car
             MonthlyPlan monthlyPlan = new Gson().fromJson(json, MonthlyPlan.class);
             // entry.monthlyPlan=monthlyPlan;
-
             monthlyPlanMutableLiveData.setValue(monthlyPlan);
-
     }
 
     public void createExit(String json){
         // if exit , qr code scanned will be for entry
         Entry entry = new Gson().fromJson(json, Entry.class);
-        entry.exitTime=getTime();
-        try {
-            long diffInMillies = Math.abs(spf.parse(entry.exitTime).getTime() - spf.parse(entry.entryTime).getTime());
-            long minutes = TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
-            long hours=minutes/60;
-            minutes=minutes-hours*60;
-            if(hours>0)
-                entry.hours= hours +" hrs "+ minutes +" min";
-            else
-                entry.hours= minutes +" min";
-            long hoursTobeConsidered= minutes>AppConstants.EXTRA_MINUTES?(hours+1):hours;
-            double charge=hoursTobeConsidered*entry.hourlyCharge;
-
-            if(minutes>0)
-                entry.calculatedAmount =charge;
-           if(entry.estimatedAmount<entry.calculatedAmount && entry.estimatedHours >= hoursTobeConsidered) {
-               // calculate additional minutes and add it to the estimated amount
-               entry.amountToBePaid = (hoursTobeConsidered - entry.estimatedHours) * entry.hourlyCharge + entry.estimatedAmount;
-
-           }else{
-               // if estimatedamount is 0 , or estimated amount is greater than calculated amount, then calculated amount is the amount to be paid
-               entry.amountToBePaid=entry.calculatedAmount;
-           }
-
-            this.entry=entry;
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        entry.makeExit();
+        this.entry=entry;
         entryMutableLiveData.setValue(entry);
     }
-    SimpleDateFormat spf=new SimpleDateFormat("hh:mm aaa", Locale.ENGLISH);
 
-    private String getTime() {
-        Date date = new Date();
-        return spf.format(date);
-    }
 
     public void setParkingSlot(String slot){
         entry.parkingSlot=slot;

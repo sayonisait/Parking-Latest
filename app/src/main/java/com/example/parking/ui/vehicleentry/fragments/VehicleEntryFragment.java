@@ -257,7 +257,7 @@ public class VehicleEntryFragment extends Fragment {
 
             if(isValidated) {
 
-                // once all validations are done , go to print screen to print all details
+                // once all validations are done , go to com.example.parking.print screen to com.example.parking.print all details
                 if (monthlyPlan == null )
                     mViewModel.createQRCode(editTextModel.getText().toString());
                 else

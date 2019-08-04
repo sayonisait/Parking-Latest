@@ -15,22 +15,40 @@ import butterknife.BindColor;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.example.parking.R;
-import com.example.parking.entities.ParkingSlot;
 import com.example.parking.ui.vehicleentry.viewmodels.VehicleEntryViewModel;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class ParkingSlotAdapter extends RecyclerView.Adapter<ParkingSlotAdapter.ViewHolder> {
-    private ArrayList<ParkingSlot> slots;
+  //  private ArrayList<ParkingSlot> slots;
     private Context context;
     private VehicleEntryViewModel viewModel;
-
-    public ParkingSlotAdapter(ArrayList<ParkingSlot> slots, FragmentActivity context) {
-        this.slots=slots;
+    private int count;
+    private List<String> mParkedSlots;
+    public ParkingSlotAdapter(int parkingSpacesCount, FragmentActivity context) {
+        count=parkingSpacesCount;
         this.context=context;
         viewModel= ViewModelProviders.of(context).get(VehicleEntryViewModel.class);
+       // slots= new ArrayList<>(count);
+
 
     }
+
+    public void setCount(int count){
+        this.count=count;
+        notifyDataSetChanged();
+//        slots= new ArrayList<>(count);
+//        for(int i=1;i<=count;i++){
+//            slots.add(new ParkingSlot());
+//        }
+    }
+    public void setOccupiedSlots(List<String> slots){
+        mParkedSlots=slots;
+        notifyDataSetChanged();
+    }
+
+
 
 
     @NonNull
@@ -42,48 +60,33 @@ public class ParkingSlotAdapter extends RecyclerView.Adapter<ParkingSlotAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ParkingSlotAdapter.ViewHolder holder, int position) {
-        ParkingSlot slot= slots.get(position);
-        if(slot.slotNumber==-1) {
-            holder.layout.setBackgroundColor(context.getResources().getColor(R.color.white));
-            holder.parkingSlot.setVisibility(View.INVISIBLE);
-           // holder.carImage.setVisibility(View.GONE);
-            holder.itemView.setBackground(null);
-
+        String slot=getSlotByPosition(position);
+        holder.parkingSlot.setText(slot);
+        if(viewModel.slotNumber !=null && viewModel.slotNumber.getValue()!=null && viewModel.slotNumber.getValue().equals(slot)) {
+            holder.itemView.setBackgroundColor(holder.blueColor);
+        }else{
+            boolean isOccupied = mParkedSlots != null && mParkedSlots.contains(slot);
+            holder.itemView.setBackgroundColor(isOccupied ? holder.redColor : holder.greenColor);
+            holder.itemView.setOnClickListener(view -> {
+                if(isOccupied){
+                    Toast.makeText(context, "Selected slot is occupied. Please select a vaccant slot", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                viewModel.setParkingSlot(slot);
+            });
         }
-        else {
-           // holder.carImage.setVisibility(slot.isOccupied?View.VISIBLE:View.INVISIBLE);
-            holder.itemView.setBackgroundColor(slot.isOccupied?holder.redColor:holder.greenColor );
-            holder.parkingSlot.setText(String.valueOf( slot.slotNumber));
 
-            //holder.layout.setBackground(context.getDrawable(  R.drawable.two_side_rectangle));
 
-        }
-
-        holder.itemView.setOnClickListener(view -> {
-            if(slot.slotNumber==-1)//if a space that doesnt belong to parking slot, no action need to be perfomed
-                return;
-            if(slot.isOccupied && !viewModel.isMonthlyPlan){
-                Toast.makeText(context, "Selected slot is occupied. Please select a vaccant slot", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if(!slot.isOccupied && viewModel.isMonthlyPlan){
-                Toast.makeText(context, "Please select an occupied slot to make an exit", Toast.LENGTH_SHORT).show();
-                return;
-            }
-            viewModel.setParkingSlot(String.valueOf(  slot.slotNumber));
-
-        });
 
     }
-    @Override
-    public int getItemViewType(int position) {
 
-        return slots.get(position).isHorizontal? 1 :2;
+    private String getSlotByPosition(int position){
+      return  String.format(Locale.ENGLISH, "%03d",position+1);
     }
 
     @Override
     public int getItemCount() {
-        return slots.size();
+        return count;
     }
 
      class ViewHolder extends RecyclerView.ViewHolder{
@@ -97,10 +100,12 @@ public class ParkingSlotAdapter extends RecyclerView.Adapter<ParkingSlotAdapter.
         public int redColor;
          @BindColor(android.R.color.holo_green_dark)
          public int greenColor;
-
+         @BindColor(android.R.color.holo_blue_dark)
+         public int blueColor;
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
 
         }
 

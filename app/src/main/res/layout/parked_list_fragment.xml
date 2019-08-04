@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.vehicleentry.fragments.ParkedListFragment">
+
+    <EditText
+            android:id="@+id/edit_query"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Search vehicle number"/>
+
+    <LinearLayout android:background="@color/colorAccent" android:paddingTop="10dp" android:paddingBottom="10dp" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <TextView android:textColor="@color/white" android:layout_width="0dp" android:layout_height="wrap_content"
+        android:text="Vehicle No." android:layout_weight="1" android:gravity="center"/>
+        <TextView android:textColor="@color/white" android:layout_width="0dp" android:layout_height="wrap_content"
+                  android:text="Phone Number" android:layout_weight="1" android:gravity="center"/>
+        <TextView android:textColor="@color/white" android:layout_width="0dp" android:layout_height="wrap_content"
+                  android:text="Slot " android:layout_weight=".5" android:gravity="center"/>
+        <TextView android:textColor="@color/white" android:layout_width="0dp" android:layout_height="wrap_content"
+                  android:text="Entry Time" android:layout_weight="1.5" android:gravity="center"/>
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</LinearLayout>

@@ -1,11 +1,16 @@
 package com.example.parking.ui.monthly;
 
+import android.app.Application;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-import com.example.parking.entities.MonthlyPlan;
-import com.example.parking.entities.Vehicle;
+import android.util.Log;
+import androidx.lifecycle.*;
+import com.example.parking.data.ParkingRespository;
+import com.example.parking.model.ConfigDetails;
+import com.example.parking.model.MonthlyCustomer;
+import com.example.parking.model.Vehicle;
+import com.example.parking.utils.QRCodeUtils;
+import com.example.parking.utils.StringUtils;
 import com.google.gson.Gson;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -17,42 +22,70 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class MonthlyViewModel extends ViewModel {
+public class MonthlyViewModel extends AndroidViewModel {
 
     public MutableLiveData<Bitmap> qrCode= new MutableLiveData<>();
 
-    MonthlyPlan monthlyPlan;
+    MonthlyCustomer monthlyCustomer;
+    ParkingRespository repository;
+    LiveData<ConfigDetails> configDetails;
+
+    public MonthlyViewModel(Application application) {
+        super(application);
+        repository = new ParkingRespository(application);
+        createEntry();
+        configDetails = repository.getConfig();
+
+
+       // isPrintDone = false;
+       // configDetails = repository.getConfig();
+    }
+
+    public LiveData<ConfigDetails> getConfigDetails() {
+        return Transformations.map(configDetails, s -> {
+            if(monthlyCustomer !=null ) {
+                if(monthlyCustomer.receiptNumber==0)
+                monthlyCustomer.receiptNumber = s.last_receipt_number + 1;
+                monthlyCustomer.amount=s.monthly_package_amount;
+                monthlyCustomer.amounFormatted = StringUtils.getAmountFormattedWithCurrency(s.monthly_package_amount);
+                monthlyCustomer.packageID=s.monthly_package_id;
+
+            }
+
+
+            ;
+            return s;
+        });
+
+    }
 
 
     public void createEntry(){
-         monthlyPlan = new MonthlyPlan();
-         monthlyPlan.startDate= getStartDate();
-         monthlyPlan.endDate=getEndDate();
+         monthlyCustomer = new MonthlyCustomer();
+         monthlyCustomer.startDate= Calendar.getInstance().getTime();
+         monthlyCustomer.endDate=getEndDate();
+         monthlyCustomer.vehicle= new Vehicle();
     }
 
-    SimpleDateFormat spf=new SimpleDateFormat(" dd MMM yyyy ", Locale.ENGLISH);
 
-    private String getEndDate() {
+    private Date getEndDate() {
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.MONTH, monthlyPlan.noOfMonths);
-        return spf.format(cal.getTime());
+        cal.add(Calendar.MONTH, monthlyCustomer.noOfMonths);
+        return cal.getTime();
     }
 
 
-    public String getStartDate() {
-        Date date = Calendar.getInstance().getTime();
-        return spf.format(date);
-    }
+
 
     public void createQRCode(String vehicleNumber , String modelName) {
         QRCodeWriter writer = new QRCodeWriter();
-        monthlyPlan.vehicle = new Vehicle();
-        monthlyPlan.vehicle.vehicleNumber=vehicleNumber;
-        monthlyPlan.vehicle.vehicleModel=modelName;
+        monthlyCustomer.vehicle = new Vehicle();
+        monthlyCustomer.vehicle.vehicleNumber=vehicleNumber;
+        monthlyCustomer.vehicle.vehicleModel=modelName;
         try {
 
 
-            BitMatrix bitMatrix = writer.encode(new Gson().toJson(monthlyPlan), BarcodeFormat.QR_CODE, 512, 512);
+            BitMatrix bitMatrix = writer.encode(new Gson().toJson(monthlyCustomer), BarcodeFormat.QR_CODE, 512, 512);
             int width = bitMatrix.getWidth();
             int height = bitMatrix.getHeight();
             Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
@@ -66,5 +99,21 @@ public class MonthlyViewModel extends ViewModel {
         } catch (WriterException e) {
             e.printStackTrace();
         }
+    }
+
+    public LiveData<String> saveSubscription() {
+        return Transformations.map(repository.sendMonthlyCustomerTOBackend(monthlyCustomer), s -> {
+            Log.d("Parking Info", "entry.transaction_id =" + String.valueOf(s));
+            monthlyCustomer.rowID = s;
+            generrateQR();
+            return s;
+        });
+    }
+
+    public void generrateQR() {
+        Bitmap image = QRCodeUtils.generateQrCode(String.valueOf(monthlyCustomer.rowID));
+        if (image != null)
+            qrCode.postValue(image);
+
     }
 }

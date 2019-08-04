@@ -8,6 +8,7 @@
               android:label="vehicle_entry" tools:layout="@layout/vehicle_entry_fragment">
         <action android:id="@+id/action_entry_print" app:destination="@id/ticketprint"/>
         <action android:id="@+id/action_to_parkingSlot" app:destination="@id/parkingSlot"/>
+        <action android:id="@+id/action_to_parked_list" app:destination="@id/parkedListFragment"/>
 
     </fragment>
     <fragment android:id="@+id/parkingSlot"
@@ -16,4 +17,7 @@
     <fragment android:id="@+id/ticketprint"
               android:name="com.example.parking.ui.vehicleentry.fragments.TicketPrintFragment"
               android:label="ticket_print_fragment" tools:layout="@layout/fragment_entry_print"/>
+    <fragment android:id="@+id/parkedListFragment"
+              android:name="com.example.parking.ui.vehicleentry.fragments.ParkedListFragment"
+              android:label="parked_list_fragment" tools:layout="@layout/parked_list_fragment"/>
 </navigation>

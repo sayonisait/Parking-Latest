@@ -6,15 +6,16 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.Toolbar;
 
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.example.parking.databinding.NewHomeBinding;
+import com.example.parking.ui.login.LoginActivity;
 import com.example.parking.ui.monthly.MonthlyPlanActivity;
 import com.example.parking.ui.vehicleentry.VehicleEntryActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -23,33 +24,24 @@ public class MainActivity extends Activity  {
 
     int totalParkingCount=100, occupiedCount=60;
 
-    @BindView(R.id.textViewVacCount)
-    TextView textViewVacantCount;
-    @BindView(R.id.textViewOccupCount)
-    TextView textViewOccupCount;
-    @OnClick(R.id.box1)
-     void startNewVehicleEntryActivity(){
-        Intent intent= new Intent(this, VehicleEntryActivity.class);
-        startActivity(intent);
-    }
-    @OnClick(R.id.box3)
-    void startMonthlyActivity(){
-        Intent intent= new Intent(this, MonthlyPlanActivity.class);
-        startActivity(intent);
-    }
-    @OnClick(R.id.box2)
-     void scanQrCode(){
-        try {
-
-            Intent intent= new Intent(this, ScanQRCodeActivity.class);
-            startActivityForResult(intent,1);
-
-        } catch (Exception e) {
-
-            Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-
-        }
-    }
+//    @BindView(R.id.textViewVacCount)
+//    TextView textViewVacantCount;
+//    @BindView(R.id.textViewOccupCount)
+//    TextView textViewOccupCount;
+//    @OnClick(R.id.box1)
+//     void startNewVehicleEntryActivity(){
+//        Intent intent= new Intent(this, VehicleEntryActivity.class);
+//        startActivity(intent);
+//    }
+//    @OnClick(R.id.boxReprint)
+//    void startMonthlyActivity(){
+//        Intent intent= new Intent(this, MonthlyPlanActivity.class);
+//        startActivity(intent);
+//    }
+//    @OnClick(R.id.box2)
+//     void exit(){
+//       startExitActivity();
+//    }
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -70,10 +62,25 @@ public class MainActivity extends Activity  {
         }
     };
 
+    NewHomeBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home);
+        NewHomeBinding binding = DataBindingUtil.setContentView(this, R.layout.new_home);
+        binding.imageRegEntry.setOnClickListener(s ->
+        {
+            Intent intent = new Intent(this, VehicleEntryActivity.class);
+            startActivity(intent);
+        });
+
+        binding.exitButton.setOnClickListener(s ->
+        {
+            startExitActivity();
+        });
+        binding.imageMonthly.setOnClickListener(s->{
+            Intent intent= new Intent(this, MonthlyPlanActivity.class);
+           startActivity(intent);
+        });
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         initViews();
@@ -81,10 +88,11 @@ public class MainActivity extends Activity  {
 
    private void initViews(){
        ButterKnife.bind(this);
-       textViewOccupCount.setText(String.valueOf(occupiedCount));
-       textViewVacantCount.setText(String.valueOf(totalParkingCount-occupiedCount));
+//       textViewOccupCount.setText(String.valueOf(occupiedCount));
+//       textViewVacantCount.setText(String.valueOf(totalParkingCount-occupiedCount));
        initToolBar();
        initListeners();
+
     }
 
     private void   initToolBar(){
@@ -99,19 +107,18 @@ public class MainActivity extends Activity  {
 
     }
 
-    void startExitActivity(String contents){
+    void startExitActivity(){
         Intent intent= new Intent(this, VehicleEntryActivity.class);
-        intent.putExtra("content",contents);
+        intent.putExtra("exit",true);
         startActivity(intent);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==1 && resultCode==RESULT_OK){
-            startExitActivity(data.getStringExtra(AppConstants.KEY_QR_CODE));
-        }
+    void startLoginActivity(){
+
+        Intent intent= new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
+
 
 
 

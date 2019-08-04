@@ -5,7 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
         android:layout_height="match_parent">
     <!--<android.support.constraint.Guideline-->
-            <!--android:id="@+id/guideline_ver_50"-->
+            <!--android:transaction_id="@+transaction_id/guideline_ver_50"-->
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:orientation="vertical"-->
@@ -85,28 +85,43 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.12"/>
+            app:layout_constraintGuide_percent="0.05"/>
     <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_ver_88"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.88"/>
+            app:layout_constraintGuide_percent="0.95"/>
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_hor_30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.2"/>
 
     <!--<android.support.constraint.Guideline-->
-    <!--android:id="@+id/guideline_hor_25"-->
+    <!--android:transaction_id="@+transaction_id/guideline_hor_25"-->
     <!--android:layout_width="wrap_content"-->
     <!--android:layout_height="wrap_content"-->
     <!--android:orientation="horizontal"-->
     <!--app:layout_constraintGuide_percent="0.25"/>-->
     <!--<android.support.constraint.Guideline-->
-    <!--android:id="@+id/guideline_hor_5"-->
+    <!--android:transaction_id="@+transaction_id/guideline_hor_5"-->
     <!--android:layout_width="wrap_content"-->
     <!--android:layout_height="wrap_content"-->
     <!--android:orientation="horizontal"-->
     <!--app:layout_constraintGuide_percent="0.05"/>-->
 
-
+<Button android:id="@+id/exitButton"
+app:layout_constraintTop_toBottomOf="@id/box1"
+app:layout_constraintStart_toStartOf="@id/guideline_ver_12"
+app:layout_constraintEnd_toEndOf="@id/guideline_ver_88"
+        app:layout_constraintBottom_toTopOf="@id/boxReprint"
+android:layout_height="50dp"
+android:layout_width="0dp"
+android:text="EXIT "
+android:layout_marginTop="10dp"
+android:layout_marginBottom="10dp"></Button>
     <androidx.constraintlayout.widget.ConstraintLayout
             android:elevation="10dp"
             android:gravity="center"
@@ -114,12 +129,12 @@
             android:padding="10dp"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="H,1:.8"
+            app:layout_constraintDimensionRatio="H,1:1"
             app:layout_constraintStart_toStartOf="@id/guideline_ver_12"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.3"
-            app:layout_constraintEnd_toEndOf="@id/guideline_ver_48"
+            app:layout_constraintTop_toTopOf="@id/guideline_hor_30"
+            app:layout_constraintBottom_toTopOf="@id/exitButton"
+            app:layout_constraintEnd_toStartOf="@id/boxSpecialEntry"
+            android:layout_marginEnd="10dp"
             android:id="@+id/box1">
 
         <ImageView
@@ -136,7 +151,7 @@
                 android:textStyle="bold"
                 app:layout_constraintVertical_bias=".9"
                 android:gravity="center"
-                android:text="ENTRY"
+                android:text="Regular Entry"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_width="match_parent"
@@ -144,6 +159,7 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
             android:elevation="10dp"
             android:gravity="center"
@@ -151,14 +167,11 @@
             android:padding="10dp"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="H,1:.8"
-
             app:layout_constraintStart_toStartOf="@id/box1"
-            app:layout_constraintTop_toBottomOf="@id/box1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.1"
+            app:layout_constraintBottom_toBottomOf="@id/boxDashboard"
+            app:layout_constraintTop_toTopOf="@id/boxDashboard"
             app:layout_constraintEnd_toEndOf="@id/box1"
-            android:id="@+id/box3">
+            android:id="@+id/boxReprint">
 
         <ImageView
                 app:layout_constraintVertical_bias=".2"
@@ -167,14 +180,16 @@
                 app:layout_constraintHeight_percent=".5"
                 android:src="@drawable/ic_calendar"
                 android:layout_width="0dp"
-                android:layout_height="0dp" app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
         />
         <TextView
                 android:textStyle="bold"
                 app:layout_constraintVertical_bias=".9"
                 android:gravity="center"
-                android:text="MONTHLY"
+                android:text="REPRINT"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_width="match_parent"
@@ -182,7 +197,45 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
 
+
+            android:elevation="10dp"
+            android:gravity="center"
+            android:background="@color/white"
+            android:padding="10dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/boxSpecialEntry"
+            app:layout_constraintStart_toEndOf="@id/box1"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintTop_toTopOf="@id/box1"
+            app:layout_constraintEnd_toStartOf="@id/box2"
+            app:layout_constraintBottom_toBottomOf="@id/box1">
+
+        <ImageView
+                app:layout_constraintVertical_bias=".2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent=".5"
+                app:layout_constraintHeight_percent=".5"
+                android:src="@drawable/ic_suv_car"
+                android:layout_width="0dp"
+                android:layout_height="0dp" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+        />
+        <TextView
+                android:textStyle="bold"
+                app:layout_constraintVertical_bias=".9"
+                android:gravity="center"
+                android:text="Special Entry"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 app:layout_constraintHorizontal_bias=".3"
@@ -194,7 +247,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:id="@+id/box2"
-                app:layout_constraintStart_toEndOf="@id/guideline_ver_52"
+                app:layout_constraintStart_toEndOf="@id/boxSpecialEntry"
 
                 app:layout_constraintTop_toTopOf="@id/box1"
                 app:layout_constraintEnd_toEndOf="@id/guideline_ver_88"
@@ -212,9 +265,9 @@
             />
             <TextView
                     android:textStyle="bold"
-                    app:layout_constraintVertical_bias=".9"
+                    app:layout_constraintVertical_bias=".95"
                     android:gravity="center"
-                    android:text="EXIT"
+                    android:text="Monthly Subscr"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_width="match_parent"
@@ -225,6 +278,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+            app:layout_constraintDimensionRatio="H,1:1"
 
             android:elevation="10dp"
             android:gravity="center"
@@ -232,12 +286,13 @@
             android:padding="10dp"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:id="@+id/box4"
-            app:layout_constraintStart_toStartOf="@id/box2"
+            android:id="@+id/boxDashboard"
+            app:layout_constraintStart_toStartOf="@id/boxSpecialEntry"
 
-            app:layout_constraintTop_toTopOf="@id/box3"
-            app:layout_constraintEnd_toEndOf="@id/box2"
-            app:layout_constraintBottom_toBottomOf="@id/box3">
+            app:layout_constraintEnd_toEndOf="@id/boxSpecialEntry"
+            app:layout_constraintBottom_toTopOf="@id/box5"
+            app:layout_constraintTop_toBottomOf="@id/exitButton"
+    >
 
         <ImageView
                 app:layout_constraintVertical_bias=".2"
@@ -272,11 +327,10 @@
             android:layout_height="0dp"
             app:layout_constraintDimensionRatio="H,1:.8"
 
-            app:layout_constraintStart_toStartOf="@id/box3"
-            app:layout_constraintTop_toBottomOf="@id/box3"
+            app:layout_constraintStart_toStartOf="@id/boxReprint"
+            app:layout_constraintTop_toBottomOf="@id/boxReprint"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.2"
-            app:layout_constraintEnd_toEndOf="@id/box3"
+            app:layout_constraintEnd_toEndOf="@id/boxReprint"
             android:id="@+id/box5">
 
         <ImageView
@@ -293,7 +347,80 @@
                 android:textStyle="bold"
                 app:layout_constraintVertical_bias=".9"
                 android:gravity="center"
-                android:text="EXPENSES"
+                android:text="XXX"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:elevation="10dp"
+            android:gravity="center"
+            android:background="@color/white"
+            android:padding="10dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="H,1:.8"
+
+            app:layout_constraintStart_toStartOf="@id/boxDashboard"
+            app:layout_constraintTop_toBottomOf="@id/boxDashboard"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/boxDashboard"
+            android:id="@+id/boxExpenses">
+
+        <ImageView
+                app:layout_constraintVertical_bias=".2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent=".5"
+                app:layout_constraintHeight_percent=".5"
+                android:src="@drawable/ic_dollar"
+                android:layout_width="0dp"
+                android:layout_height="0dp" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+        />
+        <TextView
+                android:textStyle="bold"
+                app:layout_constraintVertical_bias=".9"
+                android:gravity="center"
+                android:text="Expenses"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:elevation="10dp"
+            android:gravity="center"
+            android:background="@color/white"
+            android:padding="10dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="H,1:.8"
+
+            app:layout_constraintStart_toStartOf="@id/box6"
+            app:layout_constraintTop_toTopOf="@id/boxExpenses"
+            app:layout_constraintEnd_toEndOf="@id/box6"
+            android:id="@+id/box7">
+
+        <ImageView
+                app:layout_constraintVertical_bias=".2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent=".5"
+                app:layout_constraintHeight_percent=".5"
+                android:src="@drawable/ic_dollar"
+                android:layout_width="0dp"
+                android:layout_height="0dp" app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+        />
+        <TextView
+                android:textStyle="bold"
+                app:layout_constraintVertical_bias=".9"
+                android:gravity="center"
+                android:text="XXX"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_width="match_parent"
@@ -310,11 +437,11 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:id="@+id/box6"
-            app:layout_constraintStart_toStartOf="@id/box4"
-
-            app:layout_constraintTop_toTopOf="@id/box5"
-            app:layout_constraintEnd_toEndOf="@id/box4"
-            app:layout_constraintBottom_toBottomOf="@id/box5">
+            app:layout_constraintStart_toStartOf="@id/box2"
+            app:layout_constraintTop_toTopOf="@id/boxDashboard"
+            app:layout_constraintEnd_toEndOf="@id/box2"
+            app:layout_constraintBottom_toBottomOf="@id/boxDashboard"
+           >
 
         <ImageView
                 app:layout_constraintVertical_bias=".2"

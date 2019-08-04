@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/navigation_monthly" app:startDestination="@id/monthlyPlanFragment">
+
+    <fragment android:id="@+id/monthlyPlanFragment" android:name="com.example.parking.ui.monthly.MonthlyPlanFragment"
+              android:label="MonthlyPlanFragment">
+        <action android:id="@+id/action_monthly_print"
+                app:destination="@id/monthlyPrintFragment"/>
+    </fragment>
+    <fragment android:id="@+id/monthlyPrintFragment" android:name="com.example.parking.ui.monthly.MonthlyPrintFragment"
+              android:label="MonthlyPrintFragment"/>
+</navigation>

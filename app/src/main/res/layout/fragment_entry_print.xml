@@ -12,9 +12,9 @@
 
 
             android:layout_width="0dp"
-            app:layout_constraintVertical_bias=".2"
-            app:layout_constraintHeight_percent=".8"
-            app:layout_constraintWidth_percent=".7"
+            app:layout_constraintVertical_bias=".5"
+            app:layout_constraintHeight_percent=".9"
+            app:layout_constraintWidth_percent=".9"
                                        android:layout_height="0dp"
                                        app:layout_constraintStart_toStartOf="parent"
                                        app:layout_constraintTop_toTopOf="parent"
@@ -22,9 +22,18 @@
                                        app:layout_constraintBottom_toBottomOf="parent"
     >
         <androidx.constraintlayout.widget.ConstraintLayout
+                android:padding="5dp"
                                                            android:layout_width="match_parent"
                                                            android:layout_height="match_parent"
         >
+            <include layout="@layout/print_header"
+                     android:layout_width="match_parent"
+                     android:layout_height="0dp"
+                     app:layout_constraintHeight_percent=".15"
+                     app:layout_constraintTop_toTopOf="parent"
+                     app:layout_constraintStart_toStartOf="parent"
+                     app:layout_constraintEnd_toEndOf="parent"
+                     app:layout_constraintBottom_toTopOf="@id/qr_code_image"/>
 
             <!-- TODO: Update blank fragment layout -->
             <ImageView
@@ -32,11 +41,11 @@
                     android:id="@+id/qr_code_image"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    app:layout_constraintTop_toTopOf="@id/textViewClientName"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/header"
+                    app:layout_constraintBottom_toTopOf="@id/guideline_hor_50"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintVertical_bias="0.2"/>
+                   />
             <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline_ver_20"
 
@@ -46,7 +55,15 @@
                     app:layout_constraintGuide_percent=".5"
 
             />
+            <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_hor_50"
 
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent=".5"
+
+            />
 
             <TextView
                     android:textStyle="bold"
@@ -54,12 +71,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/textViewNumberTag"
-                    app:layout_constraintTop_toBottomOf="@+id/qr_code_image"
+                    app:layout_constraintTop_toBottomOf="@+id/guideline_hor_50"
                     app:layout_constraintBottom_toTopOf="@id/textViewModelTag"
                     app:layout_constraintVertical_bias=".1"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/guideline_ver_20"
-                    app:layout_constraintHorizontal_bias="1"
+                    app:layout_constraintHorizontal_bias=".4"
             />
 
             <TextView
@@ -67,11 +84,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/textViewNumber"
-                    app:layout_constraintStart_toEndOf="@+id/textViewNumberTag"
+                    app:layout_constraintStart_toStartOf="@id/guideline_ver_20"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="@id/textViewNumberTag"
                     app:layout_constraintVertical_bias=".0"
-                    app:layout_constraintHorizontal_bias=".2"
+                    app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintEnd_toEndOf="parent"
             />
             <TextView
@@ -173,7 +190,7 @@
                     android:id="@+id/textViewEstHoursTag"
                     app:layout_constraintTop_toBottomOf="@id/textViewHoursTag"
                     app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintBottom_toTopOf="@id/textViewSpecialPriceTag"
+                    app:layout_constraintBottom_toTopOf="@id/textViewChargeTag"
                     app:layout_constraintVertical_bias=".05"
                     app:layout_constraintStart_toStartOf="@id/textViewNumberTag"/>
             <TextView
@@ -183,25 +200,7 @@
                     android:id="@+id/textViewEstHours"
                     app:layout_constraintTop_toTopOf="@id/textViewEstHoursTag"
                     app:layout_constraintStart_toStartOf="@+id/textViewNumber"/>
-            <TextView
-                    android:textStyle="bold"
 
-                    android:text="Special Price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textViewSpecialPriceTag"
-                    app:layout_constraintTop_toBottomOf="@id/textViewEstHoursTag"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintBottom_toTopOf="@id/textViewChargeTag"
-                    app:layout_constraintVertical_bias=".05"
-                    app:layout_constraintStart_toStartOf="@id/textViewNumberTag"/>
-            <TextView
-                    android:text="TextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textViewSpecialPrice"
-                    app:layout_constraintTop_toTopOf="@id/textViewSpecialPriceTag"
-                    app:layout_constraintStart_toStartOf="@+id/textViewNumber"/>
 
             <TextView
                     android:textStyle="bold"
@@ -210,7 +209,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/textViewChargeTag"
-                    app:layout_constraintTop_toBottomOf="@id/textViewSpecialPriceTag"
+                    app:layout_constraintTop_toBottomOf="@id/textViewEstHoursTag"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintBottom_toTopOf="@id/textViewAmountTag"
                     app:layout_constraintVertical_bias=".05"
@@ -229,9 +228,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/textViewAmountTag"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewHoursTag"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewChargeTag"
                     app:layout_constraintBottom_toTopOf="@id/textViewEstAmountTag"
-                    app:layout_constraintVertical_bias=".05"
                     app:layout_constraintStart_toStartOf="@id/textViewNumberTag"/>
             <TextView
                     android:text="TextView"
@@ -249,9 +247,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/textViewEstAmountTag"
+
                     app:layout_constraintTop_toBottomOf="@+id/textViewAmountTag"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintStart_toStartOf="@id/textViewNumberTag"/>
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/textViewNumberTag"
+            />
             <TextView
                     android:text="TextView"
                     android:layout_width="wrap_content"
@@ -268,28 +268,15 @@
                     android:id="@+id/textViewSlot"
                     app:layout_constraintTop_toTopOf="@+id/textViewSlotNumberTag"
                     app:layout_constraintStart_toStartOf="@+id/textViewNumber"/>
-            <TextView
-                    android:text="CLIENT NAME"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textViewClientName"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintVertical_bias="0.060000002"/>
-            <TextView
-                    android:text="Address1, Address 2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/textViewClientName"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintVertical_bias=".01"
-                    android:id="@+id/textView13"/>
+
+
+
+
+
+
+
+
+
 
 
 

@@ -6,8 +6,10 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -47,41 +49,51 @@ public class BluetoothUtil {
     public static void sendData(byte[] bytes, BluetoothSocket socket) throws IOException {
         OutputStream os = socket.getOutputStream();
         os.write(bytes, 0, bytes.length);
-        // Setting height
-        int gs = 29;
-        os.write(intToByteArray(gs));
-        int h = 104;
-        os.write(intToByteArray(h));
-        int n = 162;
-        os.write(intToByteArray(n));
+    }
 
-        // Setting Width
-        int gs_width = 29;
-        os.write(intToByteArray(gs_width));
-        int w = 119;
-        os.write(intToByteArray(w));
-        int n_width = 2;
-        os.write(intToByteArray(n_width));
+    public static void donePrinting(OutputStream os) throws IOException {
         os.close();
     }
 
-    public static void printData(byte[] dataToPrint, Context context  ){
+    public static boolean printData(byte[] dataToPrint, Context context  ){
         BluetoothAdapter btAdapter = BluetoothUtil.getBTAdapter ();
         if (btAdapter ==  null) {
             Toast. makeText (context, "Please turn on your bluetooth to print!",Toast.LENGTH_SHORT).show();
-            return;
+            return false;
         }
         BluetoothDevice device = BluetoothUtil. getDevice (btAdapter);
         if (device == null) {
             Toast. makeText (context, "Please make sure your device has inner printer!",Toast.LENGTH_SHORT).show();
-            return;
+            return false;
         }
         try {
             BluetoothSocket socket= BluetoothUtil.getSocket(device);
             BluetoothUtil.sendData(dataToPrint,socket);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    public static OutputStream getOutputStream(Context context){
+        BluetoothAdapter btAdapter = BluetoothUtil.getBTAdapter ();
+        if (btAdapter ==  null) {
+            Toast. makeText (context, "Please turn on your bluetooth to print!",Toast.LENGTH_SHORT).show();
+            return null;
+        }
+        BluetoothDevice device = BluetoothUtil. getDevice (btAdapter);
+        if (device == null) {
+            Toast. makeText (context, "Please make sure your device has inner printer!",Toast.LENGTH_SHORT).show();
+            return null;
+        }
+        try {
+            return BluetoothUtil.getSocket(device).getOutputStream();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
 

@@ -23,7 +23,7 @@
             <!--android:layout_width="wrap_content"-->
                <!--android:layout_height="wrap_content"-->
                <!--android:src="@drawable/ic_suv_car"-->
-               <!--android:id="@+id/image_car"-->
+               <!--android:transaction_id="@+transaction_id/image_car"-->
 
     <!--/>-->
     <!--<View android:layout_width=".2dp"-->

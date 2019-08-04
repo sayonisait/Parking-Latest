@@ -16,27 +16,9 @@ public class MonthlyPlanActivity extends FragmentActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.vehicle_entry_activity);
+        setContentView(R.layout.monthly_customer_activity);
         setActionBar(findViewById(R.id.tool_bar));
-
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, MonthlyPlanFragment.newInstance()).addToBackStack("slot")
-                    .commit();
-        }
         mViewModel = ViewModelProviders.of(this).get(MonthlyViewModel.class);
-        mViewModel.createEntry();
-//        mViewModel.slotNumber.observe(this, s -> {
-//            getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.container,VehicleEntryFragment.newInstance() ).addToBackStack("monthlyPlan")
-//                    .commit();
-//        });
-        mViewModel.qrCode.observe(this, s->{
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, MonthlyPrintFragment.newInstance() ).addToBackStack("preview")
-                    .commit();
-
-        });
 
     }
 
@@ -47,8 +29,6 @@ public class MonthlyPlanActivity extends FragmentActivity  {
             finish();
         else
             super.onBackPressed();
-
-
 
     }
 

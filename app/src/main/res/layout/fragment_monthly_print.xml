@@ -10,8 +10,8 @@
     <androidx.cardview.widget.CardView
             app:cardElevation="5dp"
             android:layout_width="0dp"
-            app:layout_constraintHeight_percent=".7"
-            app:layout_constraintWidth_percent=".7"
+            app:layout_constraintHeight_percent=".9"
+            app:layout_constraintWidth_percent=".8"
                                        android:layout_height="0dp"
                                        app:layout_constraintStart_toStartOf="parent"
                                        app:layout_constraintTop_toTopOf="parent"
@@ -19,9 +19,19 @@
                                        app:layout_constraintBottom_toBottomOf="parent"
     >
         <androidx.constraintlayout.widget.ConstraintLayout
+                android:padding="10dp"
                                                            android:layout_width="match_parent"
                                                            android:layout_height="match_parent"
         >
+            <include
+                    layout="@layout/print_header"
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     app:layout_constraintTop_toTopOf="parent"
+                     app:layout_constraintStart_toStartOf="parent"
+                     app:layout_constraintEnd_toEndOf="parent"
+                     app:layout_constraintBottom_toTopOf="@id/qr_code_image"/>
+
 
             <!-- TODO: Update blank fragment layout -->
             <ImageView
@@ -29,8 +39,8 @@
                     android:id="@+id/qr_code_image"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    app:layout_constraintTop_toTopOf="@id/textViewClientName"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/header"
+                    app:layout_constraintBottom_toBottomOf="@id/textViewNameTag"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintVertical_bias="0.2"/>
@@ -43,125 +53,164 @@
                     app:layout_constraintGuide_percent=".5"
 
             />
+            <TextView
+                    android:textStyle="bold"
+                    android:text="Customer Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewNameTag"
+                    app:layout_constraintTop_toBottomOf="@+id/qr_code_image"
+                    app:layout_constraintBottom_toTopOf="@id/textViewPhoneTag"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_ver_20"
+            />
+            <TextView
+                    android:textStyle="bold"
+                    android:text="Phone"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewPhoneTag"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewNameTag"
+                    app:layout_constraintBottom_toTopOf="@id/textViewCompanyTag"
+                    app:layout_constraintStart_toStartOf="@id/textViewNameTag"
+                    app:layout_constraintEnd_toEndOf="@id/textViewNameTag"
+            />
 
+            <TextView
+                    android:textStyle="bold"
+                    android:text="Company Name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewCompanyTag"
+                    app:layout_constraintTop_toBottomOf="@id/textViewPhoneTag"
+                    app:layout_constraintBottom_toTopOf="@id/textViewNumberTag"
+                    app:layout_constraintStart_toStartOf="@id/textViewNameTag"
+                    app:layout_constraintEnd_toEndOf="@id/textViewNameTag"
+            />
 
             <TextView
                     android:textStyle="bold"
                     android:text="Vehicle Number"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/textViewNumberTag"
-                    app:layout_constraintTop_toBottomOf="@+id/qr_code_image"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintVertical_bias=".1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="@id/guideline_ver_20"
-                    app:layout_constraintHorizontal_bias="1"
+                    app:layout_constraintTop_toBottomOf="@id/textViewCompanyTag"
+                    app:layout_constraintBottom_toTopOf="@id/textViewModelTag"
+                    app:layout_constraintStart_toStartOf="@id/textViewNameTag"
+                    app:layout_constraintEnd_toEndOf="@id/textViewNameTag"
             />
-
             <TextView
+                    android:id="@+id/textViewName"
                     android:text="TextView"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    app:layout_constraintStart_toEndOf="@id/guideline_ver_20"
+                    app:layout_constraintTop_toTopOf="@id/textViewNameTag"
+                    app:layout_constraintBottom_toBottomOf="@id/textViewNameTag"
+            /> <TextView
+                android:id="@+id/textViewPhoneCustomer"
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toEndOf="@id/guideline_ver_20"
+                app:layout_constraintTop_toTopOf="@id/textViewPhoneTag"
+                app:layout_constraintBottom_toBottomOf="@id/textViewPhoneTag"
+        /> <TextView
+                android:id="@+id/textViewCompany"
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toEndOf="@id/guideline_ver_20"
+                app:layout_constraintTop_toTopOf="@id/textViewCompanyTag"
+                app:layout_constraintBottom_toBottomOf="@id/textViewCompanyTag"
+        />
+
+            <TextView
                     android:id="@+id/textViewNumber"
-                    app:layout_constraintStart_toEndOf="@+id/textViewNumberTag"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/textViewNumberTag"
-                    app:layout_constraintVertical_bias=".0"
-                    app:layout_constraintHorizontal_bias=".1"
-                    app:layout_constraintEnd_toEndOf="parent"
-            />
-            <TextView
-                    android:textStyle="bold"
-
-                    android:text="Vehicle Model"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textViewModelTag"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewNumberTag"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintVertical_bias=".05"
-                    app:layout_constraintStart_toStartOf="@id/textViewNumberTag"/>
-            <TextView
                     android:text="TextView"
                     android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    app:layout_constraintStart_toEndOf="@id/guideline_ver_20"
+                    app:layout_constraintTop_toTopOf="@id/textViewNumberTag"
+                    app:layout_constraintBottom_toBottomOf="@id/textViewNumberTag"
+            />
+            <TextView
+                    android:id="@+id/textViewModelTag"
+
+                    android:textStyle="bold"
+                    android:text="Vehicle Model"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/textViewNumberTag"
+                    app:layout_constraintBottom_toTopOf="@id/textViewStartDateTag"
+                    app:layout_constraintStart_toStartOf="@id/textViewNameTag"
+                    app:layout_constraintEnd_toEndOf="@id/textViewNameTag"/>
+            <TextView
                     android:id="@+id/textViewModel"
-                    app:layout_constraintTop_toTopOf="@+id/textViewModelTag"
-                    app:layout_constraintStart_toStartOf="@+id/textViewNumber"
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    app:layout_constraintStart_toEndOf="@id/guideline_ver_20"
+                    app:layout_constraintTop_toTopOf="@id/textViewModelTag"
+                    app:layout_constraintBottom_toBottomOf="@id/textViewModelTag"
             />
             <TextView
                     android:textStyle="bold"
 
                     android:text="Start Date"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textViewTimeTag"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewModelTag"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintVertical_bias=".05"
-                    app:layout_constraintStart_toStartOf="@id/textViewNumberTag"/>
+                    android:id="@+id/textViewStartDateTag"
+                    app:layout_constraintTop_toBottomOf="@id/textViewModelTag"
+                    app:layout_constraintBottom_toTopOf="@id/textViewEndDateTag"
+                    app:layout_constraintStart_toStartOf="@id/textViewNameTag"
+                    app:layout_constraintEnd_toEndOf="@id/textViewNameTag"/>
             <TextView
+
+                    android:id="@+id/textViewStartDate"
                     android:text="TextView"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textViewTime"
-                    app:layout_constraintTop_toTopOf="@+id/textViewTimeTag"
-                    app:layout_constraintStart_toStartOf="@+id/textViewNumber"/>
+                    android:layout_height="0dp"
+                    app:layout_constraintStart_toEndOf="@id/guideline_ver_20"
+                    app:layout_constraintTop_toTopOf="@id/textViewStartDateTag"
+                    app:layout_constraintBottom_toBottomOf="@id/textViewStartDateTag"/>
             <TextView
                     android:textStyle="bold"
 
                     android:text="End Date"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textViewSlotNumberTag"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewTimeTag"
-                    app:layout_constraintHorizontal_bias="0"
+                    android:id="@+id/textViewEndDateTag"
+                    app:layout_constraintTop_toBottomOf="@id/textViewStartDateTag"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintVertical_bias=".05"
-                    app:layout_constraintStart_toStartOf="@id/textViewNumberTag"/>
+                    app:layout_constraintStart_toStartOf="@id/textViewNameTag"
+                    app:layout_constraintEnd_toEndOf="@id/textViewNameTag"/>
             <TextView
+                    android:id="@+id/textViewEndDate"
+
                     android:text="TextView"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textViewSlot"
-                    app:layout_constraintTop_toTopOf="@+id/textViewSlotNumberTag"
-                    app:layout_constraintStart_toStartOf="@+id/textViewNumber"/>
-            <TextView
-                    android:text="CLIENT NAME"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
+                    android:layout_height="0dp"
+                    app:layout_constraintStart_toEndOf="@id/guideline_ver_20"
+                    app:layout_constraintTop_toTopOf="@id/textViewEndDateTag"
+                    app:layout_constraintBottom_toBottomOf="@id/textViewEndDateTag"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:src="@drawable/ic_print"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textViewClientName"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintVertical_bias="0.060000002"/>
-            <TextView
-                    android:text="Address1, Address 2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/textViewClientName"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintVertical_bias=".01"
-                    android:id="@+id/textView13"/>
-            <Button android:layout_width="0dp"
-                    app:layout_constraintWidth_percent=".8"
-                    android:layout_height="35dp"
                     android:background="@color/colorAccent"
                     android:textColor="@color/white"
                     android:text="PRINT"
-                    app:layout_constraintTop_toBottomOf="@id/textViewSlot"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:tint="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintVertical_bias=".5"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintHorizontal_bias=".99"
+                    app:layout_constraintVertical_bias=".99"
+                    android:id="@+id/fabPrint"
             />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

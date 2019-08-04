@@ -1,105 +1,149 @@
 package com.example.parking.ui.vehicleentry.viewmodels;
 
+import android.app.Application;
 import android.graphics.Bitmap;
-import android.graphics.Color;
+import android.util.Log;
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-import com.example.parking.AppConstants;
-import com.example.parking.entities.Entry;
-import com.example.parking.entities.MonthlyPlan;
-import com.example.parking.entities.Vehicle;
+import androidx.lifecycle.Transformations;
+import com.example.parking.data.ParkingRespository;
+import com.example.parking.data.local.entities.EntryTable;
+import com.example.parking.model.ConfigDetails;
+import com.example.parking.model.MonthlyCustomer;
+import com.example.parking.model.Entry;
+import com.example.parking.utils.QRCodeUtils;
 import com.example.parking.utils.StringUtils;
 import com.google.gson.Gson;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 
-public class VehicleEntryViewModel extends ViewModel {
+public class VehicleEntryViewModel extends AndroidViewModel {
 
-   public MutableLiveData<String> slotNumber = new MutableLiveData<>();
-   public MutableLiveData<Bitmap> qrCode= new MutableLiveData<>();
-    public MutableLiveData<MonthlyPlan> monthlyPlanMutableLiveData= new MutableLiveData<>();
-    public MutableLiveData<Entry> entryMutableLiveData= new MutableLiveData<>();
-    public MutableLiveData<String> estimatedAmountLiveData = new MutableLiveData<>();
+    public MutableLiveData<String> slotNumber = new MutableLiveData<>();
+    public MutableLiveData<Bitmap> qrCode = new MutableLiveData<>();
+    public MutableLiveData<MonthlyCustomer> monthlyPlanMutableLiveData = new MutableLiveData<>();
+   // public MutableLiveData<String> estimatedAmountLiveData = new MutableLiveData<>();
     public MutableLiveData<String> specialChargeLiveData = new MutableLiveData<>();
 
+    public boolean isExit;
+    public MutableLiveData<Entry> qrCodeMutableLiveData= new MutableLiveData<>();
     public Entry entry;
     public boolean isMonthlyPlan;
 
+    ParkingRespository repository;
+    public boolean isPrintDone;
+    LiveData<ConfigDetails> configDetails;
+    LiveData<List<Entry>> parkedEntries;
+    MutableLiveData<Boolean> entrySelectedLiveData;
 
-    public void setSpecialCharge(Double specialChargeLiveData){
-        entry.specialCharge= specialChargeLiveData;
-        setEstimatedAmount();
-        this.specialChargeLiveData.postValue(StringUtils.getAmountFormatted(entry.specialCharge));
+    public VehicleEntryViewModel(Application application) {
+        super(application);
+        repository = new ParkingRespository(application);
+        isPrintDone = false;
+        configDetails = repository.getConfig();
+        entrySelectedLiveData= new MutableLiveData<>();
 
     }
 
-    public void setEstHours(int hours){
-        entry.estimatedHours=hours;
-        setEstimatedAmount();
+    public void setSelectedEntry(Entry entry){
+        entrySelectedLiveData.setValue(true);
+        this.entry=entry;
+        this.entry.makeExit();
+    }
+    public LiveData<Boolean> getSelectedEntryFromList(){
+        return entrySelectedLiveData;
+    }
+
+    //todo move this to appropriate place
+    public LiveData<Integer> getTransactions(){
+        return  repository.fetchTransactions("2019-07-14 00:00:00","2019-07-14 23:59:59");
+    }
+
+
+
+    public LiveData<List<EntryTable>> sendUnSyncedEntries(){
+        return repository.getUnSyncedEntries();
+    }
+
+    public LiveData<ConfigDetails> getConfigDetails() {
+        return Transformations.map(configDetails, s -> {
+            if(entry !=null && entry.receipt_number==0)
+                entry.receipt_number=s.last_receipt_number+1;
+            return s;
+        });
 
     }
 
-    private void setEstimatedAmount(){
-            entry.estimatedAmount = entry.specialCharge * entry.estimatedHours;
-            if(entry.estimatedAmount>0)
-                estimatedAmountLiveData.postValue(StringUtils.getAmountFormatted(entry.estimatedAmount));
+    public LiveData<String> saveEntry() {
+        return Transformations.map(repository.sendEntryToBackend(entry), s -> {
+            Log.d("Parking Info", "entry.transaction_id =" + s);
+           // entry.transaction_id = s;
+            generrateQR(entry);
+            return s;
+        });
+    }
 
 
+//    public void setSpecialCharge(Double specialChargeLiveData) {
+//        entry.rate = specialChargeLiveData;
+//        getAmountFormatted();
+//        this.specialChargeLiveData.postValue(StringUtils.getAmountFormatted(entry.rate));
+//    }
+
+    public void setEstHours(String hours) {
+        entry.estimatedHours = Integer.parseInt(hours);
+
+    }
+
+    public String getAmountFormatted(String estimatedAmount) {
+        try {
+            entry.estimatedAmount = Double.parseDouble(estimatedAmount);
+            if (entry.estimatedAmount > 0)
+               return  StringUtils.getAmountFormatted(entry.estimatedAmount);
+        }catch (Exception ex){
+          ex.printStackTrace();
+        }
+        return "";
     }
 
 
     /* creates a new entry*/
-    public void createEntry(){
-         entry= new Entry();
-         entry.startEntry();
+    public void createEntry() {
+        entry = new Entry();
+        entry.startEntry();
+        System.out.println("Parking Info: Create entry 2");
+
     }
 
-    public void createEntryForMonthlyVehicle(String json){
-            // if entry scanned qr code is for a monthly plan car
-            MonthlyPlan monthlyPlan = new Gson().fromJson(json, MonthlyPlan.class);
-            // entry.monthlyPlan=monthlyPlan;
-            monthlyPlanMutableLiveData.setValue(monthlyPlan);
+    public void createEntryForMonthlyVehicle(String json) {
+        // if entry scanned qr code is for a monthly plan car
+        MonthlyCustomer monthlyCustomer = new Gson().fromJson(json, MonthlyCustomer.class);
+        // entry.monthlyCustomer=monthlyCustomer;
+        monthlyPlanMutableLiveData.setValue(monthlyCustomer);
     }
 
-    public void createExit(String json){
-        // if exit , qr code scanned will be for entry
-        Entry entry = new Gson().fromJson(json, Entry.class);
+    public void setEntryFromQrCode(String qrCodeData){
+        entry=new Gson().fromJson(qrCodeData, Entry.class);
         entry.makeExit();
-        this.entry=entry;
-        entryMutableLiveData.setValue(entry);
+        this.qrCodeMutableLiveData.setValue(entry);
     }
 
 
-    public void setParkingSlot(String slot){
-        entry.parkingSlot=slot;
-        slotNumber.postValue( slot);
+
+
+
+    public void setParkingSlot(String slot) {
+        entry.parkingSlot = slot;
+        slotNumber.postValue(slot);
     }
 
-    public void createQRCode(String modelName) {
-        QRCodeWriter writer = new QRCodeWriter();
-        entry.vehicle.vehicleModel=modelName;
-        try {
-            BitMatrix bitMatrix = writer.encode(new Gson().toJson(entry), BarcodeFormat.QR_CODE, 512, 512);
-            int width = bitMatrix.getWidth();
-            int height = bitMatrix.getHeight();
-            Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
-            for (int x = 0; x < width; x++) {
-                for (int y = 0; y < height; y++) {
-                    bmp.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);
-                }
-            }
-            qrCode.postValue(bmp);
+    public void generrateQR(Entry entry) {
+        Bitmap image = QRCodeUtils.generateQrCode(new Gson().toJson(entry,Entry.class));
+        if (image != null)
+            qrCode.postValue(image);
 
-        } catch (WriterException e) {
-            e.printStackTrace();
-        }
     }
+
+
 }

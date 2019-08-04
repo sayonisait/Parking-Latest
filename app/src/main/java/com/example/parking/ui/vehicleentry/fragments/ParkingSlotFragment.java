@@ -7,15 +7,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.*;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.example.parking.R;
 import com.example.parking.ui.vehicleentry.adapters.ParkingSlotAdapter;
 import com.example.parking.ui.vehicleentry.viewmodels.ParkingSlotViewModel;
+
+import java.util.List;
 
 public class ParkingSlotFragment extends Fragment {
 
@@ -38,6 +39,8 @@ public class ParkingSlotFragment extends Fragment {
         return view;
     }
 
+
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -48,9 +51,22 @@ public class ParkingSlotFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         ParkingSlotViewModel mViewModel = ViewModelProviders.of(this).get(ParkingSlotViewModel.class);
-        recyclerView.setLayoutManager(new GridLayoutManager(mContext, 11,GridLayoutManager.HORIZONTAL,false));//todo change number of columns
-        recyclerView.setAdapter(new ParkingSlotAdapter(mViewModel.getParkingSpaces(),(FragmentActivity) mContext));
-        ((FragmentActivity)  mContext). getActionBar().setTitle("Select slot");
+        LiveData<String> slotsCOunt = mViewModel.getParkingSlotsCount();
+        LiveData<List<String>> occupiedSlots= mViewModel.getOccupiedSlots();
+        recyclerView.setLayoutManager(new GridLayoutManager(mContext, 9, GridLayoutManager.VERTICAL, false));
+        ParkingSlotAdapter adapter=new ParkingSlotAdapter(0, (FragmentActivity) mContext);
+        recyclerView.setAdapter(adapter);
+
+        slotsCOunt.observe(this, s -> {
+            adapter.setCount(Integer.parseInt(slotsCOunt.getValue()));
+        });
+
+        occupiedSlots.observe(this, s->{
+            adapter.setOccupiedSlots(occupiedSlots.getValue());
+        });
+
+
+        ((FragmentActivity) mContext).getActionBar().setTitle("Select slot");
 
 
     }

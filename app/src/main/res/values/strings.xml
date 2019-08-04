@@ -11,9 +11,85 @@
 <string-array name="models">
     <item>Toyota Yaris</item>
     <item>Toyota Innova</item>
-    <item>Nissan Sunny</item>
+    <item> Nissan Sunny</item>
     <item>Toyota Corolla</item>
     <item>Toyota Camry</item>
+    <item> Honda Accord</item>
+    <item> Honda Amaze</item>
+    <item>Honda Crosstour</item>
+    <item>  Honda Brio</item>
+    <item> Honda BR-V</item>
+    <item>  Honda City</item>
+    <item> Honda Civic</item>
+    <item> Honda Clarity</item>
+    <item> Honda Crider</item>
+    <item> Honda CR-V</item>
+    <item>  Honda HR-V</item>
+    <item>  Honda MR-V</item>
+    <item>  Honda  Preulde</item>
+    <item> Honda S2000</item>
+    <item>  Honda Odyssey</item>
+    <item>  Honda Pilot</item>
+    <item> Honda Elysion</item>
+    <item>  Honda Jazz</item>
+    <item>   Honda Hybrid</item>
+    <item>  Honda Shuttle</item>
+    <item>  Honda Freed</item>
+
+    <item> Toyota 4Runner</item>
+    <item> Toyota 86</item>
+    <item> Toyota Alphard</item>
+    <item> Toyota Aurion</item>
+    <item> Toyota Avalon</item>
+    <item> Toyota Avanza</item>
+    <item> Toyota Echo</item>
+    <item> Toyota FJ Cruiser</item>
+    <item> Toyota Fortuner</item>
+    <item>  Toyota Hiace</item>
+    <item>  Toyota Highlander</item>
+    <item>  Toyota Hilux</item>
+    <item>  Toyota IQ</item>
+    <item> Toyota C-HR</item>
+    <item>  Toyota Celica</item>
+    <item>  Toyota Land Cruiser</item>
+    <item>  Toyota Pickup</item>
+    <item>  Toyota Sequoia</item>
+    <item> Toyota Siennia</item>
+    <item> Toyota Supra</item>
+    <item> Toyota Tacoma</item>
+    <item> Toyota Prado</item>
+    <item> Toyota Previa</item>
+    <item>  Toyota Prius</item>
+    <item> Toyota Rav 4</item>
+    <item> Toyota Rush</item>
+    <item> Toyota Tundra</item>
+    <item> Toyota Zelas</item>
+    <item> Nissan 280ZX</item>
+    <item> Nissan 300ZX</item>
+    <item> Nissan 370z</item>
+    <item> Nissan Altima</item>
+    <item> Nissan Armada</item>
+    <item> Nissan GT-R</item>
+    <item> Nissan Juke</item>
+    <item> Nissan Kicks</item>
+    <item> Nissan Maxima</item>
+    <item> Nissan Micra</item>
+    <item> Nissan Murano</item>
+    <item> Nissan Navara</item>
+    <item> Nissan Pathfinder</item>
+    <item> Nissan Patrol</item>
+    <item> Nissan Patrol Pickup</item>
+    <item> Nissan Qashqai</item>
+    <item> Nissan Rougue</item>
+    <item> Nissan Sentra</item>
+    <item> Nissan Sivilia</item>
+    <item> Nissan Skyline</item>
+    <item> Nissan Tida</item>
+    <item> Nissan Van</item>
+    <item> Nissan X-Trail</item>
+    <item> Nissan Xterra</item>
+    <item> Nissan Versa</item>
+
 
 
 </string-array>

@@ -66,7 +66,7 @@ public class ParkingSlotFragment extends Fragment {
         });
 
 
-        ((FragmentActivity) mContext).getActionBar().setTitle("Select slot");
+       // ((FragmentActivity) mContext).getActionBar().setTitle("Select slot");
 
 
     }

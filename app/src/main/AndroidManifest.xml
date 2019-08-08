@@ -17,8 +17,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
 
-        <activity android:name=".ui.vehicleentry.VehicleEntryActivity"
-                  android:windowSoftInputMode="adjustPan">
+        <activity android:name=".ui.vehicleentry.VehicleEntryActivity" android:label="Vehicle Entry"
+                  android:windowSoftInputMode="adjustPan" >
             <nav-graph android:value="@navigation/navigation_graph_entry" />
         </activity>
         <activity android:name=".ui.monthly.MonthlyPlanActivity"

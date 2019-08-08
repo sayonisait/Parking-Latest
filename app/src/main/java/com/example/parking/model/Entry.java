@@ -46,6 +46,7 @@ public class Entry {
 
     public Vehicle vehicle;
     public String phoneNumber;
+    public String name;
 
 
     public String getAppEntryTime(){

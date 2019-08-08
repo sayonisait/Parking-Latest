@@ -8,7 +8,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.*;
 import android.widget.*;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.*;
 import android.os.Bundle;
@@ -25,6 +24,7 @@ import com.example.parking.ui.vehicleentry.viewmodels.VehicleEntryViewModel;
 import com.example.parking.utils.StringUtils;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.tomlonghurst.expandablehinttext.ExpandableHintText;
 
 import java.util.Objects;
 
@@ -32,60 +32,56 @@ public class VehicleEntryFragment extends Fragment {
 
     private VehicleEntryViewModel mViewModel;
 
-    @BindView(R.id.parent)
-    ConstraintLayout parentLayout;
 
-    @BindView(R.id.textInputStartDate)
-    TextInputLayout textInputStartDate;
-    @BindView(R.id.textInputEndDate)
-    TextInputLayout textInputEndDate;
-    @BindView(R.id.editTextStartDate)
-    EditText editTextStartDate;
-    @BindView(R.id.editTextEndDate)
-    EditText editEndDate;
-    @BindView(R.id.editTextAmountCalculated)
-    EditText editTextAmountCalculated;
-    @BindView(R.id.editTextAmount)
-    EditText editTextAmount;
 
-    @BindView(R.id.textInputModel)
-    TextInputLayout textInputModel;
-    @BindView(R.id.textInputNumber)
-    TextInputLayout textInputNumber;
-    @BindView(R.id.editTextModel)
-    AutoCompleteTextView editTextModel;
-    @BindView(R.id.editTextNumber)
-    EditText editTextNumber;
-    @BindView(R.id.editTextEntryTime)
-    EditText editTextTime;
-    @BindView(R.id.textInputExitime)
-    TextInputLayout textInputExitTime;
-    @BindView(R.id.editExitTime)
-    EditText editExitTime;
-    @BindView(R.id.editTextSlot)
-    TextInputEditText editTextSlot;
-    @BindView(R.id.buttonSubmit)
-    Button buttonSubmit;
-
-//    @BindView(R.id.editTextCharge)
-//    EditText editTextCharge;
-    @BindView(R.id.editTextEstAmount)
-    EditText editTextEstAmount;
-    @BindView(R.id.textInputEstAmount)
-    TextInputLayout textInputEstAmount;
-    @BindView(R.id.editTextEstHours)
-    EditText editTextEstHours;
-    @BindView(R.id.editTextHours)
-    EditText editTextHours;
-//    @BindView(R.id.editTextSpecialCharge)
-//    EditText editTextSpecialCharge;
-//    @BindView(R.id.textInputSpecialCharge)
-//    TextInputLayout textInputSpecialCharge;
-    @BindView(R.id.textInputEstHours)
-    TextInputLayout textInputEstHours;
+    @BindView(R.id.textInputHourlyCharge)
+    TextView textInputHourlyCharge;
+    @BindView(R.id.editTextHourlyCharge)
+    TextView editTextHourlyCharge;
     @BindView(R.id.editTextPhone)
     EditText editTextPhone;
 
+
+
+    @BindView(R.id.textInputName)
+    TextInputLayout textInputName;
+    @BindView(R.id.editTextName)
+    TextInputEditText editTextName;
+    @BindView(R.id.textInputModel)
+    TextInputLayout textInputModel;
+
+    @BindView(R.id.editTextModel)
+    AutoCompleteTextView editTextModel;
+    @BindView(R.id.editTextNumber)
+    ExpandableHintText editTextNumber;
+    @BindView(R.id.editTextEntryTime)
+    TextView editTextTime;
+
+    @BindView(R.id.editTextSlot)
+    TextView editTextSlot;
+    @BindView(R.id.buttonSubmit)
+    Button buttonSubmit;
+
+
+//    @BindView(R.id.editTextEstAmount)
+//    EditText editTextEstAmount;
+//    @BindView(R.id.textInputEstAmount)
+//    TextInputLayout textInputEstAmount;
+//    @BindView(R.id.editTextEstHours)
+//    EditText editTextEstHours;
+//    @BindView(R.id.editTextHours)
+//    EditText editTextHours;
+//
+//    @BindView(R.id.textInputEstHours)
+//    TextInputLayout textInputEstHours;
+//@BindView(R.id.editTextAmountCalculated)
+//EditText editTextAmountCalculated;
+//    @BindView(R.id.editTextAmount)
+//    EditText editTextAmount;
+//@BindView(R.id.textInputExitime)
+//TextInputLayout textInputExitTime;
+//    @BindView(R.id.editExitTime)
+//    EditText editExitTime;
 
     public static VehicleEntryFragment newInstance() {
         return new VehicleEntryFragment();
@@ -114,35 +110,33 @@ public class VehicleEntryFragment extends Fragment {
         return true;
     }
 
-    @SuppressLint("RestrictedApi")
-    @Override
-    public void onCreateOptionsMenu(
-            Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.entry, menu);
-         super.onCreateOptionsMenu(menu, inflater);
-        //getMenuInflater().inflate(R.menu.entry, menu);
-//        if(menu instanceof MenuBuilder){
-//            MenuBuilder m = (MenuBuilder) menu;
-//            m.setOptionalIconsVisible(true);
-//        }
-    }
+//    @SuppressLint("RestrictedApi")
+//    @Override
+//    public void onCreateOptionsMenu(
+//            Menu menu, MenuInflater inflater) {
+//        inflater.inflate(R.menu.entry, menu);
+//         super.onCreateOptionsMenu(menu, inflater);
+//        //getMenuInflater().inflate(R.menu.entry, menu);
+////        if(menu instanceof MenuBuilder){
+////            MenuBuilder m = (MenuBuilder) menu;
+////            m.setOptionalIconsVisible(true);
+////        }
+//    }
 
     NavController navController;
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        System.out.println("Parking Info: started fragments on create");
 
         mViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(VehicleEntryViewModel.class);
 
         editTextModel.setAdapter(new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.models)));
-        System.out.println("Parking Info: Trying to access entry time");
 
         //if entry is created, then display
         if(mViewModel.entry!=null) {
             editTextTime.setText(mViewModel.entry.getAppEntryTime());
-//            editTextCharge.setText(StringUtils.getAmountFormatted(mViewModel.entry.hourlyCharge));
+            editTextHourlyCharge.setText(StringUtils.getAmountFormatted(mViewModel.entry.hourlyCharge));
         }
 
         navController = NavHostFragment.findNavController(VehicleEntryFragment.this);
@@ -177,7 +171,7 @@ public class VehicleEntryFragment extends Fragment {
             switch (v.getId()) {
                 case R.id.editTextNumber:
                     mViewModel.entry.vehicle.vehicleNumber = text;
-                    textInputNumber.setError(null);
+                   // textInputNumber.setError(null);
                     break;
                 case R.id.editTextModel:
                     mViewModel.entry.vehicle.vehicleModel = text;
@@ -187,17 +181,21 @@ public class VehicleEntryFragment extends Fragment {
                     mViewModel.entry.parkingSlot = text;
                     break;
 
-                case R.id.editTextEstHours:
-                    mViewModel.setEstHours(text);
-                   textInputEstHours.setError(null);
-
-                    break;
-                case R.id.editTextEstAmount:
-                   editTextEstAmount.setText( mViewModel.getAmountFormatted(text));
-                   textInputEstAmount.setError(null);
-                   break;
+//                case R.id.editTextEstHours:
+//                    mViewModel.setEstHours(text);
+//                   textInputEstHours.setError(null);
+//
+//                    break;
+//                case R.id.editTextEstAmount:
+//                   editTextEstAmount.setText( mViewModel.getAmountFormatted(text));
+//                   textInputEstAmount.setError(null);
+//                   break;
                 case R.id.editTextPhone:
                     mViewModel.entry.phoneNumber=text;
+                    break;
+                case R.id.editTextName:
+                    mViewModel.entry.name=text;
+                    break;
 
             }
 
@@ -205,8 +203,9 @@ public class VehicleEntryFragment extends Fragment {
 
         editTextNumber.setOnFocusChangeListener(focusChangeListener);
         editTextModel.setOnFocusChangeListener(focusChangeListener);
-        editTextEstAmount.setOnFocusChangeListener(focusChangeListener);
-        editTextEstHours.setOnFocusChangeListener(focusChangeListener);
+        //todo commented two lines
+//        editTextEstAmount.setOnFocusChangeListener(focusChangeListener);
+//        editTextEstHours.setOnFocusChangeListener(focusChangeListener);
 
         //when slot number is set after selected by user, display in edit text
         mViewModel.slotNumber.observe(this, s -> {
@@ -240,23 +239,25 @@ public class VehicleEntryFragment extends Fragment {
                 isValidated = false;
             }
 
-            if (editTextNumber.getText().toString().trim().equals("")) {
-                textInputNumber.setError("Field can not be empty");
-                isValidated = false;
-            }
+//            if (editTextNumber.getText().toString().trim().equals("")) {
+//                editTextNumber.setEr
+//                isValidated = false;
+//            }
 
 
-            // if estimated amount is entered then estimated hours is also mandatory
-            if (editTextEstHours.getText().toString().trim().equals("") && !editTextEstAmount.getText().toString().trim().equals("")) {
-                textInputEstHours.setError("Field can not be empty");
-                isValidated = false;
-            }
+            //todo commented two lines
 
-            // if estimated hours is entered then estimated amount is also mandatory
-            if (!editTextEstHours.getText().toString().trim().equals("") && editTextEstAmount.getText().toString().trim().equals("")) {
-                textInputEstAmount.setError("Field can not be empty");
-                isValidated = false;
-            }
+//            // if estimated amount is entered then estimated hours is also mandatory
+//            if (editTextEstHours.getText().toString().trim().equals("") && !editTextEstAmount.getText().toString().trim().equals("")) {
+//                textInputEstHours.setError("Field can not be empty");
+//                isValidated = false;
+//            }
+//
+//            // if estimated hours is entered then estimated amount is also mandatory
+//            if (!editTextEstHours.getText().toString().trim().equals("") && editTextEstAmount.getText().toString().trim().equals("")) {
+//                textInputEstAmount.setError("Field can not be empty");
+//                isValidated = false;
+//            }
 
 
             //validating special charge not greater than actual charge
@@ -288,7 +289,7 @@ public class VehicleEntryFragment extends Fragment {
 //                    ((FragmentActivity) mContext).finish();
             }
         });
-        ((FragmentActivity) mContext).getActionBar().setTitle("Vehicle EntryTable");
+        //((FragmentActivity) mContext).getActionBar().setTitle("Regular Entry");
 
     }
 
@@ -338,27 +339,23 @@ public class VehicleEntryFragment extends Fragment {
        // editTextSlot.setFocusable(false);
         editTextTime.setText(s.getAppEntryTime());
         editTextSlot.setText(s.parkingSlot);
+        editTextHourlyCharge.setText(StringUtils.getAmountFormattedWithCurrency(s.hourlyCharge));
         editTextPhone.setText(s.phoneNumber);
         editTextNumber.setText(s.vehicle.vehicleNumber);
         editTextModel.setText(s.vehicle.vehicleModel);
-        editExitTime.setText(s.getAppExitTime());
-        editTextHours.setText(s.hours);
 
-//        editTextSpecialCharge.setFocusableInTouchMode(false);
-//        editTextSpecialCharge.setFocusable(false);
-        editTextEstAmount.setFocusable(false);
-        editTextEstHours.setFocusableInTouchMode(false);
-        editTextEstHours.setFocusable(false);
-        editTextEstAmount.setFocusableInTouchMode(false);
-        //editTextPhone.setText(mViewModel.);
-        editTextAmountCalculated.setText(StringUtils.getAmountFormatted(s.calculatedAmount));
-        editTextAmount.setText(StringUtils.getAmountFormatted(s.amountToBePaid));
 
-        if (s.estimatedHours != 0)
-            editTextEstHours.setText(StringUtils.getAmountFormatted(s.estimatedHours));
-//        if (s.rate != 0)
-//            editTextSpecialCharge.setText(StringUtils.getAmountFormatted(s.rate));
-        if (s.estimatedAmount != 0)
-            editTextEstAmount.setText(String.valueOf(s.estimatedAmount));
+//        editExitTime.setText(s.getAppExitTime());
+//        editTextHours.setText(s.hours);
+//        editTextEstAmount.setFocusable(false);
+//        editTextEstHours.setFocusableInTouchMode(false);
+//        editTextEstHours.setFocusable(false);
+//        editTextEstAmount.setFocusableInTouchMode(false);
+//        editTextAmountCalculated.setText(StringUtils.getAmountFormatted(s.calculatedAmount));
+//        editTextAmount.setText(StringUtils.getAmountFormatted(s.amountToBePaid));
+//        if (s.estimatedHours != 0)
+//            editTextEstHours.setText(StringUtils.getAmountFormatted(s.estimatedHours));
+//        if (s.estimatedAmount != 0)
+//            editTextEstAmount.setText(String.valueOf(s.estimatedAmount));
     }
 }

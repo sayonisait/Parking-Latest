@@ -8,5 +8,6 @@
     <color name="white">#ffffff</color>
     <color name="light_blue">#40c4ff</color>
     <color name="background_gray">#f2f2f2</color>
+    <color name="text_color">#888888</color>
 
 </resources>

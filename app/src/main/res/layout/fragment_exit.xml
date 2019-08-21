@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout
+
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="android.view.View"/>
+
+        <import type="com.example.parking.utils.StringUtils"/>
+        <variable name="parkedVehicle" type="com.example.parking.model.Entry"/>
+        <variable name="viewmodel" type="com.example.parking.ui.vehicleexit.VehicleExitViewModel"/>
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+
+
+
+
+    <LinearLayout
+            android:layout_margin="20dp"
+            android:id="@+id/layout_main"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+           app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintWidth_percent=".9"
+            app:layout_constraintHeight_percent=".7"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_weight="1.5"
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:id="@+id/card1"
+            android:visibility="visible"
+            style="@style/CardEntryScreen"
+           >
+
+
+        <TextView
+
+                app:layout_constraintVertical_chainStyle="spread_inside"
+                android:gravity="center_vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="0dp"
+                android:layout_width="0dp"
+                android:id="@+id/txt_entry_time_tag"
+                android:text="Entry Time"
+                app:layout_constraintEnd_toStartOf="@id/txt_entry_time"
+                app:layout_constraintBottom_toTopOf="@id/line1"
+        />
+
+        <TextView
+
+                style="@style/GeneralTextViewStyle"
+                android:gravity="end|center_vertical"
+                app:layout_constraintStart_toEndOf="@id/txt_entry_time_tag"
+                app:layout_constraintTop_toTopOf="@id/txt_entry_time_tag"
+                app:layout_constraintBottom_toBottomOf="@id/txt_entry_time_tag"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_height="0dp"
+                android:layout_width="0dp"
+                android:id="@+id/txt_entry_time"
+                android:text="@{parkedVehicle.appEntryTime}"
+        />
+
+        <View
+                android:id="@+id/line1"
+                app:layout_constraintStart_toStartOf="@id/txt_entry_time_tag"
+                app:layout_constraintEnd_toEndOf="@id/txt_entry_time"
+                style="@style/LineExitScreen"
+              app:layout_constraintTop_toBottomOf="@id/txt_entry_time_tag"
+              app:layout_constraintBottom_toTopOf="@id/txt_exit_time_tag"/>
+        <TextView
+                android:gravity="center_vertical"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="@id/txt_entry_time_tag"
+                app:layout_constraintEnd_toEndOf="@id/txt_entry_time_tag"
+                app:layout_constraintTop_toBottomOf="@id/line1"
+                app:layout_constraintBottom_toTopOf="@id/line2"
+                android:hint="Exit Time"
+                style="@style/GeneralEditTextStyle"
+                android:id="@+id/txt_exit_time_tag"
+        />
+
+        <TextView
+                style="@style/GeneralTextViewStyle"
+
+                android:gravity="end|center_vertical"
+                app:layout_constraintStart_toStartOf="@id/txt_entry_time"
+                app:layout_constraintTop_toTopOf="@id/txt_exit_time_tag"
+                app:layout_constraintBottom_toBottomOf="@id/txt_exit_time_tag"
+                app:layout_constraintEnd_toEndOf="@id/txt_entry_time"
+                android:layout_height="0dp"
+                android:layout_width="0dp"
+                android:id="@+id/txt_exit_time"
+                android:text="@{parkedVehicle.appExitTime}"
+
+        />
+        <View
+                android:id="@+id/line2"
+                style="@style/LineExitScreen"
+                app:layout_constraintStart_toStartOf="@id/txt_entry_time_tag"
+                app:layout_constraintEnd_toEndOf="@id/txt_entry_time"
+                app:layout_constraintTop_toBottomOf="@id/txt_exit_time_tag"
+                app:layout_constraintBottom_toTopOf="@id/txt_hours_tag"/>
+
+        <TextView
+
+                android:gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="@id/txt_entry_time_tag"
+                app:layout_constraintEnd_toEndOf="@id/txt_entry_time_tag"
+                app:layout_constraintTop_toBottomOf="@id/line2"
+                app:layout_constraintBottom_toTopOf="@id/line3"
+                android:hint="Parking Duration"
+                style="@style/TagTextViewStyle"
+                android:id="@+id/txt_hours_tag"
+        />
+
+        <TextView
+                style="@style/GeneralTextViewStyle"
+
+                android:gravity="end|center_vertical"
+                app:layout_constraintStart_toStartOf="@id/txt_entry_time"
+                app:layout_constraintEnd_toEndOf="@id/txt_entry_time"
+                app:layout_constraintTop_toTopOf="@id/txt_hours_tag"
+                app:layout_constraintBottom_toBottomOf="@id/txt_hours_tag"
+                android:layout_height="0dp"
+                android:layout_width="0dp"
+                android:id="@+id/txt_hours"
+                android:text="@{parkedVehicle.hours}"
+
+        />
+        <View
+                android:id="@+id/line3"
+                style="@style/LineExitScreen"
+                app:layout_constraintStart_toStartOf="@id/txt_entry_time_tag"
+                app:layout_constraintEnd_toEndOf="@id/txt_entry_time"
+                app:layout_constraintTop_toBottomOf="@id/txt_hours_tag"
+                app:layout_constraintBottom_toTopOf="@id/txt_hourly_charge_tag"/>
+        <TextView
+                android:gravity="center_vertical"
+                app:layout_constraintBottom_toTopOf="@+id/line4"
+                app:layout_constraintStart_toStartOf="@id/txt_entry_time_tag"
+                app:layout_constraintTop_toBottomOf="@id/line3"
+                app:layout_constraintEnd_toStartOf="@id/txt_hourly_charge"
+                android:text="Hourly Charge"
+                android:id="@+id/txt_hourly_charge_tag"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+        />
+        <TextView
+                android:gravity="center_vertical"
+
+                app:layout_constraintStart_toStartOf="@id/txt_hourly_charge_tag"
+                app:layout_constraintTop_toBottomOf="@+id/line4"
+                app:layout_constraintEnd_toEndOf="@id/txt_hourly_charge_tag"
+                app:layout_constraintBottom_toTopOf="@id/buttonSubmit"
+                android:text="Amount"
+                android:id="@+id/txt_amount_tag"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+        />
+        <View
+                android:id="@+id/line4"
+                style="@style/LineExitScreen"
+                app:layout_constraintStart_toStartOf="@id/txt_entry_time_tag"
+                app:layout_constraintEnd_toEndOf="@id/txt_entry_time"
+                app:layout_constraintTop_toBottomOf="@id/txt_hourly_charge_tag"
+                app:layout_constraintBottom_toTopOf="@id/txt_amount_tag"/>
+
+        <View
+                android:id="@+id/line5"
+                style="@style/LineExitScreen"
+                app:layout_constraintStart_toStartOf="@id/txt_entry_time_tag"
+                app:layout_constraintEnd_toEndOf="@id/txt_entry_time"
+                app:layout_constraintTop_toBottomOf="@id/txt_amount_tag"
+                app:layout_constraintBottom_toTopOf="@id/buttonSubmit"/>
+        <TextView
+                style="@style/GeneralTextViewStyle"
+                android:text="@{StringUtils.getAmountFormatted(parkedVehicle.hourlyCharge)}"
+
+                android:gravity="end|center_vertical"
+                app:layout_constraintStart_toEndOf="@id/txt_hourly_charge_tag"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/txt_hourly_charge_tag"
+                app:layout_constraintBottom_toBottomOf="@id/txt_hourly_charge_tag"
+                android:id="@+id/txt_hourly_charge"
+                android:layout_width="0dp"
+                android:layout_height="0dp"/>
+
+        <TextView
+                style="@style/GeneralTextViewStyle"
+                android:gravity="end|center_vertical"
+                android:text="@{StringUtils.getAmountFormatted(parkedVehicle.amountToBePaid)}"
+                android:id="@+id/txt_amount"
+                app:layout_constraintStart_toStartOf="@id/txt_hourly_charge"
+                app:layout_constraintEnd_toEndOf="@id/txt_hourly_charge"
+                app:layout_constraintTop_toTopOf="@id/txt_amount_tag"
+                app:layout_constraintBottom_toBottomOf="@id/txt_amount_tag"
+                android:layout_width="0dp"
+                android:layout_height="0dp"/>
+
+        <Button
+                app:layout_constraintTop_toBottomOf="@id/line5"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="10dp"
+                android:visibility="visible"
+                android:layout_gravity="center_horizontal"
+                android:tint="@color/white"
+                android:src="@drawable/ic_print"
+                android:id="@+id/buttonSubmit"
+                android:textColorHint="@color/white"
+                android:background="@color/colorAccent"
+                android:hint="Submit"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </LinearLayout>
+
+
+
+    <include layout="@layout/progress" android:visibility="gone"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

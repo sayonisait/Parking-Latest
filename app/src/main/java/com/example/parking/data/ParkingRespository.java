@@ -59,6 +59,7 @@ public class ParkingRespository {
         parkingDao=database.parkingDao();
         mContext=application.getApplicationContext();
 
+
     }
 
     public LiveData<List<Entry>> getParkedEntries(String vehicleNumberQuery) {
@@ -68,6 +69,7 @@ public class ParkingRespository {
                 s -> {
                     ArrayList<Entry> entries = new ArrayList<>();
                     for (EntryTable entryTable : s) {
+                        Log.d("Parking Info", "Parked Vehcile Exit Time is "+entryTable.exitTime);
                         entries.add(new Entry(entryTable));
                     }
                     return entries;
@@ -137,7 +139,6 @@ public class ParkingRespository {
     }
 
     private void saveEntry(Entry entry, boolean synedToBackend){
-
        EntryTable table = new EntryTable();
        if(entry.exitTime!=null ){ //if exit time presents
            table.hours=entry.hours;
@@ -198,7 +199,8 @@ public class ParkingRespository {
         long id;
         @Override
         protected String doInBackground(EntryTable... entries) {
-            parkingDao.upsertEntry(entries[0]);
+
+            parkingDao.insertEntry(entries[0]);
             Log.d(AppConstants.LOG,"Udpating receipt number as "+entries[0].receiptNumber);
             parkingDao.insertConfig(new ConfigTable(LAST_RECEIPT_NUMBER, String.valueOf(entries[0].receiptNumber)));
 //                Log.d(AppConstants.LOG,"Udpating receipt number successful ");

@@ -26,8 +26,8 @@ android {
         applicationId "com.example.parking"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 3
-        versionName "1.2"
+        versionCode 7
+        versionName "2.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
 
@@ -102,5 +102,8 @@ dependencies {
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
     //date time picker
-    implementation 'com.github.thomhurst:ExpandableHintText:1.0.4'
+    implementation 'com.wdullaer:materialdatetimepicker:4.2.1'
+    implementation 'com.rengwuxian.materialedittext:library:2.1.4'
+    implementation 'com.github.beigirad:ZigzagView:1.0.7'
+
 }

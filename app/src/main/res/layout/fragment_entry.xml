@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+
+        xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/background_gray">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            app:layout_constraintHeight_percent=".25"
+            android:background="@drawable/background_blue"
+            android:id="@+id/appbar"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+        <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                app:layout_constraintGuide_percent=".5"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+<Toolbar
+        android:title="Vehicle Exit"
+android:titleTextColor="@color/white"
+app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"/>
+
+
+
+
+        <TextView
+
+                    style="@style/HeaderTagTextViewStyle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/toolbar"
+                    app:layout_constraintEnd_toStartOf="@id/guideline"
+                    android:layout_width="wrap_content"
+                    android:text="Entry Time"
+
+                    android:id="@+id/textInputEntryTime"
+            />
+                <TextView
+                        app:layout_constraintStart_toStartOf="@id/textInputEntryTime"
+                        app:layout_constraintEnd_toEndOf="@id/textInputEntryTime"
+                        android:layout_width="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/textInputEntryTime"
+                        style="@style/ContentTextStyle"
+                        android:text="12/03/134"
+                                android:id="@+id/editTextEntryTime"
+                        />
+                    <TextView
+
+                            style="@style/HeaderTagTextViewStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:text="Hourly Charge"
+                            android:id="@+id/textInputHourlyCharge"
+
+                            app:layout_constraintTop_toTopOf="@id/textInputEntryTime"
+                            app:layout_constraintBottom_toBottomOf="@id/textInputEntryTime"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/guideline"
+                    />
+                        <TextView
+                                android:gravity="center"
+                                android:layout_width="0dp"
+                                app:layout_constraintEnd_toEndOf="@id/textInputHourlyCharge"
+                                app:layout_constraintTop_toBottomOf="@id/textInputHourlyCharge"
+                                app:layout_constraintStart_toStartOf="@id/textInputHourlyCharge"
+                                style="@style/ContentTextStyle"
+                                android:id="@+id/editTextHourlyCharge"
+                                android:text="Hourly Charge"
+                        />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+<androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_hor"
+        android:orientation="horizontal"
+        android:layout_width="match_parent" app:layout_constraintGuide_percent=".26" android:layout_height="1dp"/>
+                    <LinearLayout
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:padding="20dp"
+                            android:layout_height="wrap_content"
+
+                            app:layout_constraintWidth_percent=".9"
+                            android:baselineAligned="false"
+                            android:layout_width="0dp"
+                            android:id="@+id/card1"
+                            app:layout_constraintTop_toTopOf="@id/guideline_hor"
+                            app:layout_constraintBottom_toTopOf="@id/card2"
+                            android:visibility="visible"
+                            style="@style/CardEntryScreen"
+                    >
+                        <com.rengwuxian.materialedittext.MaterialEditText
+                                style="@style/GeneralEditTextStyle"
+                                android:drawableStart="@drawable/ic_car_blue"
+                                android:inputType="textCapCharacters"
+                                android:id="@+id/editTextSlot"
+                                android:hint="Parking Slot"
+                                app:met_floatingLabel="highlight"
+
+
+                />
+
+
+                    <com.rengwuxian.materialedittext.MaterialEditText
+                            style="@style/GeneralEditTextStyle"
+                            android:drawableStart="@drawable/ic_car_blue"
+                            android:inputType="textCapCharacters"
+                            android:id="@+id/editTextNumber"
+                            android:hint="Vehicle number"
+                            app:met_floatingLabel="highlight"
+
+
+                    />
+
+                    <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
+                            app:met_floatingLabel="highlight"
+
+                            android:hint="Vehicle Model"
+                            style="@style/GeneralEditTextStyle"
+                            android:drawableStart="@drawable/ic_suv_car"
+                            android:id="@+id/editTextModel"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                    app:layout_constraintStart_toStartOf="@id/card1"
+                    app:layout_constraintEnd_toEndOf="@id/card1"
+                    android:id="@+id/card2"
+                    app:layout_constraintTop_toBottomOf="@+id/card1"
+                    app:layout_constraintBottom_toTopOf="@id/buttonSubmit"
+                    android:layout_width="0dp"
+                    android:visibility="visible"
+                    style="@style/CardEntryScreen"
+            >
+
+                    <com.rengwuxian.materialedittext.MaterialEditText
+                            android:hint="Customer Name"
+                            app:met_floatingLabel="highlight"
+
+                            style="@style/GeneralEditTextStyle"
+                            android:drawableStart="@drawable/ic_person"
+                            android:inputType="textCapSentences"
+                            android:id="@+id/editTextName"
+                    />
+
+                    <com.rengwuxian.materialedittext.MaterialEditText
+                            style="@style/GeneralEditTextStyle"
+                            android:hint="Phone Number"
+                            app:met_floatingLabel="highlight"
+
+                            android:drawableStart="@drawable/ic_phone"
+
+                            android:inputType="phone"
+                            android:id="@+id/editTextPhone"
+                    />
+            </LinearLayout>
+
+
+
+    <include layout="@layout/progress" android:visibility="gone"/>
+    
+    <Button
+                    app:layout_constraintTop_toBottomOf="@id/card2"
+                    app:layout_constraintBottom_toTopOf="@id/guideline_bottom"
+                    app:layout_constraintStart_toStartOf="@id/card1"
+                    app:layout_constraintEnd_toEndOf="@id/card1"
+                    android:visibility="visible"
+                    android:layout_gravity="center_horizontal"
+                    android:tint="@color/white"
+                    android:src="@drawable/ic_print"
+                    android:id="@+id/buttonSubmit"
+                    android:textColorHint="@color/white"
+                    android:background="@color/colorAccent"
+                    android:hint="Submit"
+                    android:layout_width="0dp"
+                    android:layout_height="45dp"/>
+
+
+
+
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_bottom"
+            app:layout_constraintGuide_percent=".8"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

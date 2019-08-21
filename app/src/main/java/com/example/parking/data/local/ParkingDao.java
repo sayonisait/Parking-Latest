@@ -28,14 +28,13 @@ public abstract class ParkingDao implements BaseDao {
     //todo order by entry time
 
 
-    @Query("SELECT * from entry_exit where exit_time is null AND  vehicle_number LIKE :query ")
+    @Query("SELECT * from entry_exit where exit_time is null and vehicle_number LIKE :query ")
     public abstract LiveData<List<EntryTable>> getParkedEntries(String query);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public abstract void insertConfig(ConfigTable entry);
 
-    @Update(onConflict = OnConflictStrategy.ABORT)
-    public abstract int updateConfig(ConfigTable entry);
+
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
     public abstract void insertConfig(List<ConfigTable> entries);
@@ -65,25 +64,25 @@ public abstract class ParkingDao implements BaseDao {
     @Update
     public abstract int updateMonthly(MonthlyCustomerTable entry);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     public abstract void insertEntry(EntryTable entryTable);
-    @Transaction
-    public String upsertEntry(EntryTable e) {
-        try {
-            Log.d(AppConstants.LOG, "Trying to insert");
-            insertEntry(e);
-            return e.uid;
-        } catch (SQLiteConstraintException ex) {
-            Log.d(AppConstants.LOG, "Insert failed");
-            if (updateEntry(e) > 0) {
-                Log.d(AppConstants.LOG, "Updated record successfully");
-
-                return e.uid;
-            } else
-                Log.d(AppConstants.LOG, "Updated record failed");
-            ;
-            return null;
-        }
-
-    }
+//    @Transaction
+//    public String upsertEntry(EntryTable e) {
+//        try {
+//            Log.d(AppConstants.LOG, "Trying to insert");
+//            insertEntry(e);
+//            return e.uid;
+//        } catch (SQLiteConstraintException ex) {
+//            Log.d(AppConstants.LOG, "Insert failed");
+//            if (updateEntry(e) > 0) {
+//                Log.d(AppConstants.LOG, "Updated record successfully");
+//
+//                return e.uid;
+//            } else
+//                Log.d(AppConstants.LOG, "Updated record failed");
+//            ;
+//            return null;
+//        }
+//
+//    }
 }

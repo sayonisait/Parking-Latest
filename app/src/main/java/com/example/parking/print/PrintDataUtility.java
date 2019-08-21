@@ -18,6 +18,15 @@ public class PrintDataUtility {
         os.write(new byte[]{0x1B, 'a', 0x00});
 
     }
+    public static void writeInBoldLarge(OutputStream os, String text) throws IOException {
+        os.write(new byte[]{0x1B,0x21,0x10});
+        os.write(text.getBytes());
+    }
+
+    public static void writeInBoldMedium(OutputStream os, String text) throws IOException {
+        os.write(new byte[]{0x1B,0x21,0x20});
+        os.write(text.getBytes());
+    }
 
     public static void writeInBold(OutputStream os, String text) throws IOException {
         os.write(new byte[]{0x1B,0x21,0x08});

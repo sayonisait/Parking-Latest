@@ -106,15 +106,15 @@ public class TicketPrintFragment extends Fragment {
             txtViewClientName.setText(s.client_name);
             textViewAddressLine.setText(s.client_address_line_1);
             textViewAddressLine_2.setText(s.client_address_line_2);
-            textViewEmail.setText(s.client_email!=null?s.client_email:"Email: ******************");//todo
-            textViewPhone.setText(s.client_phone!=null?s.client_phone:"Phone: ******************");//todo
+            textViewEmail.setText(s.client_email!=null?s.client_email:"Email not coming from API");//todo
+            textViewPhone.setText(s.client_phone!=null?s.client_phone:"Phone not coming from API");//todo
 
         });
 
         textViewNumber.setText(mViewModel.entry.vehicle.vehicleNumber);
         textViewModel.setText(mViewModel.entry.vehicle.vehicleModel);
         textViewTime.setText(mViewModel.entry.getAppEntryTime());
-        textViewSlot.setText(mViewModel.entry.parkingSlot);
+        textViewSlot.setText(  mViewModel.entry.parkingSlot!=null && !mViewModel.entry.parkingSlot.equals("")?  mViewModel.entry.parkingSlot:"__");
         textViewEstHours.setText( String.valueOf( mViewModel.entry.estimatedHours));
 
         textViewEstAmount.setText(StringUtils.getAmountFormattedWithCurrency( mViewModel.entry.estimatedAmount));//todo
@@ -141,7 +141,7 @@ public class TicketPrintFragment extends Fragment {
             textViewEstAmount.setVisibility(View.GONE);
             textViewEstAmountTag.setVisibility(View.GONE);
         }
-        ((FragmentActivity)  mContext). getActionBar().setTitle("Ticket Preview");
+        //((FragmentActivity)  mContext). getActionBar().setTitle("Ticket Preview");
 
         printButton.setOnClickListener(view -> {
            printData();
@@ -158,12 +158,9 @@ public class TicketPrintFragment extends Fragment {
         try {
             PrintDataUtility.addLineFeed(os,1);
             PrintDataUtility.alignCentre(os);
-            PrintDataUtility.writeInBold(os, txtViewClientName.getText().toString()+"\n");
-            String text=textViewAddressLine.getText().toString()+"\n"+textViewAddressLine_2.getText().toString()+"\n"+textViewEmail.getText().toString()+"\n"+textViewPhone.getText().toString()+"\n";
-            PrintDataUtility.writeInNormal(os,text);
+            PrintDataUtility.writeInBoldMedium(os,"Entry Ticket");
             PrintDataUtility.writeData(os, DataConversionUtility.getByteArrayFromImageView(qrCodeImage));
 
-            PrintDataUtility.alignLeft(os);
             PrintDataUtility.writeInBold(os,"Vehicle Number: ");
             PrintDataUtility.writeInNormal(os,textViewNumber.getText().toString()+"\n");
             PrintDataUtility.writeInBold(os,"Vehicle Model: ");
@@ -172,17 +169,24 @@ public class TicketPrintFragment extends Fragment {
             PrintDataUtility.writeInNormal(os,textViewSlot.getText().toString()+"\n");
             PrintDataUtility.writeInBold(os,"Entry Time: ");
             PrintDataUtility.writeInNormal(os,textViewTime.getText().toString()+"\n");
-            PrintDataUtility.writeInBold(os,"Charge per hour ");
+            PrintDataUtility.writeInBold(os,"Charge per hour: ");
             PrintDataUtility.writeInNormal(os, textViewCharge.getText().toString()+"\n");
 
             if(mViewModel.entry.estimatedHours>0) {
-                PrintDataUtility.writeInBold(os, "Estimated Hours: ");
+                PrintDataUtility.writeInBold(os, "Estimated Hours: \n");
                 PrintDataUtility.writeInBold(os, textViewEstHours.getText().toString()+"\n");
 //                PrintDataUtility.writeInBold(os, "Special Price ");
 //                PrintDataUtility.writeInBold(os, textViewSpecialPrice.getText().toString()+"\n");
                 PrintDataUtility.writeInBold(os, "Estimated Amount ");
                 PrintDataUtility.writeInBold(os, textViewEstAmount.getText().toString()+"\n");
             }
+            PrintDataUtility.alignCentre(os);
+            PrintDataUtility.writeInNormal(os,"------------------------------\n");
+
+            PrintDataUtility.writeInBold(os, txtViewClientName.getText().toString()+"\n");
+            String text=textViewAddressLine.getText().toString()+"\n"+textViewAddressLine_2.getText().toString()+"\n"+textViewEmail.getText().toString()+"\n"+textViewPhone.getText().toString()+"\n";
+            PrintDataUtility.writeInNormal(os,text);
+
 
             PrintDataUtility.addLineFeed(os,3);//todo change
             mViewModel.isPrintDone=true;

@@ -22,6 +22,7 @@ import com.example.parking.model.Entry;
 import com.example.parking.ui.vehicleentry.adapters.ParkedVehicleListAdapter;
 import com.example.parking.ui.vehicleentry.viewmodels.EntryListViewModel;
 import com.example.parking.ui.vehicleentry.viewmodels.VehicleEntryViewModel;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.List;
 
@@ -78,6 +79,7 @@ public class ParkedListFragment extends Fragment {
             entries=s;
             recyclerView.setAdapter(new ParkedVehicleListAdapter(entries, (FragmentActivity) mContext));
         });
+
 
 
 

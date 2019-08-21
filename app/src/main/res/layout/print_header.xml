@@ -10,7 +10,7 @@
 
                 android:text="CLIENT NAME"
                 android:textStyle="bold"
-                android:textSize="18sp"
+                android:textSize="12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textViewClientName"
@@ -20,6 +20,7 @@
                 app:layout_constraintBottom_toTopOf="@id/textViewAddressLine"
         />
         <TextView
+                android:textSize="10sp"
                 android:gravity="center"
                 android:maxLines="2"
                 android:text="Address1, Address 2"
@@ -31,6 +32,8 @@
                 app:layout_constraintBottom_toTopOf="@id/textViewAddressLine_2"
                 android:id="@+id/textViewAddressLine"/>
         <TextView
+                android:textSize="10sp"
+
                 android:gravity="center"
                 android:maxLines="2"
                 android:text="Address1, Address 2"
@@ -43,6 +46,8 @@
                 android:id="@+id/textViewAddressLine_2"/>
 
         <TextView
+                android:textSize="10sp"
+
                 android:gravity="center"
                 android:text="Email, Phone"
                 android:layout_width="wrap_content"
@@ -54,6 +59,8 @@
                 android:id="@+id/textViewEmail"/>
 
         <TextView
+                android:textSize="10sp"
+
                 android:gravity="center"
                 android:text="Phone"
                 android:layout_width="wrap_content"

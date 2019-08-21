@@ -16,6 +16,10 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".ui.vehicleexit.VehicleExitActivity" android:label="Vehicle Exit"
+                  android:windowSoftInputMode="adjustPan" >
+            <nav-graph android:value="@navigation/navigation_exit" />
+        </activity>
 
         <activity android:name=".ui.vehicleentry.VehicleEntryActivity" android:label="Vehicle Entry"
                   android:windowSoftInputMode="adjustPan" >

@@ -22,9 +22,8 @@ import com.example.parking.R;
 import com.example.parking.model.Entry;
 import com.example.parking.ui.vehicleentry.viewmodels.VehicleEntryViewModel;
 import com.example.parking.utils.StringUtils;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
-import com.tomlonghurst.expandablehinttext.ExpandableHintText;
+import com.rengwuxian.materialedittext.MaterialAutoCompleteTextView;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.util.Objects;
 
@@ -43,24 +42,24 @@ public class VehicleEntryFragment extends Fragment {
 
 
 
-    @BindView(R.id.textInputName)
-    TextInputLayout textInputName;
+
     @BindView(R.id.editTextName)
-    TextInputEditText editTextName;
-    @BindView(R.id.textInputModel)
-    TextInputLayout textInputModel;
+    MaterialEditText editTextName;
+
 
     @BindView(R.id.editTextModel)
-    AutoCompleteTextView editTextModel;
+    MaterialAutoCompleteTextView editTextModel;
     @BindView(R.id.editTextNumber)
-    ExpandableHintText editTextNumber;
+    MaterialEditText editTextNumber;
     @BindView(R.id.editTextEntryTime)
     TextView editTextTime;
 
     @BindView(R.id.editTextSlot)
-    TextView editTextSlot;
+    MaterialEditText editTextSlot;
     @BindView(R.id.buttonSubmit)
     Button buttonSubmit;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
 
 //    @BindView(R.id.editTextEstAmount)
@@ -91,7 +90,7 @@ public class VehicleEntryFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.fragment_entry_exit, container, false);
+        View view= inflater.inflate(R.layout.fragment_entry, container, false);
         ButterKnife.bind(this,view);
         setHasOptionsMenu(true);
 
@@ -136,16 +135,13 @@ public class VehicleEntryFragment extends Fragment {
         //if entry is created, then display
         if(mViewModel.entry!=null) {
             editTextTime.setText(mViewModel.entry.getAppEntryTime());
-            editTextHourlyCharge.setText(StringUtils.getAmountFormatted(mViewModel.entry.hourlyCharge));
+            editTextHourlyCharge.setText(StringUtils.getAmountFormattedWithCurrency(mViewModel.entry.hourlyCharge));
         }
 
         navController = NavHostFragment.findNavController(VehicleEntryFragment.this);
-        // on getting data from qrcode , exit details are created and displayed in fields accordingly
-        mViewModel.qrCodeMutableLiveData.observe(this,s->{
-            initialiseFieldsForExit(s);
-        });
+//
 
-
+        initToolBar();
 
 
 
@@ -164,7 +160,7 @@ public class VehicleEntryFragment extends Fragment {
             //if field is the field for vehicle model , then its autocomplete field not normal edit field
             if (v.getId() == R.id.editTextModel)
                 text = ((AutoCompleteTextView) v).getText().toString();
-            else text = Objects.requireNonNull(((TextInputEditText) v).getText()).toString();
+            else text = Objects.requireNonNull(((MaterialEditText) v).getText()).toString();
             if (hasFocus || text.equals(""))
                 return;
             //todo check why
@@ -175,7 +171,7 @@ public class VehicleEntryFragment extends Fragment {
                     break;
                 case R.id.editTextModel:
                     mViewModel.entry.vehicle.vehicleModel = text;
-                    textInputModel.setError(null);
+                    editTextModel.setError(null);
                     break;
                 case R.id.editTextSlot:
                     mViewModel.entry.parkingSlot = text;
@@ -222,10 +218,7 @@ public class VehicleEntryFragment extends Fragment {
 
         });
 
-        mViewModel.getSelectedEntryFromList().observe(this,s->{
 
-            initialiseFieldsForExit(mViewModel.entry);
-        });
 
 
         buttonSubmit.setOnClickListener(view -> {
@@ -235,14 +228,14 @@ public class VehicleEntryFragment extends Fragment {
                 ((FragmentActivity) mContext).getCurrentFocus().clearFocus();
 
             if (editTextModel.getText().toString().trim().equals("")) {
-                textInputModel.setError("Field can not be empty");
+                editTextModel.setError("Field can not be empty");
                 isValidated = false;
             }
 
-//            if (editTextNumber.getText().toString().trim().equals("")) {
-//                editTextNumber.setEr
-//                isValidated = false;
-//            }
+            if (editTextNumber.getText().toString().trim().equals("")) {
+                editTextNumber.setError("Field can not be empty");
+                isValidated = false;
+            }
 
 
             //todo commented two lines
@@ -274,9 +267,7 @@ public class VehicleEntryFragment extends Fragment {
                   ProgressDialog dialog=  showProgress();
                     //saves and generates qr code
                     mViewModel.saveEntry().observe(this, s -> {
-                        if(mViewModel.isExit)// if its exit , no need to print just close
-                            ((FragmentActivity) mContext).finish();
-                        else// if entry, then go to print screen to take out a print
+                      //  go to print screen to take out a print
                             NavHostFragment.findNavController(VehicleEntryFragment.this).navigate(R.id.action_entry_print);
                         dialog.dismiss();
                     });
@@ -358,4 +349,14 @@ public class VehicleEntryFragment extends Fragment {
 //        if (s.estimatedAmount != 0)
 //            editTextEstAmount.setText(String.valueOf(s.estimatedAmount));
     }
+
+
+    private void   initToolBar(){
+        getActivity().setActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_back);
+
+        toolbar.setNavigationOnClickListener(v ->getActivity().onBackPressed() );
+    }
+
+
 }

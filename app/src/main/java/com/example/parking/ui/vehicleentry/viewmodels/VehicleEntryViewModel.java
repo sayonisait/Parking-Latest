@@ -27,33 +27,22 @@ public class VehicleEntryViewModel extends AndroidViewModel {
     public MutableLiveData<String> specialChargeLiveData = new MutableLiveData<>();
 
     public boolean isExit;
-    public MutableLiveData<Entry> qrCodeMutableLiveData= new MutableLiveData<>();
     public Entry entry;
     public boolean isMonthlyPlan;
 
     ParkingRespository repository;
     public boolean isPrintDone;
     LiveData<ConfigDetails> configDetails;
-    LiveData<List<Entry>> parkedEntries;
-    MutableLiveData<Boolean> entrySelectedLiveData;
 
     public VehicleEntryViewModel(Application application) {
         super(application);
         repository = new ParkingRespository(application);
         isPrintDone = false;
         configDetails = repository.getConfig();
-        entrySelectedLiveData= new MutableLiveData<>();
 
     }
 
-    public void setSelectedEntry(Entry entry){
-        entrySelectedLiveData.setValue(true);
-        this.entry=entry;
-        this.entry.makeExit();
-    }
-    public LiveData<Boolean> getSelectedEntryFromList(){
-        return entrySelectedLiveData;
-    }
+
 
     //todo move this to appropriate place
     public LiveData<Integer> getTransactions(){
@@ -85,27 +74,9 @@ public class VehicleEntryViewModel extends AndroidViewModel {
     }
 
 
-//    public void setSpecialCharge(Double specialChargeLiveData) {
-//        entry.rate = specialChargeLiveData;
-//        getAmountFormatted();
-//        this.specialChargeLiveData.postValue(StringUtils.getAmountFormatted(entry.rate));
-//    }
 
-    public void setEstHours(String hours) {
-        entry.estimatedHours = Integer.parseInt(hours);
 
-    }
 
-    public String getAmountFormatted(String estimatedAmount) {
-        try {
-            entry.estimatedAmount = Double.parseDouble(estimatedAmount);
-            if (entry.estimatedAmount > 0)
-               return  StringUtils.getAmountFormatted(entry.estimatedAmount);
-        }catch (Exception ex){
-          ex.printStackTrace();
-        }
-        return "";
-    }
 
 
     /* creates a new entry*/
@@ -123,11 +94,7 @@ public class VehicleEntryViewModel extends AndroidViewModel {
         monthlyPlanMutableLiveData.setValue(monthlyCustomer);
     }
 
-    public void setEntryFromQrCode(String qrCodeData){
-        entry=new Gson().fromJson(qrCodeData, Entry.class);
-        entry.makeExit();
-        this.qrCodeMutableLiveData.setValue(entry);
-    }
+
 
 
 

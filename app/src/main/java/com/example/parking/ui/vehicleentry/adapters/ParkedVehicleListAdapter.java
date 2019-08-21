@@ -13,6 +13,7 @@ import com.example.parking.R;
 import com.example.parking.databinding.RowParkedVehicleBinding;
 import com.example.parking.model.Entry;
 import com.example.parking.ui.vehicleentry.viewmodels.VehicleEntryViewModel;
+import com.example.parking.ui.vehicleexit.VehicleExitViewModel;
 
 import java.util.List;
 
@@ -20,11 +21,11 @@ public class ParkedVehicleListAdapter extends RecyclerView.Adapter<ParkedVehicle
 
     List<Entry> entries;
     LayoutInflater inflater;
-    private VehicleEntryViewModel viewModel;
+    private VehicleExitViewModel viewModel;
 
     public ParkedVehicleListAdapter(List<Entry> entries, FragmentActivity context){
         this.entries=entries;
-        viewModel= ViewModelProviders.of(context).get(VehicleEntryViewModel.class);
+        viewModel= ViewModelProviders.of(context).get(VehicleExitViewModel.class);
     }
 
     @NonNull

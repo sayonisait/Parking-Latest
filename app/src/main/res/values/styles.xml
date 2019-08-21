@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -26,7 +26,6 @@
     </style>
 
     <style name="GeneralEditTextStyle">
-
         <item name="android:textColor">@color/text_color</item>
         <item name="android:drawablePadding">5dp</item>
         <item name="android:drawableTint">@color/colorPrimary</item>
@@ -36,7 +35,18 @@
         <item name="android:maxLength">150</item>
     </style>
 
+    <style name="GeneralTextViewStyle">
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="TagTextViewStyle">
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="HeaderTagTextViewStyle">
         <item name="android:textColor">@color/white</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">20sp</item>
@@ -46,6 +56,13 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="LineExitScreen">
+
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height"> 1dp</item>
+        <item name="android:background">@color/background_gray</item>
     </style>
 
 </resources>

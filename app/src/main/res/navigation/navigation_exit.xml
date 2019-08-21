@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation_exit"
+            >
+
+    <fragment android:id="@+id/vehicleExitFragment"
+              android:name="com.example.parking.ui.vehicleexit.VehicleExitFragment" android:label="fragment_exit"
+              tools:layout="@layout/fragment_exit">
+        <action android:id="@+id/action_to_parked_list" app:destination="@id/parkedListFragment"/>
+
+    </fragment>
+    <fragment android:id="@+id/parkedListFragment"
+              android:name="com.example.parking.ui.vehicleentry.fragments.ParkedListFragment"
+              android:label="parked_list_fragment" tools:layout="@layout/parked_list_fragment"/>
+</navigation>

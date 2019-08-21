@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+    <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:background="@color/white"
+            android:id="@+id/layout_selection"
+            android:padding="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+    <TextView
+            android:textStyle="bold"
+            android:textColor="@color/text_color"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_marginBottom="20dp"
+            android:text="Choose an option to checkout the vehicle"
+            android:id="@+id/header_text"
+            android:layout_width="match_parent"
+              android:layout_height="wrap_content"/>
+
+
+        <Button android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:id="@+id/button_qr"
+                android:text="Scan QR Code"
+                android:background="@color/colorAccent"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"
+        />
+        <Button android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="45dp"
+                android:id="@+id/button_manual"
+                android:text="Manual Search"
+                android:background="@drawable/border_background"
+        />
+
+
+    </LinearLayout>

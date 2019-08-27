@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<layout  xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools">
+        <data>
+                <variable name="config" type="com.example.parking.model.ConfigDetails"/>
+        </data>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+
 
               android:gravity="center"
             android:id="@+id/header"
@@ -8,7 +13,7 @@
             android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
         <TextView
 
-                android:text="CLIENT NAME"
+                android:text="@{config.client_name}"
                 android:textStyle="bold"
                 android:textSize="12sp"
                 android:layout_width="wrap_content"
@@ -23,7 +28,7 @@
                 android:textSize="10sp"
                 android:gravity="center"
                 android:maxLines="2"
-                android:text="Address1, Address 2"
+                android:text= '@{config.client_address_line_1}'
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/textViewClientName"
@@ -36,7 +41,7 @@
 
                 android:gravity="center"
                 android:maxLines="2"
-                android:text="Address1, Address 2"
+                android:text= '@{config.client_address_line_2}'
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/textViewAddressLine"
@@ -49,7 +54,7 @@
                 android:textSize="10sp"
 
                 android:gravity="center"
-                android:text="Email, Phone"
+                android:text= '@{config.client_email}'
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/textViewAddressLine_2"
@@ -62,7 +67,7 @@
                 android:textSize="10sp"
 
                 android:gravity="center"
-                android:text="Phone"
+                android:text= '@{config.client_phone}'
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/textViewEmail"
@@ -72,3 +77,4 @@
                 android:id="@+id/textViewPhone"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layout xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="android.view.View"/>
+        <variable name="viewmodel" type="com.example.parking.ui.monthly.MonthlyViewModel"/>
+
+
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@color/background_gray"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_hor_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.1"/>
+    <include
+            android:id="@+id/appbarLayout"
+            layout="@layout/toolbar_layout_big"
+             android:layout_height="0dp"
+             android:layout_width="match_parent"
+             app:layout_constraintHeight_percent=".2"/>
+    <androidx.cardview.widget.CardView
+            app:layout_constraintHeight_percent=".9"
+            app:layout_constraintTop_toBottomOf="@id/guideline_hor_start"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_margin="15dp"
+            android:background="@color/white"
+            android:id="@+id/card"
+            app:cardElevation="5dp"
+            app:cardUseCompatPadding="true"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center">
+        <ScrollView android:layout_width="match_parent" android:layout_height="wrap_content"   >
+
+
+        <LinearLayout
+                android:padding="20dp"
+                app:cardElevation="5dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+
+
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                    app:met_textColor="@color/text_color"
+                    app:met_floatingLabel="highlight"
+                    style="@style/MonthlyPlanEditText"
+                    android:drawableStart="@drawable/ic_person"
+                    android:visibility="@{viewmodel.pageNumberLiveData==1?View.VISIBLE:View.GONE}"
+                    android:hint="Customer Name"
+
+
+                    android:text="@={viewmodel.monthlyCustomer.name}"
+
+                    android:inputType="textCapSentences"
+                    android:ems="10"
+                    android:id="@+id/editTextName"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                    app:met_floatingLabel="highlight"
+                    app:met_textColor="@color/text_color"
+
+                    style="@style/MonthlyPlanEditText"
+                    android:drawableStart="@drawable/ic_phone"
+                    android:visibility="@{viewmodel.pageNumberLiveData==1?View.VISIBLE:View.GONE}"
+
+                    android:hint="Phone Number"
+
+                    android:text="@={viewmodel.monthlyCustomer.phone}"
+                    android:inputType="phone"
+                    android:ems="10"
+                    android:id="@+id/editTextPhone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                    app:met_floatingLabel="highlight"
+                    app:met_textColor="@color/text_color"
+
+                    style="@style/MonthlyPlanEditText"
+                    android:drawableStart="@drawable/ic_phone"
+                    android:visibility="@{viewmodel.pageNumberLiveData==1?View.VISIBLE:View.GONE}"
+                    android:text="@{viewmodel.monthlyCustomer.secondaryNumber}"
+                    android:hint="Secondary Phone Number"
+
+
+                    android:inputType="phone"
+                    android:ems="10"
+                    android:id="@+id/editTextSecondary"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                    app:met_floatingLabel="highlight"
+                    app:met_textColor="@color/text_color"
+
+                    android:drawableStart="@drawable/ic_person"
+                    style="@style/MonthlyPlanEditText"
+                    android:visibility="@{viewmodel.pageNumberLiveData==1?View.VISIBLE:View.GONE}"
+                    android:hint="Company Name"
+
+                    android:text="@={viewmodel.monthlyCustomer.company}"
+
+
+                    android:inputType="textCapSentences"
+                    android:ems="10"
+                    android:id="@+id/editTextCompany"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                    app:met_floatingLabel="highlight"
+                    app:met_textColor="@color/text_color"
+
+                    android:drawableStart="@drawable/ic_location"
+                    style="@style/MonthlyPlanEditText"
+                    android:visibility="@{viewmodel.pageNumberLiveData==1?View.VISIBLE:View.GONE}"
+                    android:hint="City"
+
+                    android:text="@={viewmodel.monthlyCustomer.city}"
+
+
+                    android:inputType="textCapSentences"
+                    android:ems="10"
+                    android:id="@+id/editTextCity"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                    app:met_floatingLabel="highlight"
+                    app:met_textColor="@color/text_color"
+
+                    android:drawableStart="@drawable/ic_car_blue"
+                    style="@style/MonthlyPlanEditText"
+                    android:hint="Vehicle Make"
+
+                    android:visibility="@{viewmodel.pageNumberLiveData==1?View.VISIBLE:View.GONE}"
+                    android:text="@={viewmodel.monthlyCustomer.vehicle.vehicleMake}"
+
+
+                    android:inputType="textCapSentences"
+                    android:ems="10"
+                    android:id="@+id/editTextVehicleMake"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                    app:met_floatingLabel="highlight"
+                    app:met_textColor="@color/text_color"
+
+                    android:drawableStart="@drawable/ic_car_blue"
+                    style="@style/MonthlyPlanEditText"
+                    android:visibility="@{viewmodel.pageNumberLiveData==1?View.VISIBLE:View.GONE}"
+                    android:text="@={viewmodel.monthlyCustomer.vehicle.vehicleNumber}"
+                    android:hint="Vehicle Number"
+
+
+                    android:inputType="textCapSentences"
+                    android:ems="10"
+                    android:id="@+id/editTextNumber"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            <com.rengwuxian.materialedittext.MaterialAutoCompleteTextView
+                    app:met_floatingLabel="highlight"
+                    app:met_textColor="@color/text_color"
+
+                    android:drawableStart="@drawable/ic_car_blue"
+                    style="@style/MonthlyPlanEditText"
+                    android:hint="Vehicle Model"
+
+                    android:visibility="@{viewmodel.pageNumberLiveData==1?View.VISIBLE:View.GONE}"
+                    android:text="@={viewmodel.monthlyCustomer.vehicle.vehicleModel}"
+
+
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/editTextModel"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                    app:met_floatingLabel="highlight"
+                    app:met_textColor="@color/text_color"
+
+                    style="@style/MonthlyPlanEditText"
+                    android:hint="Start Date"
+                    android:drawableStart="@drawable/ic_calendar"
+                    android:visibility="@{viewmodel.pageNumberLiveData==2?View.VISIBLE:View.GONE}"
+                    android:text="@{viewmodel.monthlyCustomer.getAppStartDate()}"
+
+                    android:clickable="true"
+                    android:focusable="false"
+
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/editTextStartDate"
+            />
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                    app:met_floatingLabel="highlight"
+                    app:met_textColor="@color/text_color"
+
+                    style="@style/MonthlyPlanEditText"
+                    android:drawableStart="@drawable/ic_time"
+                    android:visibility="@{viewmodel.pageNumberLiveData==2?View.VISIBLE:View.GONE}"
+
+                    android:text="@{viewmodel.monthlyCustomer.getAppEndDate()}"
+                    android:hint="End Date"
+
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/editEndDate"
+            />
+
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                    app:met_floatingLabel="highlight"
+                    app:met_textColor="@color/text_color"
+
+                    android:hint="Amount"
+                    style="@style/MonthlyPlanEditText"
+                    android:drawableStart="@drawable/ic_dollar"
+                    android:visibility="@{viewmodel.pageNumberLiveData==2?View.VISIBLE:View.GONE}"
+
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/editAmount"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:visibility="@{viewmodel.pageNumberLiveData==2?View.VISIBLE:View.GONE}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/linearLayout"
+                    android:paddingStart="5dp"
+            >
+
+                <com.rengwuxian.materialedittext.MaterialEditText
+                        app:met_textColor="@color/text_color"
+
+                        app:met_floatingLabel="highlight"
+                        android:layout_width="0dp"
+                        android:hint="Grace Period"
+                        style="@style/MonthlyPlanEditText"
+                        android:drawableStart="@drawable/ic_timelapse"
+                        android:text="@{(viewmodel.monthlyCustomer.gracePeriodDays>0)?`` + viewmodel.monthlyCustomer.gracePeriodDays:``}"
+
+
+
+                        android:inputType="phone"
+                        android:ems="10"
+                        android:id="@+id/editGracePeriod"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/checkBox"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                />
+                <CheckBox
+                        android:checked="@={viewmodel.monthlyCustomer.isNotPaid}"
+                        app:met_textColor="@color/text_color"
+
+                        android:layout_width="wrap_content" android:buttonTint="@color/colorAccent"
+                        android:backgroundTint="@color/colorAccent"
+                        android:layout_height="wrap_content"
+                        android:text="Not Paid"
+                        android:id="@+id/checkBox" app:layout_constraintStart_toEndOf="@+id/editGracePeriod"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/editGracePeriod"
+                        app:layout_constraintBottom_toBottomOf="@+id/editGracePeriod"
+                />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1" android:layout_width="match_parent" android:layout_height="0dp">
+
+                <Button
+
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="1"
+                        android:onClick="@{()->viewmodel.onBack()}"
+                        app:layout_constraintHorizontal_bias=".2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textColor="@color/colorAccent"
+                        android:enabled="@{viewmodel.pageNumberLiveData!=1}"
+
+                        android:id="@+id/buttonPrev"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/border_background"
+                        android:hint="Back"
+                        android:layout_width="100dp"
+                        android:layout_height="40dp"/>
+
+                <Button
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="1"
+
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintHorizontal_bias=".8"
+
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+
+                        android:id="@+id/buttonSubmit"
+                        android:layout_margin="5dp"
+                        android:textColorHint="@color/white"
+                        android:background="@color/colorAccent"
+                        android:hint="@{viewmodel.pageNumberLiveData==2?&quot;Submit&quot;:&quot;Next&quot;}"
+                        android:layout_width="100dp"
+                        android:layout_height="40dp"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+        </ScrollView>
+    </androidx.cardview.widget.CardView>
+
+
+
+    <LinearLayout android:alpha=".7" android:orientation="vertical" android:background="@android:color/white"  android:id="@+id/myProgBar" android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center">
+
+
+   <TextView android:textColor="@color/colorAccent" android:text="Loading" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    <ProgressBar
+
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:elevation="10dp"
+            />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

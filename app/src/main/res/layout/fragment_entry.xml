@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"/>
 
 <Toolbar
-        android:title="Vehicle Exit"
+        android:title="Vehicle Entry"
 android:titleTextColor="@color/white"
 app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/toolbar"
@@ -99,7 +99,7 @@ app:layout_constraintTop_toTopOf="parent"
                     >
                         <com.rengwuxian.materialedittext.MaterialEditText
                                 style="@style/GeneralEditTextStyle"
-                                android:drawableStart="@drawable/ic_car_blue"
+                                android:drawableStart="@drawable/ic_car_outlined"
                                 android:inputType="textCapCharacters"
                                 android:id="@+id/editTextSlot"
                                 android:hint="Parking Slot"
@@ -111,7 +111,7 @@ app:layout_constraintTop_toTopOf="parent"
 
                     <com.rengwuxian.materialedittext.MaterialEditText
                             style="@style/GeneralEditTextStyle"
-                            android:drawableStart="@drawable/ic_car_blue"
+                            android:drawableStart="@drawable/ic_car_outlined"
                             android:inputType="textCapCharacters"
                             android:id="@+id/editTextNumber"
                             android:hint="Vehicle number"

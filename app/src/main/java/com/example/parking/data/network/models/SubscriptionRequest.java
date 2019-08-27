@@ -19,8 +19,8 @@ public class SubscriptionRequest {
         public String state="";
         public String country="";
         public String mobile;
-        public String emergency_contact;
-        public String company_name;
+        public String emergency_contact="";
+        public String company_name="";
         public int grace_period_days;
     }
 
@@ -61,9 +61,10 @@ public class SubscriptionRequest {
         this.serverkey=details.token;
         this.request_content= new RequestContent();
         this.request_content.customer_data= new CustomerData();
-        request_content.customer_data.company_name=customer.company;
-        request_content.customer_data.emergency_contact=customer.secondaryNumber;
+        request_content.customer_data.company_name=customer.company!=null?customer.company:"";
+        request_content.customer_data.emergency_contact=customer.secondaryNumber!=null?customer.secondaryNumber:"";
         request_content.customer_data.mobile=customer.phone;
+        request_content.customer_data.customer_name=customer.name;
         request_content.subscription_data=new SubscriptionData();
         request_content.subscription_data.start_date=customer.getServerStartDate();
         request_content.subscription_data.expiry_date=customer.getServerEndDate();
@@ -88,3 +89,4 @@ public class SubscriptionRequest {
 
 
 }
+

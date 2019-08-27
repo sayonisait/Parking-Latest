@@ -24,10 +24,10 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.parking"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 28
-        versionCode 7
-        versionName "2.1"
+        versionCode 8
+        versionName "3.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
 
@@ -84,6 +84,8 @@ dependencies {
     //qr code scanning
     implementation 'me.dm7.barcodescanner:zxing:1.9'
 
+    
+
     //butter kife
     implementation 'com.jakewharton:butterknife:10.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
@@ -105,5 +107,13 @@ dependencies {
     implementation 'com.wdullaer:materialdatetimepicker:4.2.1'
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
     implementation 'com.github.beigirad:ZigzagView:1.0.7'
+
+    //flipping
+    implementation 'eu.davidea:flipview:1.2.0'
+
+    //progressbar
+    implementation 'com.kaopiz:kprogresshud:1.0.5'
+
+
 
 }

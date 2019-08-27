@@ -2,7 +2,6 @@ package com.example.parking.ui.monthly;
 
 import android.app.Application;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.util.Log;
 import androidx.lifecycle.*;
 import com.example.parking.data.ParkingRespository;
@@ -11,34 +10,40 @@ import com.example.parking.model.MonthlyCustomer;
 import com.example.parking.model.Vehicle;
 import com.example.parking.utils.QRCodeUtils;
 import com.example.parking.utils.StringUtils;
-import com.google.gson.Gson;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
+import java.util.*;
 
 public class MonthlyViewModel extends AndroidViewModel {
 
+     enum MissedFieldsStatus{Name, VehicleNumber, VehicleModel, VehicleMake, Phone }
+
+     MutableLiveData<Boolean> showProgress;
+
+
     public MutableLiveData<Bitmap> qrCode= new MutableLiveData<>();
+
+
+    private MutableLiveData<MonthlyCustomer> monthlyCustomerMutableLiveData= new MutableLiveData<>();
 
     MonthlyCustomer monthlyCustomer;
     ParkingRespository repository;
     LiveData<ConfigDetails> configDetails;
+    MutableLiveData<Integer> pageNumerShown;
 
     public MonthlyViewModel(Application application) {
         super(application);
         repository = new ParkingRespository(application);
         createEntry();
         configDetails = repository.getConfig();
+        pageNumerShown=new MutableLiveData<>();
+        pageNumerShown.setValue(1);
+        showProgress= new MutableLiveData<>();
 
 
-       // isPrintDone = false;
-       // configDetails = repository.getConfig();
+    }
+
+    public LiveData<Integer> getPageNumberLiveData(){
+        return pageNumerShown;
     }
 
     public LiveData<ConfigDetails> getConfigDetails() {
@@ -65,6 +70,11 @@ public class MonthlyViewModel extends AndroidViewModel {
          monthlyCustomer.startDate= Calendar.getInstance().getTime();
          monthlyCustomer.endDate=getEndDate();
          monthlyCustomer.vehicle= new Vehicle();
+         monthlyCustomerMutableLiveData.setValue(monthlyCustomer);
+    }
+
+    public LiveData<MonthlyCustomer> getMonthlyCustomer(){
+        return monthlyCustomerMutableLiveData;
     }
 
 
@@ -77,43 +87,74 @@ public class MonthlyViewModel extends AndroidViewModel {
 
 
 
-    public void createQRCode(String vehicleNumber , String modelName) {
-        QRCodeWriter writer = new QRCodeWriter();
-        monthlyCustomer.vehicle = new Vehicle();
-        monthlyCustomer.vehicle.vehicleNumber=vehicleNumber;
-        monthlyCustomer.vehicle.vehicleModel=modelName;
-        try {
 
 
-            BitMatrix bitMatrix = writer.encode(new Gson().toJson(monthlyCustomer), BarcodeFormat.QR_CODE, 512, 512);
-            int width = bitMatrix.getWidth();
-            int height = bitMatrix.getHeight();
-            Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
-            for (int x = 0; x < width; x++) {
-                for (int y = 0; y < height; y++) {
-                    bmp.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);
-                }
+    private LiveData<Boolean> saveSubscription() {
+        showProgress.setValue(true);
+        return Transformations.map(repository.saveSubscription(monthlyCustomer), s -> {
+            if(s.equals("failure")){
+                return false;
             }
-            qrCode.postValue(bmp);
-
-        } catch (WriterException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public LiveData<String> saveSubscription() {
-        return Transformations.map(repository.sendMonthlyCustomerTOBackend(monthlyCustomer), s -> {
-            Log.d("Parking Info", "entry.transaction_id =" + String.valueOf(s));
             monthlyCustomer.rowID = s;
-            generrateQR();
-            return s;
+            Bitmap image = QRCodeUtils.generateQrCode(String.valueOf(monthlyCustomer.rowID));
+            qrCode.setValue(image);
+            return true;
         });
     }
 
-    public void generrateQR() {
-        Bitmap image = QRCodeUtils.generateQrCode(String.valueOf(monthlyCustomer.rowID));
-        if (image != null)
-            qrCode.postValue(image);
+    MutableLiveData<List<MissedFieldsStatus>> validationLiveData= new MutableLiveData<>();
+
+     LiveData<Boolean> onSubmit(){
+        if(pageNumerShown.getValue()!=null) {
+            if (pageNumerShown.getValue() == 2) {
+               return saveSubscription();
+
+            } else {
+                List<MissedFieldsStatus> statusList= new ArrayList<>();
+                if(StringUtils.isEmpty(monthlyCustomer.name))
+                {
+                    statusList.add(MissedFieldsStatus.Name);
+                }
+                if(StringUtils.isEmpty(monthlyCustomer.phone))
+                {
+                    statusList.add(MissedFieldsStatus.Phone);
+
+                }
+                if(StringUtils.isEmpty(monthlyCustomer.vehicle.vehicleNumber))
+                {
+                    statusList.add(MissedFieldsStatus.VehicleNumber);
+                }
+                if(StringUtils.isEmpty(monthlyCustomer.vehicle.vehicleMake))
+                {
+                   statusList.add(MissedFieldsStatus.VehicleMake);
+                }
+                if(StringUtils.isEmpty(monthlyCustomer.vehicle.vehicleModel))
+                {
+                   statusList.add(MissedFieldsStatus.VehicleModel);
+                }
+                if(statusList.size()>0) {
+                    validationLiveData.setValue(statusList);
+                }else {
+                    pageNumerShown.setValue(pageNumerShown.getValue() + 1);
+
+                }
+            }
+        }
+
+        MutableLiveData<Boolean> liveData= new MutableLiveData<>();
+        liveData.setValue(false);
+        return  liveData;
+     }
+
+    public LiveData<Integer> onBack(){
+
+        if(pageNumerShown.getValue()!=null) {
+            if (pageNumerShown.getValue() >1) {
+                pageNumerShown.setValue(pageNumerShown.getValue() -1);
+
+            }
+        }
+        return pageNumerShown;
 
     }
 }

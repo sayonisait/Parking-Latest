@@ -311,7 +311,7 @@ public class VehicleEntryFragment extends Fragment {
 
     private ProgressDialog showProgress(){
         // Initialize a new instance of progress dialog
-        final ProgressDialog pd = new ProgressDialog(mContext, R.style.MyGravity);
+        final ProgressDialog pd = new ProgressDialog(mContext, R.style.MyDialogTheme);
         // Set progress dialog style horizontal
 
         // Set the progress dialog background color transparent

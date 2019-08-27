@@ -54,6 +54,7 @@ public class ParkingRespository {
 
 
     Context mContext;
+
     public ParkingRespository(Application application){
         ParkingDatabase database= ParkingDatabase.getDatabase(application);
         parkingDao=database.parkingDao();
@@ -69,7 +70,6 @@ public class ParkingRespository {
                 s -> {
                     ArrayList<Entry> entries = new ArrayList<>();
                     for (EntryTable entryTable : s) {
-                        Log.d("Parking Info", "Parked Vehcile Exit Time is "+entryTable.exitTime);
                         entries.add(new Entry(entryTable));
                     }
                     return entries;
@@ -81,28 +81,7 @@ public class ParkingRespository {
        return parkingDao.getParkedSlots();
     }
 
-//    public LiveData<Entry> getEntry(String rowID){
-//       return Transformations.map(parkingDao.getEntryByID(rowID),s->{
-//            Entry entry= new Entry();
-//            entry.amountToBePaid=s.amountToBePaid;
-//            entry.transaction_id =s.uid;
-//            entry.receipt_number=s.receiptNumber;
-//            entry.serverID=s.serverID;
-//            entry.estimatedHours=s.estimatedHours;
-//            entry.estimatedAmount=s.estimatedAmount;
-//            entry.entryTime=s.entryTime;
-//            entry.exitTime=s.exitTime;
-//            entry.hours=s.hours;
-//            entry.hourlyCharge=s.hourlyCharge;
-//            //entry.rate=s.rate;
-//            entry.calculatedAmount=s.calculatedAmount;
-//            entry.parkingSlot=s.parkingSlot;
-//            entry.vehicle= new Vehicle();
-//            entry.vehicle.vehicleModel=s.vehicleModel;
-//            entry.vehicle.vehicleNumber=s.vehicleNumber;
-//            return entry;
-//        });
-//    }
+
 
     public LiveData<ConfigDetails> getConfig(){
         LiveData<List<ConfigTable>> rows=parkingDao.getConfig();
@@ -261,9 +240,9 @@ public class ParkingRespository {
 
     }
 
-    public MutableLiveData<String> sendMonthlyCustomerTOBackend(MonthlyCustomer customer){
+
+    public MutableLiveData<String> saveSubscription(MonthlyCustomer customer){
         insertedMonthlyRowId= new MutableLiveData<>();
-        Log.d("Parking Info","Sending Monthly plan to backend not implemented yet");
         SubscriptionRequest request= new SubscriptionRequest(customer,configDetails);
         ServiceInterface service = RetrofitClient.getRetrofitInstance(mContext).create(ServiceInterface.class);
 
@@ -273,19 +252,25 @@ public class ParkingRespository {
                 SubscriptionResponse data = response.body();
                 if (response.isSuccessful() && data.result.equals("success")) {
                     customer.serverID = data.subscription_id;
+                    customer.subscriptionPaymentID=data.subscription_payment_id;
+                    customer.customerID=data.customer_id;
+                    customer.vehicleID=data.vehicle_id;
                     Log.d("Parking Info", "Saved in server. transaction_id is" + customer.serverID);
                     saveMonthlyCustomer(customer);
 
                 }else {
+                    insertedMonthlyRowId.setValue("failure");
                     Log.d("Parking Info", "Could not save in server");
                 }
+
+
 
             }
 
             @Override
             public void onFailure(Call<SubscriptionResponse> call, Throwable t) {
-                Log.d("Parking Info", "Culd not save in server");
-
+                Log.d("Parking Info", "Culd not save in server "+t.getLocalizedMessage());
+                insertedMonthlyRowId.setValue("failure");
             }
         });
         return insertedMonthlyRowId;

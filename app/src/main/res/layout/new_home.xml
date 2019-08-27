@@ -55,7 +55,7 @@
        >
     <ImageView
 
-            android:src="@drawable/ic_car_blue"
+            android:src="@drawable/ic_car_outlined"
             android:layout_width="50dp"
             android:layout_height="50dp"
 

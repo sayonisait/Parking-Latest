@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -31,26 +32,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 public class MainActivity extends Activity  {
 
-    int totalParkingCount=100, occupiedCount=60;
 
-//    @BindView(R.id.textViewVacCount)
-//    TextView textViewVacantCount;
-//    @BindView(R.id.textViewOccupCount)
-//    TextView textViewOccupCount;
-//    @OnClick(R.id.box1)
-//     void startNewVehicleEntryActivity(){
-//        Intent intent= new Intent(this, VehicleEntryActivity.class);
-//        startActivity(intent);
-//    }
-//    @OnClick(R.id.boxReprint)
-//    void startMonthlyActivity(){
-//        Intent intent= new Intent(this, MonthlyPlanActivity.class);
-//        startActivity(intent);
-//    }
-//    @OnClick(R.id.box2)
-//     void exit(){
-//       startExitActivity();
-//    }
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -85,13 +67,14 @@ public class MainActivity extends Activity  {
         binding.exitButton.setOnClickListener(s ->
         {
             View view = getLayoutInflater().inflate(R.layout.fragment_exit_menu_dialog, null);
-
+          Button btnQr=  view.findViewById(R.id.button_qr);
+          Button btnManual=view.findViewById(R.id.button_manual);
             BottomSheetDialog dialog = new BottomSheetDialog(this);
-           view.findViewById(R.id.button_qr).setOnClickListener(onClick->{
-               scanQrCode();
+           btnQr.setOnClickListener(onClick->{
+                scanQrCode(true);
                 dialog.dismiss();
             });
-            view.findViewById(R.id.button_manual).setOnClickListener(onClick->{
+            btnManual.setOnClickListener(onClick->{
                 startExitActivity(null);
                 dialog.dismiss();
 
@@ -100,14 +83,19 @@ public class MainActivity extends Activity  {
             dialog.show();
            // startExitActivity();
         });
-        binding.imageMonthly.setOnClickListener(s->{
+        binding.boxSubscription.setOnClickListener(s->{
             Intent intent= new Intent(this, MonthlyPlanActivity.class);
            startActivity(intent);
+        });
+        binding.boxRenewal.setOnClickListener(s->{
+            scanQrCode(false);
         });
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         initViews();
     }
+
+
 
    private void initViews(){
        ButterKnife.bind(this);
@@ -136,7 +124,13 @@ public class MainActivity extends Activity  {
         startActivity(intent);
     }
 
-    public void scanQrCode() {
+    void startSubscriptionActivity(String qrCodeResult){
+        Intent intent= new Intent(this, MonthlyPlanActivity.class);
+        intent.putExtra("scan_qr",qrCodeResult);
+        startActivity(intent);
+    }
+
+    public void scanQrCode(boolean isExit) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
             // Permission is not granted
@@ -147,18 +141,18 @@ public class MainActivity extends Activity  {
             } else {
                 // No explanation needed; request the permission
                 ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.CAMERA}, 1
+                        new String[]{Manifest.permission.CAMERA}, isExit?1:2
                 );
             }
         } else
-            startQRCodeActivity();
+            startQRCodeActivity(isExit?1:2);
     }
 
-    private void startQRCodeActivity(){
+    private void startQRCodeActivity(int requestCode){
         try {
 
             Intent intent= new Intent(this, ScanQRCodeActivity.class);
-            startActivityForResult(intent,1);
+            startActivityForResult(intent,requestCode);
 
         } catch (Exception e) {
 
@@ -176,7 +170,7 @@ public class MainActivity extends Activity  {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted
-                    startQRCodeActivity();
+                    startQRCodeActivity(requestCode);
                 } else {
                     // permission denied,
                     Toast.makeText(this,"Permission denied . Can not proceed scanning the QR code", Toast.LENGTH_SHORT).show();
@@ -191,8 +185,13 @@ public class MainActivity extends Activity  {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==1 && resultCode==RESULT_OK){
-            startExitActivity(data.getStringExtra(AppConstants.KEY_QR_CODE));
+        if(resultCode==RESULT_OK) {
+            if (requestCode == 1 ) {
+                startExitActivity(data.getStringExtra(AppConstants.KEY_QR_CODE));
+            }
+            if(requestCode==2){
+                startSubscriptionActivity(data.getStringExtra(AppConstants.KEY_QR_CODE));
+            }
         }
     }
 

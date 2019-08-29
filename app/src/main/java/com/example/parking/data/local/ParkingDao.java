@@ -51,38 +51,16 @@ public abstract class ParkingDao implements BaseDao {
     @Query("SELECT slot_used from entry_exit where exit_time is null")
     public abstract LiveData<List<String>> getParkedSlots();
 
-
-
-
-
     @Query("SELECT * from entry_exit where synced is 0")
     public abstract LiveData<List<EntryTable>> getUnSyncedEntries();
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
-    public abstract void insertMonthly(MonthlyCustomerTable monthly);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    public abstract void insertSubscription(MonthlyCustomerTable monthly);
 
-    @Update
-    public abstract int updateMonthly(MonthlyCustomerTable entry);
+    @Query(("SELECT * from monthly_customer where server_id is :id LIMIT 1"))
+    public abstract LiveData<MonthlyCustomerTable> getSubscription(String id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public abstract void insertEntry(EntryTable entryTable);
-//    @Transaction
-//    public String upsertEntry(EntryTable e) {
-//        try {
-//            Log.d(AppConstants.LOG, "Trying to insert");
-//            insertEntry(e);
-//            return e.uid;
-//        } catch (SQLiteConstraintException ex) {
-//            Log.d(AppConstants.LOG, "Insert failed");
-//            if (updateEntry(e) > 0) {
-//                Log.d(AppConstants.LOG, "Updated record successfully");
-//
-//                return e.uid;
-//            } else
-//                Log.d(AppConstants.LOG, "Updated record failed");
-//            ;
-//            return null;
-//        }
-//
-//    }
+
 }

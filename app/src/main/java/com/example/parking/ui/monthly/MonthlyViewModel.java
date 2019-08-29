@@ -10,18 +10,19 @@ import com.example.parking.model.MonthlyCustomer;
 import com.example.parking.model.Vehicle;
 import com.example.parking.utils.QRCodeUtils;
 import com.example.parking.utils.StringUtils;
+import com.google.gson.Gson;
 
 import java.util.*;
 
 public class MonthlyViewModel extends AndroidViewModel {
 
      enum MissedFieldsStatus{Name, VehicleNumber, VehicleModel, VehicleMake, Phone }
+    enum SaveStatus{Saved, SaveFailed, Validated }
 
      MutableLiveData<Boolean> showProgress;
-
+    MutableLiveData<Boolean> scanQrCode;
 
     public MutableLiveData<Bitmap> qrCode= new MutableLiveData<>();
-
 
     private MutableLiveData<MonthlyCustomer> monthlyCustomerMutableLiveData= new MutableLiveData<>();
 
@@ -33,12 +34,12 @@ public class MonthlyViewModel extends AndroidViewModel {
     public MonthlyViewModel(Application application) {
         super(application);
         repository = new ParkingRespository(application);
-        createEntry();
+        createEntry(null);
         configDetails = repository.getConfig();
         pageNumerShown=new MutableLiveData<>();
         pageNumerShown.setValue(1);
         showProgress= new MutableLiveData<>();
-
+        scanQrCode= new MutableLiveData<>();
 
     }
 
@@ -49,65 +50,57 @@ public class MonthlyViewModel extends AndroidViewModel {
     public LiveData<ConfigDetails> getConfigDetails() {
         return Transformations.map(configDetails, s -> {
             if(monthlyCustomer !=null ) {
-                if(monthlyCustomer.receiptNumber==0)
-                monthlyCustomer.receiptNumber = s.last_receipt_number + 1;
-                monthlyCustomer.amount=s.monthly_package_amount;
-                monthlyCustomer.amounFormatted = StringUtils.getAmountFormattedWithCurrency(s.monthly_package_amount);
-                monthlyCustomer.packageID=s.monthly_package_id;
-
+                monthlyCustomer.setConfigDetails(s);
+                monthlyCustomerMutableLiveData.setValue(monthlyCustomer);
             }
-
-
-            ;
             return s;
         });
 
     }
 
+    public LiveData<MonthlyCustomer> createEntry(String qrCode){
+        monthlyCustomer = new MonthlyCustomer();
+        monthlyCustomerMutableLiveData.setValue(monthlyCustomer);
+        //if qrcode is not null ,fetch from database
+        if(qrCode!=null){
+           return   Transformations.switchMap(repository.getSubscription(qrCode),s->{
+              monthlyCustomer.setDetails(s);
+              return monthlyCustomerMutableLiveData;
+          });
+        }
+        //else create a new one with default valuses like startdate and enddate
+        else{
+            monthlyCustomer.createNewEntry();
+        }
 
-    public void createEntry(){
-         monthlyCustomer = new MonthlyCustomer();
-         monthlyCustomer.startDate= Calendar.getInstance().getTime();
-         monthlyCustomer.endDate=getEndDate();
-         monthlyCustomer.vehicle= new Vehicle();
-         monthlyCustomerMutableLiveData.setValue(monthlyCustomer);
+
+        return monthlyCustomerMutableLiveData;
     }
 
     public LiveData<MonthlyCustomer> getMonthlyCustomer(){
         return monthlyCustomerMutableLiveData;
     }
 
-
-    private Date getEndDate() {
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.MONTH, monthlyCustomer.noOfMonths);
-        return cal.getTime();
-    }
-
-
-
-
-
-
-    private LiveData<Boolean> saveSubscription() {
+    private LiveData<SaveStatus> saveSubscription() {
         showProgress.setValue(true);
         return Transformations.map(repository.saveSubscription(monthlyCustomer), s -> {
             if(s.equals("failure")){
-                return false;
+                return SaveStatus.SaveFailed;
             }
             monthlyCustomer.rowID = s;
-            Bitmap image = QRCodeUtils.generateQrCode(String.valueOf(monthlyCustomer.rowID));
+            Bitmap image = QRCodeUtils.generateQrCode(String.valueOf(monthlyCustomer.serverID));
             qrCode.setValue(image);
-            return true;
+            return SaveStatus.Saved;
         });
     }
 
     MutableLiveData<List<MissedFieldsStatus>> validationLiveData= new MutableLiveData<>();
 
-     LiveData<Boolean> onSubmit(){
+    LiveData<SaveStatus> onSubmit(){
+        LiveData<SaveStatus> liveData= new MutableLiveData<>();
         if(pageNumerShown.getValue()!=null) {
             if (pageNumerShown.getValue() == 2) {
-               return saveSubscription();
+               liveData= saveSubscription();
 
             } else {
                 List<MissedFieldsStatus> statusList= new ArrayList<>();
@@ -136,14 +129,18 @@ public class MonthlyViewModel extends AndroidViewModel {
                     validationLiveData.setValue(statusList);
                 }else {
                     pageNumerShown.setValue(pageNumerShown.getValue() + 1);
-
+                    ((MutableLiveData<SaveStatus>) liveData).setValue(SaveStatus.Validated);
                 }
             }
         }
 
-        MutableLiveData<Boolean> liveData= new MutableLiveData<>();
-        liveData.setValue(false);
+
+
         return  liveData;
+     }
+
+     public void scanQrCode(){
+         scanQrCode.setValue(true);
      }
 
     public LiveData<Integer> onBack(){

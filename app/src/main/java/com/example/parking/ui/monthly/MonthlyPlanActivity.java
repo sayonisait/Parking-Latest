@@ -2,14 +2,16 @@ package com.example.parking.ui.monthly;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.parking.R;
 import com.example.parking.ScanQRCodeActivity;
+import com.example.parking.base.BaseActivity;
 
-public class MonthlyPlanActivity extends FragmentActivity  {
+public class MonthlyPlanActivity extends BaseActivity {
 
     private MonthlyViewModel mViewModel;
 
@@ -19,18 +21,17 @@ public class MonthlyPlanActivity extends FragmentActivity  {
         setContentView(R.layout.monthly_customer_activity);
         setActionBar(findViewById(R.id.tool_bar));
         mViewModel = ViewModelProviders.of(this).get(MonthlyViewModel.class);
+        String scannedQrCode= getIntent().getStringExtra("scan_qr");
+//        if(scannedQrCode!=null){
+//            mViewModel.updateSubscription(scannedQrCode);
+//        }
+        mViewModel.createEntry(scannedQrCode).observe(this,s->{});
 
     }
 
-    @Override
-    public void onBackPressed() {
 
-        if(getSupportFragmentManager().getBackStackEntryCount()==1)
-            finish();
-        else
-            super.onBackPressed();
 
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

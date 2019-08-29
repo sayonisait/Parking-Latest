@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.*;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
+import android.widget.Toolbar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -43,18 +44,26 @@ public class MonthlyPlanFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_monthly_new, container, false);
         binding.setViewmodel(mViewModel);
         binding.setLifecycleOwner(this);
-//        loadAnimations();
-//        changeCameraDistance();
+        Toolbar toolbar= binding.toolBar;
+        (getActivity()).setActionBar(binding.toolBar);
+        getActivity().invalidateOptionsMenu();
+        setHasOptionsMenu(true);
         return binding.getRoot();
 
     }
 
-    //    private void changeCameraDistance() {
-//        int distance = 8000;
-//        float scale = getResources().getDisplayMetrics().density * distance;
-//        binding.frame1.setCameraDistance(scale);
-//        binding.frame2.setCameraDistance(scale);
-//    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.exit,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Toast.makeText(mContext, "Search for vehicle", Toast.LENGTH_SHORT).show();
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -62,6 +71,7 @@ public class MonthlyPlanFragment extends Fragment {
         binding.editTextModel.setAdapter(new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.models)));
         mViewModel.validationLiveData.observe(this, s -> {
             Toast.makeText(mContext, "Please fill the mandatory fields", Toast.LENGTH_SHORT).show();
+            hideProgress();
             for (MonthlyViewModel.MissedFieldsStatus status : s) {
                 switch (status) {
                     case Name:
@@ -89,10 +99,10 @@ public class MonthlyPlanFragment extends Fragment {
             showProgress();
             mViewModel.onSubmit().observe(this, s -> {
                 hideProgress();
-                if (s)// if saving successful
+                if (s.equals(MonthlyViewModel.SaveStatus.Saved))// if saving successful
                 {
                     NavHostFragment.findNavController(MonthlyPlanFragment.this).navigate(R.id.action_monthly_print);
-                }else
+                }else if(s.equals(MonthlyViewModel.SaveStatus.SaveFailed))
                 {
                     Toast.makeText(mContext,"Save failed. Connection or Server failure", Toast.LENGTH_SHORT).show();
                 }
@@ -101,9 +111,10 @@ public class MonthlyPlanFragment extends Fragment {
 
         mViewModel.getConfigDetails().observe(this, s -> {
             Log.d("Parking Info", "got config info");
-            binding.editAmount.setText(mViewModel.monthlyCustomer.amounFormatted);
+
         });
     }
+
     KProgressHUD kProgressHUD;
     private void showProgress() {
 
@@ -129,7 +140,6 @@ public class MonthlyPlanFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
     }
-
 
     @Override
     public void onAttach(Context context) {

@@ -52,7 +52,7 @@ public class MonthlyPrintFragment extends Fragment {
         mViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(MonthlyViewModel.class);
         binding.setViewmodel(mViewModel);
         binding.qrCodeImage.setImageBitmap(mViewModel.qrCode.getValue());
-        binding.layoutHeader.setConfig(mViewModel.configDetails.getValue());
+        //binding.layoutHeader.setConfig(mViewModel.configDetails.getValue());
         binding.fabPrint.setOnClickListener(s->{printData();});
     }
 

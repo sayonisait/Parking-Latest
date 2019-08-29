@@ -19,7 +19,6 @@ import com.example.parking.model.Entry;
 import com.example.parking.data.network.RetrofitClient;
 import com.example.parking.data.network.ServiceInterface;
 import com.example.parking.model.MonthlyCustomer;
-import com.example.parking.utils.StringUtils;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -61,6 +60,10 @@ public class ParkingRespository {
         mContext=application.getApplicationContext();
 
 
+    }
+
+    public LiveData<MonthlyCustomerTable> getSubscription(String id) {
+       return parkingDao.getSubscription(id);
     }
 
     public LiveData<List<Entry>> getParkedEntries(String vehicleNumberQuery) {
@@ -153,15 +156,20 @@ public class ParkingRespository {
          table. endDate=customer.getServerEndDate();
         table . secondary_phone=customer.secondaryNumber;
         table . customerPhone=customer.phone;
-        table .    company=customer.company;
-        table .     grace_period=customer.gracePeriodDays;
-        table .     is_not_paid=customer.isNotPaid;
-        table .     vehicle_make=customer.vehicle.vehicleMake;
+        table . company=customer.company;
+        table . grace_period=customer.gracePeriodDays;
+        table . is_not_paid=customer.isNotPaid;
+        table . vehicle_make=customer.vehicle.vehicleMake;
         table .     vehicleModel=customer.vehicle.vehicleModel;
         table .     vehicleNumber=customer.vehicle.vehicleNumber;
         table .     receipt_number=customer.receiptNumber;
         table .     subscription_date=customer.subscriptionDate;
         table .     server_id=customer.serverID;
+        table.city=customer.city;
+        table.payment_id=customer.subscriptionPaymentID;
+        table.package_id =customer.packageID;
+        table.customer_id=customer.customerID;
+        table.vehicle_id=customer.vehicleID;
         return table;
 
 
@@ -245,7 +253,6 @@ public class ParkingRespository {
         insertedMonthlyRowId= new MutableLiveData<>();
         SubscriptionRequest request= new SubscriptionRequest(customer,configDetails);
         ServiceInterface service = RetrofitClient.getRetrofitInstance(mContext).create(ServiceInterface.class);
-
         service.sendSubscription(request).enqueue(new Callback<SubscriptionResponse>() {
             @Override
             public void onResponse(Call<SubscriptionResponse> call, Response<SubscriptionResponse> response) {
@@ -262,9 +269,6 @@ public class ParkingRespository {
                     insertedMonthlyRowId.setValue("failure");
                     Log.d("Parking Info", "Could not save in server");
                 }
-
-
-
             }
 
             @Override
@@ -378,10 +382,9 @@ public class ParkingRespository {
             if(entries[0].uid==null || entries[0].uid.trim().equals("")) {
                 entries[0].uid= UUID.randomUUID().toString();
                 System.out.println("Parking Info :"+entries[0].uid +" is the id of the record inserted");
-                 parkingDao.insertMonthly(entries[0]);
+
             }
-            else
-                parkingDao.updateMonthly(entries[0]);
+            parkingDao.insertSubscription(entries[0]);
             return entries[0].uid;
         }
 

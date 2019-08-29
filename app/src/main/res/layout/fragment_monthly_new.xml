@@ -20,12 +20,22 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.1"/>
-    <include
-            android:id="@+id/appbarLayout"
-            layout="@layout/toolbar_layout_big"
-             android:layout_height="0dp"
-             android:layout_width="match_parent"
-             app:layout_constraintHeight_percent=".2"/>
+    <com.google.android.material.appbar.AppBarLayout
+            android:background="@drawable/background_blue"
+
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            app:layout_constraintHeight_percent=".2"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+
+        <Toolbar
+                android:titleTextColor="@color/white"
+                android:id="@+id/tool_bar"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_width="match_parent">
+        </Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
     <androidx.cardview.widget.CardView
             app:layout_constraintHeight_percent=".9"
             app:layout_constraintTop_toBottomOf="@id/guideline_hor_start"
@@ -97,7 +107,7 @@
                     style="@style/MonthlyPlanEditText"
                     android:drawableStart="@drawable/ic_phone"
                     android:visibility="@{viewmodel.pageNumberLiveData==1?View.VISIBLE:View.GONE}"
-                    android:text="@{viewmodel.monthlyCustomer.secondaryNumber}"
+                    android:text="@={viewmodel.monthlyCustomer.secondaryNumber}"
                     android:hint="Secondary Phone Number"
 
 
@@ -252,7 +262,7 @@
                     style="@style/MonthlyPlanEditText"
                     android:drawableStart="@drawable/ic_dollar"
                     android:visibility="@{viewmodel.pageNumberLiveData==2?View.VISIBLE:View.GONE}"
-
+                    android:text="@{viewmodel.monthlyCustomer.amounFormatted}"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
 
@@ -269,6 +279,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/linearLayout"
                     android:paddingStart="5dp"
+                    
             >
 
                 <com.rengwuxian.materialedittext.MaterialEditText

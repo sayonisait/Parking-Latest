@@ -43,7 +43,11 @@ public class MonthlyCustomerTable {
     public long receipt_number;
     public String subscription_date;
     public int server_id;
-
+    public int vehicle_id;
+    public int package_id;
+    public int customer_id;
+    public int payment_id;
+    public String city;
 
 
 }

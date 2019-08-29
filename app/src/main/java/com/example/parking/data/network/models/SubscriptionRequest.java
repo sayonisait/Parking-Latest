@@ -65,6 +65,7 @@ public class SubscriptionRequest {
         request_content.customer_data.emergency_contact=customer.secondaryNumber!=null?customer.secondaryNumber:"";
         request_content.customer_data.mobile=customer.phone;
         request_content.customer_data.customer_name=customer.name;
+        request_content.customer_data.city =customer.city!=null?customer.city:"";
         request_content.subscription_data=new SubscriptionData();
         request_content.subscription_data.start_date=customer.getServerStartDate();
         request_content.subscription_data.expiry_date=customer.getServerEndDate();

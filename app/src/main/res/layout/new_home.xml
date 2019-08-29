@@ -56,6 +56,7 @@
     <ImageView
 
             android:src="@drawable/ic_car_outlined"
+
             android:layout_width="50dp"
             android:layout_height="50dp"
 
@@ -86,12 +87,13 @@
             app:layout_constraintBottom_toTopOf="@id/exitButton"
             app:layout_constraintTop_toBottomOf="@id/guideline_hor_start"
             app:layout_constraintStart_toEndOf="@id/image_reg_entry"
-            app:layout_constraintEnd_toStartOf="@id/image_monthly"
+            app:layout_constraintEnd_toStartOf="@id/box_monthly_entry"
             >
     <ImageView
 
 
-            android:src="@drawable/ic_suv_car"
+            android:src="@drawable/ic_car_outlined"
+            android:tint="@color/colorAccent"
             android:layout_width="50dp"
             android:layout_height="50dp"
 
@@ -108,7 +110,7 @@
     <LinearLayout
             android:gravity="center"
             android:background="@color/white"
-            android:id="@+id/image_monthly"
+            android:id="@+id/box_monthly_entry"
 
             android:elevation="10dp"
             android:padding="10dp"
@@ -119,17 +121,17 @@
             app:layout_constraintEnd_toEndOf="@id/guideline_ver_end"
             app:layout_constraintBottom_toBottomOf="@id/image_special_entry">
     <ImageView
-
-            android:src="@drawable/ic_calendar"
+            android:tint="@color/colorPrimaryLight"
+            android:src="@drawable/ic_car_outlined"
             android:layout_width="50dp"
             android:layout_height="50dp"/>
         <TextView
                 android:textStyle="bold"
                 android:gravity="center"
-                android:text="Monthly Plan"
+                android:text="Monthly Entry"
 
-                app:layout_constraintStart_toStartOf="@id/image_monthly"
-                app:layout_constraintEnd_toEndOf="@id/image_monthly"
+                app:layout_constraintStart_toStartOf="@id/box_monthly_entry"
+                app:layout_constraintEnd_toEndOf="@id/box_monthly_entry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -204,7 +206,7 @@
             app:layout_constraintTop_toBottomOf="@id/exitButton"
             app:layout_constraintStart_toStartOf="@id/image_special_entry"
             app:layout_constraintEnd_toEndOf="@id/image_special_entry"
-            app:layout_constraintBottom_toTopOf="@id/image_extra1"
+            app:layout_constraintBottom_toTopOf="@id/box_subscription"
     >
 
     <ImageView
@@ -235,8 +237,8 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
 
-            app:layout_constraintStart_toStartOf="@id/image_monthly"
-            app:layout_constraintEnd_toEndOf="@id/image_monthly"
+            app:layout_constraintStart_toStartOf="@id/box_monthly_entry"
+            app:layout_constraintEnd_toEndOf="@id/box_monthly_entry"
             app:layout_constraintBottom_toBottomOf="@id/image_dashboard"
             app:layout_constraintTop_toTopOf="@id/image_dashboard"
 
@@ -267,7 +269,7 @@
             android:elevation="10dp"
             android:padding="10dp"
             android:orientation="vertical"
-            android:id="@+id/image_extra1"
+            android:id="@+id/box_subscription"
             android:layout_width="0dp"
             android:layout_height="0dp"
 
@@ -279,8 +281,8 @@
     >
 
     <ImageView
-
-            android:src="@drawable/ic_home"
+            android:tint="@color/colorPrimaryDark"
+            android:src="@drawable/ic_calendar"
             android:layout_width="50dp"
             android:layout_height="50dp"
 
@@ -289,7 +291,7 @@
                 android:id="@+id/txt_extra1"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:text="Extra 1"
+                android:text="Subscription"
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -301,20 +303,20 @@
             android:elevation="10dp"
             android:padding="10dp"
             android:orientation="vertical"
-            android:id="@+id/image_expenses"
+            android:id="@+id/box_renewal"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="@id/image_extra1"
+            app:layout_constraintTop_toTopOf="@id/box_subscription"
             app:layout_constraintStart_toStartOf="@id/image_special_entry"
             app:layout_constraintEnd_toEndOf="@id/image_special_entry"
-            app:layout_constraintBottom_toBottomOf="@id/image_extra1"
+            app:layout_constraintBottom_toBottomOf="@id/box_subscription"
 
     >
     <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-
-            android:src="@drawable/ic_dollar"
+            android:src="@drawable/ic_renew"
+            android:tint="@color/colorPrimaryDark"
 
 
     />
@@ -322,7 +324,7 @@
                 android:id="@+id/txt_expenses"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:text="Expenses"
+                android:text="Renewal"
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -338,9 +340,9 @@
             android:id="@+id/image_extra2"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="@id/image_monthly"
-            app:layout_constraintEnd_toEndOf="@id/image_monthly"
-            app:layout_constraintBottom_toBottomOf="@id/image_extra1"
+            app:layout_constraintStart_toStartOf="@id/box_monthly_entry"
+            app:layout_constraintEnd_toEndOf="@id/box_monthly_entry"
+            app:layout_constraintBottom_toBottomOf="@id/box_subscription"
 
     >
 
@@ -349,15 +351,14 @@
     <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/ic_notes"
-
+            android:src="@drawable/ic_dollar"
 
     />
         <TextView
                 android:id="@+id/txt_extra2"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:text="Extra 2"
+                android:text="Expenses"
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

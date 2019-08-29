@@ -12,7 +12,7 @@ import com.example.parking.data.local.entities.MonthlyCustomerTable;
 
 import java.util.List;
 
-@androidx.room.Database(entities = {EntryTable.class, ConfigTable.class, MonthlyCustomerTable.class}, version =7, exportSchema = false)
+@androidx.room.Database(entities = {EntryTable.class, ConfigTable.class, MonthlyCustomerTable.class}, version =8, exportSchema = false)
 public abstract class ParkingDatabase extends RoomDatabase {
     public abstract ParkingDao parkingDao();
     private static ParkingDatabase INSTANCE;

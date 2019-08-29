@@ -23,4 +23,7 @@ public interface ServiceInterface {
 
     @POST("app_calls/parking_subscription")
     Call<SubscriptionResponse> sendSubscription(@Body SubscriptionRequest map);
+
+    @POST("app_calls/renew_subscription")
+    Call<SubscriptionResponse> renewSubscription(@Body SubscriptionRequest map);
 }

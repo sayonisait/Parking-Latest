@@ -218,7 +218,10 @@ public class ParkingRespository {
         request.location_id=configDetails.location_id;
         request.key=configDetails.token;
         request.request_content=new Transaction(entry);
-        request.request_type="push_parking_record";
+
+            request.request_type="push_parking_record";
+
+
         ServiceInterface service = RetrofitClient.getRetrofitInstance(mContext).create(ServiceInterface.class);
 
             service.sendTransaction(request).enqueue(new Callback<SaveCheckInResponse>() {

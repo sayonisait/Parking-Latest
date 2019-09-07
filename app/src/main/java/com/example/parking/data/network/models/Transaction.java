@@ -9,7 +9,7 @@ public class Transaction{
     public static final String CHECK_IN = "Check-In";
     public static final String VISITOR_CUSTOMER = "Visitor";
     public static final String CHECK_OUT = "Check-Out";
-
+    public static final String CHECK_IN_UPDATE = "Check-In Update";
 
     @SerializedName("entry_time")
     public String entry_time;
@@ -83,8 +83,10 @@ public class Transaction{
         estimatedHours=entry.estimatedHours;
         rate =entry.hourlyCharge;
         order_id=entry.serverID;
-
-        transaction_type=entry.exitTime!=null&& !entry.exitTime.equals("")?CHECK_OUT:CHECK_IN;
+        if(entry.serverID!=0){
+            transaction_type=CHECK_IN_UPDATE;
+        }else
+            transaction_type=entry.exitTime!=null&& !entry.exitTime.equals("")?CHECK_OUT:CHECK_IN;
     }
 
 

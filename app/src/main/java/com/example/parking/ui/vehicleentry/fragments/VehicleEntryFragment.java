@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -86,43 +87,21 @@ public class VehicleEntryFragment extends Fragment {
         return new VehicleEntryFragment();
     }
     private Context mContext;
-
+//     NavController navController;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_entry, container, false);
         ButterKnife.bind(this,view);
         setHasOptionsMenu(true);
-
+//        navController = Navigation.findNavController(view);
         return view;
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-         super.onOptionsItemSelected(item);
-         if(item.getItemId()==R.id.action_search) {
-             if (navController.getCurrentDestination().getId() == R.id.vehicleentry) {
-                 navController.navigate(R.id.action_to_parked_list);
-             }
-         }
-        return true;
-    }
 
-//    @SuppressLint("RestrictedApi")
-//    @Override
-//    public void onCreateOptionsMenu(
-//            Menu menu, MenuInflater inflater) {
-//        inflater.inflate(R.menu.entry, menu);
-//         super.onCreateOptionsMenu(menu, inflater);
-//        //getMenuInflater().inflate(R.menu.entry, menu);
-////        if(menu instanceof MenuBuilder){
-////            MenuBuilder m = (MenuBuilder) menu;
-////            m.setOptionalIconsVisible(true);
-////        }
-//    }
 
-    NavController navController;
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -138,8 +117,6 @@ public class VehicleEntryFragment extends Fragment {
             editTextHourlyCharge.setText(StringUtils.getAmountFormattedWithCurrency(mViewModel.entry.hourlyCharge));
         }
 
-        navController = NavHostFragment.findNavController(VehicleEntryFragment.this);
-//
 
         initToolBar();
 
@@ -148,10 +125,7 @@ public class VehicleEntryFragment extends Fragment {
         //on touching on parking slot field, navigates to parking slots listing screen
 
         editTextSlot.setOnClickListener(view -> {
-
-            if (navController.getCurrentDestination().getId() == R.id.vehicleentry) {
-                navController.navigate(R.id.action_to_parkingSlot);
-            }
+           Navigation.findNavController(view) .navigate(R.id.parkingSlot);
         });
 
 
@@ -268,7 +242,8 @@ public class VehicleEntryFragment extends Fragment {
                     //saves and generates qr code
                     mViewModel.saveEntry().observe(this, s -> {
                       //  go to print screen to take out a print
-                            NavHostFragment.findNavController(VehicleEntryFragment.this).navigate(R.id.action_entry_print);
+                      Navigation.findNavController(view).navigate(R.id.action_entry_print);
+
                         dialog.dismiss();
                     });
 

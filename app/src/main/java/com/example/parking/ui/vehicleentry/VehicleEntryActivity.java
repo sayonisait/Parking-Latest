@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
+import androidx.navigation.NavGraph;
 import androidx.navigation.Navigation;
 import com.example.parking.AppConstants;
 import com.example.parking.R;
@@ -31,14 +32,15 @@ public class VehicleEntryActivity extends FragmentActivity  {
         //setActionBar(findViewById(R.id.tool_bar));
 
         NavController navController= Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavGraph graph = navController.getNavInflater().inflate(R.navigation.navigation_graph_entry);
+        if(getIntent().getStringExtra("monthly")==null)
+            graph.setStartDestination(R.id.vehicleentry);
+        else
+            graph.setStartDestination(R.id.monthlyEntryFragment);
+        navController.setGraph(graph);
 
-        // if slot is selected, then navigate back
-        mViewModel.slotNumber.observe(this, s -> {
-             navController.popBackStack ();
-        });
 
 
-        System.out.println("Parking Info: finished activitys on create");
 
     }
 

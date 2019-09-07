@@ -61,6 +61,13 @@ public class MainActivity extends Activity  {
         binding.imageRegEntry.setOnClickListener(s ->
         {
             Intent intent = new Intent(this, VehicleEntryActivity.class);
+
+            startActivity(intent);
+        });
+        binding.boxMonthlyEntry.setOnClickListener(s ->
+        {
+            Intent intent = new Intent(this, VehicleEntryActivity.class);
+            intent.putExtra("monthly","monthly");
             startActivity(intent);
         });
 

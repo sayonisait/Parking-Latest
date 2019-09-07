@@ -64,6 +64,7 @@ public class VehicleEntryViewModel extends AndroidViewModel {
 
     }
 
+
     public LiveData<String> saveEntry() {
         return Transformations.map(repository.sendEntryToBackend(entry), s -> {
             Log.d("Parking Info", "entry.transaction_id =" + s);

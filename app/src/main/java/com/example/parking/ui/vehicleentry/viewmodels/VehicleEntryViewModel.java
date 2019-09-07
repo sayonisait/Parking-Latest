@@ -81,7 +81,7 @@ public class VehicleEntryViewModel extends AndroidViewModel {
 
 
     /* creates a new entry*/
-    public void createEntry() {
+    public void createEntry(boolean isMonthlyPlan) {
         entry = new Entry();
         entry.startEntry();
         System.out.println("Parking Info: Create entry 2");

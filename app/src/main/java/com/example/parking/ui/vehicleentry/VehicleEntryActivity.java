@@ -26,17 +26,17 @@ public class VehicleEntryActivity extends FragmentActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(VehicleEntryViewModel.class);
-        mViewModel.createEntry();// if entry, create an entry record
+
 
         setContentView(R.layout.vehicle_entry_activity);
         //setActionBar(findViewById(R.id.tool_bar));
 
         NavController navController= Navigation.findNavController(this, R.id.nav_host_fragment);
         NavGraph graph = navController.getNavInflater().inflate(R.navigation.navigation_graph_entry);
-        if(getIntent().getStringExtra("monthly")==null)
-            graph.setStartDestination(R.id.vehicleentry);
-        else
-            graph.setStartDestination(R.id.monthlyEntryFragment);
+        boolean isMonthly=getIntent().getStringExtra("monthly")==null;
+        graph.setStartDestination(isMonthly? R.id.monthlyEntryFragment:R.id.vehicleentry);
+
+        mViewModel.createEntry(isMonthly);// if entry, create an entry record
         navController.setGraph(graph);
 
 
